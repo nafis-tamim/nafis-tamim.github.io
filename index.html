@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Academic portfolio of Nafis Tamim">
+  <title>Nafis Tamim — Academic Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <div class="nav-wrap">
+    <nav class="site-nav">
+      <a class="brand" href="#top"><span class="brand-mark">NT</span><span id="navName">Nafis Tamim</span></a>
+      <div id="navLinks" class="nav-links"></div>
+      <a class="nav-cta" href="#contact">Connect ↗</a>
+    </nav>
+  </div>
+
+  <main id="top">
+    <header class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="status-pill"><span></span><b id="heroStatus">Academic Portfolio · 2026</b></div>
+          <h1 id="heroTitle">Learn.<br>Compete.<br><em>Build.</em></h1>
+          <p id="heroDescription" class="hero-description">Loading portfolio…</p>
+          <div class="hero-actions">
+            <a id="primaryCta" class="button button-dark" href="#honours">Explore Portfolio ↓</a>
+            <a id="cvLink" class="button button-light" href="#" target="_blank" rel="noreferrer">Download CV</a>
+          </div>
+        </div>
+
+        <aside class="identity-card">
+          <div>
+            <small id="identityLabel">Student Profile / Bangladesh</small>
+            <div id="identityName" class="identity-name">Nafis<br>Tamim</div>
+            <p id="identityRole">STEM · Engineering · Leadership · Global Engagement</p>
+          </div>
+          <div id="identityStats" class="identity-stats"></div>
+        </aside>
+      </div>
+    </header>
+
+    <div id="dynamicSections"></div>
+
+    <section id="contact" class="contact-section">
+      <div class="container">
+        <div class="contact-card">
+          <small>Let's connect</small>
+          <h2 id="contactHeading">Always open to the next challenge.</h2>
+          <div id="contactLinks" class="contact-links"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span id="footerLeft">© 2026 Nafis Tamim</span>
+      <span id="footerRight">Academic · STEM · Engineering · Leadership</span>
+    </div>
+  </footer>
+
+  <div id="lightbox" class="lightbox" aria-hidden="true">
+    <button id="lightboxClose" class="lightbox-close" aria-label="Close">×</button>
+    <img id="lightboxImage" alt="Preview">
+  </div>
+
+  <div id="siteMessage" class="toast" hidden></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="assets/public.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+NAFIS PORTFOLIO CMS — SETUP CHECKLIST
+
+1) Create free Supabase project
+2) SQL Editor → run supabase-schema.sql
+3) Authentication → Users → create your admin user
+4) SQL Editor → add that user's UID using the admin statement in README
+5) Project API settings → copy Project URL + anon/publishable key
+6) Paste both into config.js
+7) Test index.html and admin.html through a local server
+8) Upload the whole folder to a public GitHub repository
+9) GitHub → Settings → Pages → main / root
+10) Open /admin.html → upload award & certificate images
+
+NO SERVICE-ROLE KEY SHOULD EVER GO IN config.js.
