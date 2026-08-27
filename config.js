@@ -1,4 +1,4 @@
 window.PORTFOLIO_CONFIG = {
   supabaseUrl: "https://kfkywtkgueprlcjarntv.supabase.co",
-  supabaseAnonKey: "sb_publishable_M8qlxBjA0UNYxc9fzhX_rA_yYNEJTZ6"
+  supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtma3l3dGtndWVwcmxjamFybnR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc4MzY3NDQsImV4cCI6MjEwMzQxMjc0NH0.QoPPA-o2sWn4nxTLHAHq1K7rsie_9htPWSsMJmDV6VY"
 };
