@@ -1,167 +1,997 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <meta name="robots" content="noindex,nofollow">
+
   <title>Portfolio CMS — Admin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/admin.css">
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- ADMIN CSS -->
+  <link
+    rel="stylesheet"
+    href="admin.css"
+  >
+
 </head>
+
+
 <body>
-  <div id="loginView" class="login-shell">
-    <form id="loginForm" class="login-card">
-      <div class="cms-mark">NT</div>
-      <p class="kicker">PRIVATE ADMIN</p>
-      <h1>Portfolio CMS</h1>
-      <p class="muted">Sign in with the admin account created in Supabase Auth.</p>
 
-      <label>Email
-        <input id="loginEmail" type="email" required autocomplete="username">
-      </label>
-      <label>Password
-        <input id="loginPassword" type="password" required autocomplete="current-password">
+
+  <!-- =====================================
+       LOGIN SCREEN
+  ====================================== -->
+
+  <div
+    id="loginView"
+    class="login-shell"
+  >
+
+    <form
+      id="loginForm"
+      class="login-card"
+    >
+
+      <div class="cms-mark">
+        NT
+      </div>
+
+      <p class="kicker">
+        PRIVATE ADMIN
+      </p>
+
+      <h1>
+        Portfolio CMS
+      </h1>
+
+      <p class="muted">
+        Sign in with the admin account created in Supabase Auth.
+      </p>
+
+
+      <label>
+
+        Email
+
+        <input
+          id="loginEmail"
+          type="email"
+          required
+          autocomplete="username"
+        >
+
       </label>
 
-      <button class="primary" type="submit">Sign in</button>
-      <p id="loginError" class="form-error"></p>
-      <a class="back-link" href="index.html">← Back to portfolio</a>
+
+      <label>
+
+        Password
+
+        <input
+          id="loginPassword"
+          type="password"
+          required
+          autocomplete="current-password"
+        >
+
+      </label>
+
+
+      <button
+        class="primary"
+        type="submit"
+      >
+        Sign in
+      </button>
+
+
+      <p
+        id="loginError"
+        class="form-error"
+      ></p>
+
+
+      <a
+        class="back-link"
+        href="index.html"
+      >
+        ← Back to portfolio
+      </a>
+
+
     </form>
+
   </div>
 
-  <div id="adminView" class="app-shell" hidden>
+
+
+  <!-- =====================================
+       ADMIN DASHBOARD
+  ====================================== -->
+
+  <div
+    id="adminView"
+    class="app-shell"
+    hidden
+  >
+
+
+    <!-- SIDEBAR -->
+
     <aside class="sidebar">
-      <div class="sidebar-brand"><span class="cms-mark small">NT</span><div><b>Portfolio CMS</b><small>Private workspace</small></div></div>
-      <nav id="adminNav">
-        <button data-panel="overview" class="active">Overview</button>
-        <button data-panel="site">Site & Hero</button>
-        <button data-panel="sections">Sections</button>
-        <button data-panel="awards">Awards</button>
-        <button data-panel="certificates">Certificates</button>
-        <button data-panel="competitions">Competitions</button>
-        <button data-panel="leadership">Leadership</button>
-        <button data-panel="projects">Projects</button>
-        <button data-panel="research">Research</button>
-        <button data-panel="skills">Skills</button>
-        <button data-panel="social">Social Links</button>
-      </nav>
-      <div class="sidebar-bottom">
-        <a href="index.html" target="_blank">View public site ↗</a>
-        <button id="logoutBtn">Sign out</button>
+
+
+      <div class="sidebar-brand">
+
+        <span class="cms-mark small">
+          NT
+        </span>
+
+        <div>
+
+          <b>
+            Portfolio CMS
+          </b>
+
+          <small>
+            Private workspace
+          </small>
+
+        </div>
+
       </div>
+
+
+
+      <nav id="adminNav">
+
+        <button
+          data-panel="overview"
+          class="active"
+        >
+          Overview
+        </button>
+
+        <button data-panel="site">
+          Site & Hero
+        </button>
+
+        <button data-panel="sections">
+          Sections
+        </button>
+
+        <button data-panel="awards">
+          Awards
+        </button>
+
+        <button data-panel="certificates">
+          Certificates
+        </button>
+
+        <button data-panel="competitions">
+          Competitions
+        </button>
+
+        <button data-panel="leadership">
+          Leadership
+        </button>
+
+        <button data-panel="projects">
+          Projects
+        </button>
+
+        <button data-panel="research">
+          Research
+        </button>
+
+        <button data-panel="skills">
+          Skills
+        </button>
+
+        <button data-panel="social">
+          Social Links
+        </button>
+
+      </nav>
+
+
+
+      <div class="sidebar-bottom">
+
+        <a
+          href="index.html"
+          target="_blank"
+        >
+          View public site ↗
+        </a>
+
+        <button id="logoutBtn">
+          Sign out
+        </button>
+
+      </div>
+
+
     </aside>
 
+
+
+    <!-- =====================================
+         MAIN ADMIN AREA
+    ====================================== -->
+
     <main class="admin-main">
+
+
+      <!-- TOP BAR -->
+
       <header class="admin-topbar">
-        <div><p class="kicker">CONTENT MANAGEMENT</p><h1 id="panelTitle">Overview</h1></div>
-        <div id="adminEmail" class="admin-chip"></div>
+
+        <div>
+
+          <p class="kicker">
+            CONTENT MANAGEMENT
+          </p>
+
+          <h1 id="panelTitle">
+            Overview
+          </h1>
+
+        </div>
+
+
+        <div
+          id="adminEmail"
+          class="admin-chip"
+        ></div>
+
       </header>
 
-      <section id="panel-overview" class="panel active">
-        <div id="statsGrid" class="stats-grid"></div>
+
+
+      <!-- =====================================
+           OVERVIEW
+      ====================================== -->
+
+      <section
+        id="panel-overview"
+        class="panel active"
+      >
+
+        <div
+          id="statsGrid"
+          class="stats-grid"
+        ></div>
+
+
         <div class="info-card">
-          <h2>How this CMS works</h2>
-          <p>Edit content here and the public website reads the latest published data directly from Supabase. Images are uploaded to Supabase Storage. You never need to edit HTML for normal updates.</p>
+
+          <h2>
+            How this CMS works
+          </h2>
+
+          <p>
+            Edit content here and the public website reads
+            the latest published data directly from Supabase.
+            Images are uploaded to Supabase Storage.
+            You never need to edit HTML for normal updates.
+          </p>
+
         </div>
+
       </section>
 
-      <section id="panel-site" class="panel">
-        <form id="siteForm" class="editor-card form-grid">
-          <div class="full"><h2>Site identity & hero</h2><p class="muted">These fields control the hero, identity card, contact area and footer.</p></div>
-          <label>Name<input name="name" required></label>
-          <label>Location<input name="location"></label>
-          <label>Hero status<input name="hero_status"></label>
-          <label>Hero title line 1<input name="hero_line_1"></label>
-          <label>Hero title line 2<input name="hero_line_2"></label>
-          <label>Hero accent line<input name="hero_line_3"></label>
-          <label class="full">Hero description<textarea name="hero_description" rows="5"></textarea></label>
-          <label>Identity label<input name="identity_label"></label>
-          <label>Identity role<input name="identity_role"></label>
-          <label>Contact heading<input name="contact_heading"></label>
-          <label>CV URL<input name="cv_url" placeholder="https://..."></label>
-          <label>Footer left<input name="footer_left"></label>
-          <label>Footer right<input name="footer_right"></label>
-          <label class="full">Hero stat cards (JSON)
-            <textarea name="hero_stats" rows="7" spellcheck="false" placeholder='[{"label":"IYMC 2025","value":"Silver Honour"}]'></textarea>
+
+
+      <!-- =====================================
+           SITE & HERO
+      ====================================== -->
+
+      <section
+        id="panel-site"
+        class="panel"
+      >
+
+        <form
+          id="siteForm"
+          class="editor-card form-grid"
+        >
+
+
+          <div class="full">
+
+            <h2>
+              Site identity & hero
+            </h2>
+
+            <p class="muted">
+              These fields control the hero,
+              identity card, contact area and footer.
+            </p>
+
+          </div>
+
+
+          <label>
+            Name
+            <input
+              name="name"
+              required
+            >
           </label>
-          <div class="full action-row"><button type="submit" class="primary">Save site settings</button></div>
+
+
+          <label>
+            Location
+            <input name="location">
+          </label>
+
+
+          <label>
+            Hero status
+            <input name="hero_status">
+          </label>
+
+
+          <label>
+            Hero title line 1
+            <input name="hero_line_1">
+          </label>
+
+
+          <label>
+            Hero title line 2
+            <input name="hero_line_2">
+          </label>
+
+
+          <label>
+            Hero accent line
+            <input name="hero_line_3">
+          </label>
+
+
+          <label class="full">
+
+            Hero description
+
+            <textarea
+              name="hero_description"
+              rows="5"
+            ></textarea>
+
+          </label>
+
+
+          <label>
+            Identity label
+            <input name="identity_label">
+          </label>
+
+
+          <label>
+            Identity role
+            <input name="identity_role">
+          </label>
+
+
+          <label>
+            Contact heading
+            <input name="contact_heading">
+          </label>
+
+
+          <label>
+
+            CV URL
+
+            <input
+              name="cv_url"
+              placeholder="https://..."
+            >
+
+          </label>
+
+
+          <label>
+            Footer left
+            <input name="footer_left">
+          </label>
+
+
+          <label>
+            Footer right
+            <input name="footer_right">
+          </label>
+
+
+          <label class="full">
+
+            Hero stat cards (JSON)
+
+            <textarea
+              name="hero_stats"
+              rows="7"
+              spellcheck="false"
+              placeholder='[{"label":"IYMC 2025","value":"Silver Honour"}]'
+            ></textarea>
+
+          </label>
+
+
+          <div class="full action-row">
+
+            <button
+              type="submit"
+              class="primary"
+            >
+              Save site settings
+            </button>
+
+          </div>
+
+
         </form>
+
       </section>
 
-      <section id="panel-sections" class="panel">
+
+
+      <!-- =====================================
+           SECTIONS
+      ====================================== -->
+
+      <section
+        id="panel-sections"
+        class="panel"
+      >
+
         <div class="panel-heading">
-          <div><h2>Page sections</h2><p class="muted">Show, hide, reorder, rename, create or delete sections.</p></div>
-          <button class="primary" data-add="sections">+ Add section</button>
+
+          <div>
+
+            <h2>
+              Page sections
+            </h2>
+
+            <p class="muted">
+              Show, hide, reorder, rename,
+              create or delete sections.
+            </p>
+
+          </div>
+
+
+          <button
+            class="primary"
+            data-add="sections"
+          >
+            + Add section
+          </button>
+
         </div>
-        <div id="sectionsList" class="records"></div>
+
+
+        <div
+          id="sectionsList"
+          class="records"
+        ></div>
+
       </section>
 
-      <section id="panel-awards" class="panel">
-        <div class="panel-heading"><div><h2>Awards</h2><p class="muted">Manage award cards, featured status, photos and certificate links.</p></div><button class="primary" data-add="awards">+ Add award</button></div>
-        <div id="awardsList" class="records card-records"></div>
+
+
+      <!-- =====================================
+           AWARDS
+      ====================================== -->
+
+      <section
+        id="panel-awards"
+        class="panel"
+      >
+
+        <div class="panel-heading">
+
+          <div>
+
+            <h2>
+              Awards
+            </h2>
+
+            <p class="muted">
+              Manage award cards, featured status,
+              photos and certificate links.
+            </p>
+
+          </div>
+
+
+          <button
+            class="primary"
+            data-add="awards"
+          >
+            + Add award
+          </button>
+
+        </div>
+
+
+        <div
+          id="awardsList"
+          class="records card-records"
+        ></div>
+
       </section>
 
-      <section id="panel-certificates" class="panel">
-        <div class="panel-heading"><div><h2>Certificate vault</h2><p class="muted">Upload, categorize, publish, edit or delete certificates.</p></div><button class="primary" data-add="certificates">+ Add certificate</button></div>
-        <div id="certificatesList" class="records card-records"></div>
+
+
+      <!-- =====================================
+           CERTIFICATES
+      ====================================== -->
+
+      <section
+        id="panel-certificates"
+        class="panel"
+      >
+
+        <div class="panel-heading">
+
+          <div>
+
+            <h2>
+              Certificate Vault
+            </h2>
+
+            <p class="muted">
+              Upload, categorize, publish,
+              edit or delete certificates.
+            </p>
+
+          </div>
+
+
+          <button
+            class="primary"
+            data-add="certificates"
+          >
+            + Add certificate
+          </button>
+
+        </div>
+
+
+        <div
+          id="certificatesList"
+          class="records card-records"
+        ></div>
+
       </section>
 
-      <section id="panel-competitions" class="panel">
-        <div class="panel-heading"><div><h2>Competitions</h2><p class="muted">Keep your international competition record current.</p></div><button class="primary" data-add="competitions">+ Add competition</button></div>
-        <div id="competitionsList" class="records"></div>
+
+
+      <!-- =====================================
+           COMPETITIONS
+      ====================================== -->
+
+      <section
+        id="panel-competitions"
+        class="panel"
+      >
+
+        <div class="panel-heading">
+
+          <div>
+
+            <h2>
+              Competitions
+            </h2>
+
+            <p class="muted">
+              Keep your international competition
+              record current.
+            </p>
+
+          </div>
+
+
+          <button
+            class="primary"
+            data-add="competitions"
+          >
+            + Add competition
+          </button>
+
+        </div>
+
+
+        <div
+          id="competitionsList"
+          class="records"
+        ></div>
+
       </section>
 
-      <section id="panel-leadership" class="panel">
-        <div class="panel-heading"><div><h2>Leadership</h2><p class="muted">Organizations, roles and descriptions.</p></div><button class="primary" data-add="leadership">+ Add leadership</button></div>
-        <div id="leadershipList" class="records"></div>
+
+
+      <!-- =====================================
+           LEADERSHIP
+      ====================================== -->
+
+      <section
+        id="panel-leadership"
+        class="panel"
+      >
+
+        <div class="panel-heading">
+
+          <div>
+
+            <h2>
+              Leadership
+            </h2>
+
+            <p class="muted">
+              Organizations, roles and descriptions.
+            </p>
+
+          </div>
+
+
+          <button
+            class="primary"
+            data-add="leadership"
+          >
+            + Add leadership
+          </button>
+
+        </div>
+
+
+        <div
+          id="leadershipList"
+          class="records"
+        ></div>
+
       </section>
 
-      <section id="panel-projects" class="panel">
-        <div class="panel-heading"><div><h2>Projects</h2><p class="muted">Projects, links, tags and images.</p></div><button class="primary" data-add="projects">+ Add project</button></div>
-        <div id="projectsList" class="records card-records"></div>
+
+
+      <!-- =====================================
+           PROJECTS
+      ====================================== -->
+
+      <section
+        id="panel-projects"
+        class="panel"
+      >
+
+        <div class="panel-heading">
+
+          <div>
+
+            <h2>
+              Projects
+            </h2>
+
+            <p class="muted">
+              Projects, links, tags and images.
+            </p>
+
+          </div>
+
+
+          <button
+            class="primary"
+            data-add="projects"
+          >
+            + Add project
+          </button>
+
+        </div>
+
+
+        <div
+          id="projectsList"
+          class="records card-records"
+        ></div>
+
       </section>
 
-      <section id="panel-research" class="panel">
-        <div class="panel-heading"><div><h2>Research</h2><p class="muted">Publication information without making the whole portfolio research-heavy.</p></div><button class="primary" data-add="research">+ Add research</button></div>
-        <div id="researchList" class="records"></div>
+
+
+      <!-- =====================================
+           RESEARCH
+      ====================================== -->
+
+      <section
+        id="panel-research"
+        class="panel"
+      >
+
+        <div class="panel-heading">
+
+          <div>
+
+            <h2>
+              Research
+            </h2>
+
+            <p class="muted">
+              Publication information without making
+              the whole portfolio research-heavy.
+            </p>
+
+          </div>
+
+
+          <button
+            class="primary"
+            data-add="research"
+          >
+            + Add research
+          </button>
+
+        </div>
+
+
+        <div
+          id="researchList"
+          class="records"
+        ></div>
+
       </section>
 
-      <section id="panel-skills" class="panel">
-        <div class="panel-heading"><div><h2>Compact toolkit</h2><p class="muted">Keep skills concise and believable.</p></div><button class="primary" data-add="skills">+ Add skill group</button></div>
-        <div id="skillsList" class="records"></div>
+
+
+      <!-- =====================================
+           SKILLS
+      ====================================== -->
+
+      <section
+        id="panel-skills"
+        class="panel"
+      >
+
+        <div class="panel-heading">
+
+          <div>
+
+            <h2>
+              Compact Toolkit
+            </h2>
+
+            <p class="muted">
+              Keep skills concise and believable.
+            </p>
+
+          </div>
+
+
+          <button
+            class="primary"
+            data-add="skills"
+          >
+            + Add skill group
+          </button>
+
+        </div>
+
+
+        <div
+          id="skillsList"
+          class="records"
+        ></div>
+
       </section>
 
-      <section id="panel-social" class="panel">
-        <div class="panel-heading"><div><h2>Social links</h2><p class="muted">Email, LinkedIn, ORCID, research archive and more.</p></div><button class="primary" data-add="social_links">+ Add link</button></div>
-        <div id="socialList" class="records"></div>
+
+
+      <!-- =====================================
+           SOCIAL LINKS
+      ====================================== -->
+
+      <section
+        id="panel-social"
+        class="panel"
+      >
+
+        <div class="panel-heading">
+
+          <div>
+
+            <h2>
+              Social Links
+            </h2>
+
+            <p class="muted">
+              Email, LinkedIn, ORCID,
+              research archive and more.
+            </p>
+
+          </div>
+
+
+          <button
+            class="primary"
+            data-add="social_links"
+          >
+            + Add link
+          </button>
+
+        </div>
+
+
+        <div
+          id="socialList"
+          class="records"
+        ></div>
+
       </section>
+
+
     </main>
+
   </div>
 
+
+
+  <!-- =====================================
+       RECORD EDITOR MODAL
+  ====================================== -->
+
   <dialog id="editorDialog">
-    <form id="recordForm" method="dialog" class="dialog-card">
+
+
+    <form
+      id="recordForm"
+      method="dialog"
+      class="dialog-card"
+    >
+
+
       <div class="dialog-head">
-        <div><p class="kicker">EDITOR</p><h2 id="dialogTitle">Edit record</h2></div>
-        <button id="dialogClose" class="icon-button" type="button">×</button>
+
+
+        <div>
+
+          <p class="kicker">
+            EDITOR
+          </p>
+
+          <h2 id="dialogTitle">
+            Edit record
+          </h2>
+
+        </div>
+
+
+        <button
+          id="dialogClose"
+          class="icon-button"
+          type="button"
+        >
+          ×
+        </button>
+
+
       </div>
-      <div id="recordFields" class="form-grid"></div>
-      <input id="recordTable" type="hidden">
-      <input id="recordId" type="hidden">
+
+
+
+      <div
+        id="recordFields"
+        class="form-grid"
+      ></div>
+
+
+      <input
+        id="recordTable"
+        type="hidden"
+      >
+
+
+      <input
+        id="recordId"
+        type="hidden"
+      >
+
+
+
       <div class="dialog-actions">
-        <button id="deleteRecordBtn" class="danger" type="button" hidden>Delete</button>
+
+
+        <button
+          id="deleteRecordBtn"
+          class="danger"
+          type="button"
+          hidden
+        >
+          Delete
+        </button>
+
+
         <span class="spacer"></span>
-        <button class="secondary" type="button" id="cancelDialogBtn">Cancel</button>
-        <button class="primary" type="submit">Save changes</button>
+
+
+        <button
+          class="secondary"
+          type="button"
+          id="cancelDialogBtn"
+        >
+          Cancel
+        </button>
+
+
+        <button
+          class="primary"
+          type="submit"
+        >
+          Save changes
+        </button>
+
+
       </div>
+
+
     </form>
+
+
   </dialog>
 
-  <div id="adminToast" class="toast" hidden></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <!-- ADMIN NOTIFICATION -->
+
+  <div
+    id="adminToast"
+    class="toast"
+    hidden
+  ></div>
+
+
+
+  <!-- =====================================
+       JAVASCRIPT
+  ====================================== -->
+
+
+  <!-- Supabase JS -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+
+  <!-- Supabase project configuration -->
+
   <script src="config.js"></script>
-  <script src="assets/admin.js"></script>
+
+
+  <!-- Admin CMS Logic -->
+
+  <script src="admin.js"></script>
+
+
 </body>
+
 </html>
