@@ -30,19 +30,39 @@ footer{padding:25px 0 45px;font-size:11px;color:#8b8f94}.footer-inner{display:fl
 .identity-card::before {
     content: "";
     position: absolute;
-    width: 75%;
-    height: 60%;
-    right: 0;
-    top: 27%;
 
-    background: url("photo.png") no-repeat center bottom;
+    width: 82%;
+    height: 65%;
+
+    right: -14%;
+    top: 22%;
+
+    background-image: url("photo.png");
+    background-repeat: no-repeat;
     background-size: contain;
+    background-position: right center;
 
-    opacity: 0.15;
-    filter: grayscale(100%);
+    opacity: 0.22;
+    filter: grayscale(100%) contrast(1.15) brightness(1.35);
 
-    z-index: 0;
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        #000 18%,
+        #000 62%,
+        transparent 96%
+    );
+
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        #000 18%,
+        #000 62%,
+        transparent 96%
+    );
+
     pointer-events: none;
+    z-index: 0;
 }
 
 .identity-card > * {
