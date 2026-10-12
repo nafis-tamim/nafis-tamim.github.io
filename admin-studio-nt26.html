@@ -1,1 +1,56 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Portfolio Studio · Private Editor</title><link rel="icon" href="/favicon.svg"><style>*{box-sizing:border-box}body{margin:0;background:#0a0f19;color:#f2f5fa;font:14px system-ui,Arial}a{color:#bfff79}button,input,textarea,select{font:inherit}button{cursor:pointer;background:#bfff79;border:0;border-radius:9px;padding:11px 15px;color:#08110a;font-weight:700}button.secondary{background:#243049;color:#e9f0fa}button.danger{background:#3e222b;color:#ffb3c0}button:disabled{opacity:.6;cursor:not-allowed}header{border-bottom:1px solid #ffffff25;padding:18px 4vw;display:flex;gap:16px;justify-content:space-between;align-items:center;flex-wrap:wrap}.brand{font-weight:900;letter-spacing:-.035em;font-size:20px}.brand em{color:#bfff79;font-style:normal}main{max-width:1460px;margin:auto;padding:25px 4vw}.notice{background:#172239;border:1px solid #ffffff25;padding:18px 22px;border-radius:12px;margin-bottom:20px;line-height:1.7}.notice strong{color:#bfff79}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.grid{display:grid;grid-template-columns:245px 1fr;gap:20px}.sidebar{background:#101929;padding:13px;border-radius:14px;align-self:start;position:sticky;top:10px}.sidebar button{width:100%;text-align:left;margin:3px 0;background:transparent;color:#b6c0d1}.sidebar button.active{background:#bfff79;color:#08110a}.panel{background:#111a2a;border:1px solid #ffffff21;border-radius:15px;padding:24px;min-height:500px}h1{font-size:32px;letter-spacing:-.05em;margin:0 0 10px}h2{font-size:22px}p,small{color:#aab7ca}label{display:block;color:#aebfd3;font-size:12px;font-weight:700;margin-bottom:13px}input,textarea,select{display:block;margin-top:7px;background:#090f1a;border:1px solid #ffffff30;color:white;border-radius:8px;padding:11px;width:100%;min-height:43px}textarea{min-height:110px;resize:vertical;line-height:1.6}input[type=color]{height:54px;padding:5px}input[type=checkbox]{width:auto;display:inline-block;min-height:auto;margin:0 8px}.two{display:grid;grid-template-columns:1fr 1fr;gap:15px}.collection{display:flex;flex-direction:column;gap:8px;margin:12px 0 26px}.collection button{text-align:left;background:#1c2b42;color:#f2f6fc;font-weight:600}.collection button.selected{outline:2px solid #bfff79}.item-editor{border-top:1px solid #ffffff29;margin-top:17px;padding-top:18px}.actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}#status{font-size:12px;color:#bfff79}#app[hidden]{display:none}.pill{padding:6px 10px;background:#20334b;border-radius:30px;color:#bfff79;font-size:11px}.modal{max-width:650px;margin:60px auto;padding:28px;border:1px solid #ffffff25;border-radius:16px;background:#111a2a}.tools{border-top:1px solid #ffffff20;padding-top:20px;margin-top:18px}@media(max-width:850px){.grid,.two{grid-template-columns:1fr}.sidebar{position:static}.sidebar{display:flex;overflow:auto}.sidebar button{white-space:nowrap;width:auto}}</style></head><body><header><div class="brand">NT <em>/</em> PORTFOLIO STUDIO</div><div class="row"><a href="/" target="_blank" rel="noopener noreferrer">↗ View site</a><span class="pill">HIDDEN EDITOR · GITHUB AUTH</span></div></header><main><section id="login" class="modal"><h1>Enter your studio.</h1><p>This editor changes the public GitHub repository directly. Create a fine-grained GitHub personal access token with <strong>Contents: Read and write</strong> for <code>nafis-tamim/nafis-tamim.github.io</code>. The token stays only in this tab's memory, is never saved to the repository and disappears when the tab closes.</p><label>GitHub fine-grained token<input id="token" type="password" autocomplete="off" placeholder="github_pat_..."></label><div class="actions"><button id="connect">Connect & load editor</button></div><small>Important: the URL is hidden from the site navigation, but not a security boundary. Access is protected by GitHub authorization, not by obscurity.</small><p id="loginerror"></p></section><section id="app" hidden><div class="notice"><strong>Full-content editor</strong> · Edit all text, metadata, navigation, theme, featured projects, notes, contact, custom sections, and image URLs. Every Publish creates a real GitHub commit and automatically updates the live site after Pages refreshes. <strong>Never paste a database password here.</strong></div><div class="row" style="justify-content:space-between;margin-bottom:20px"><strong id="commitinfo"></strong><div class="row"><button class="secondary" id="preview">Preview JSON</button><button id="save">Publish changes ↗</button><button class="secondary" id="logout">Disconnect</button></div></div><div class="grid"><aside class="sidebar" id="tabs"></aside><article class="panel"><h1 id="heading"></h1><p id="description"></p><div id="fields"></div><div id="status"></div></article></div></section></main><script src="/studio.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="theme-color" content="#102e32">
+<title>NT Studio — Private Academic Portfolio Editor</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/studio.css">
+</head>
+<body>
+<div id="app">
+  <header class="studio-header">
+    <div class="header-left"><div class="studio-logo">NT<span class="dot">•</span></div><span class="header-brand">PORTFOLIO STUDIO <small>/ CONTENT SYSTEM</small></span></div>
+    <div class="header-right"><a class="head-link" href="/" target="_blank" rel="noopener noreferrer">VIEW PUBLIC SITE ↗</a><span class="header-private">PRIVATE EDITOR</span></div>
+  </header>
+  <section id="login" class="login-page">
+    <div class="login-aside"><span class="eyebrow">NAFIS / TAMIM</span><h1>A better portfolio deserves a better editor<span>.</span></h1><p>Manage every page, section, project, image, award, research record and color from one place. No database password is ever exposed in the browser.</p>
+    <div class="login-accent"><span>CONNECTED PUBLISHING</span><strong>GitHub Pages + GitHub API</strong><p>Secure changes through a GitHub repository-scoped personal access token.</p></div></div>
+    <div class="login-box">
+      <span class="step">STEP 01 / CONNECT</span><h2>Unlock your studio.</h2>
+      <p>Generate a <b>fine-grained GitHub token</b> restricted to the <code>nafis-tamim.github.io</code> repository. Give it only the <b>Contents: Read and write</b> permission.</p>
+      <a class="instruction-link" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">CREATE A REPOSITORY-SCOPED TOKEN ↗</a>
+      <label>YOUR GITHUB TOKEN<input id="token" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_..." /></label>
+      <button id="connect" class="button-primary" type="button">CONNECT & OPEN STUDIO <span>↗</span></button>
+      <div id="login-error" class="error-message" role="status"></div>
+      <p class="security"><span>◈</span> Your token stays in this browser tab's memory only. It is never written to the portfolio, saved in storage, or sent anywhere except GitHub's API.</p>
+    </div>
+  </section>
+  <section id="dashboard" hidden>
+    <div class="dash-top"><div><span class="eyebrow">ACADEMIC PORTFOLIO / CONTROL CENTER</span><h1>Make it yours<span>.</span></h1><p>Every visible story, section, image, color and link begins here.</p></div>
+      <div class="dash-actions">
+        <button type="button" id="download" class="button-outline">BACKUP JSON ↓</button>
+        <button type="button" id="publish" class="button-primary">PUBLISH CHANGES <span>↗</span></button>
+        <button type="button" id="disconnect" class="button-quiet">DISCONNECT</button>
+      </div>
+    </div>
+    <div id="status-banner" role="status"></div>
+    <div class="dashboard-grid">
+      <aside class="studio-sidebar">
+        <div class="sidebar-heading">YOUR WORKSPACE</div>
+        <nav id="sections-nav" aria-label="Studio sections"></nav>
+        <div class="sidebar-footer"><span id="dirty-label">ALL CHANGES SAVED</span><p>Publishing updates the public GitHub Pages content. Image uploads publish immediately to the media folder.</p></div>
+      </aside>
+      <main class="studio-panel"><div class="panel-head"><div><span id="panel-kicker" class="eyebrow">CONTENT MODULE</span><h2 id="panel-title">Overview</h2><p id="panel-description"></p></div><div id="panel-count" class="count-box"></div></div>
+        <div id="editor-area"></div>
+      </main>
+    </div>
+  </section>
+</div>
+<script src="/studio.js" defer></script>
+</body>
+</html>
