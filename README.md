@@ -1,23 +1,46 @@
-# Nafis Tamim — Living Academic Portfolio
+# Nafis Tamim — Multidisciplinary Academic Portfolio (v4)
 
-This repository hosts a responsive, accessible, evidence-first academic portfolio on GitHub Pages.
+A responsive editorial portfolio with a scientific visual layer, evidence-linked achievements, design and software projects, research, writing and editable content.
 
-## Architecture
+## Live site
 
-- Static HTML/CSS/JS served by GitHub Pages.
-- Every visible item lives in `content/site.json`; no rebuild required.
-- Custom non-indexed editor: `/admin-studio-nt26.html`.
-- Editor writes back to GitHub using the GitHub Contents API with a fine-grained, Contents Read/Write personal access token provided manually in the browser. The token is never stored in code, localStorage or cookies; closing the tab removes it.
-- The editor supports text, colors, SEO, avatar and image URLs, projects, case studies, timeline, skills, notes, navigation ordering, and custom sections.
-- For direct image upload use a trusted hosted media service or GitHub upload, then paste the HTTPS URL. Direct media file upload is not implemented in the editor.
-- No MongoDB passwords or API keys are exposed in this static site. Secure MongoDB live data/API requires a separate server-side deployment, not GitHub Pages alone.
+- Website: https://nafis-tamim.github.io/
+- Private editor: https://nafis-tamim.github.io/admin-studio-nt26.html (not included in public navigation; noindexed)
+- Source: https://github.com/nafis-tamim/nafis-tamim.github.io
 
-## Setup
+## Live architecture
 
-The website requires only GitHub Pages set to **Deploy from a branch → main / (root)**.
+- GitHub Pages hosts the static site (no payments or server required).
+- Site content: \`content/site.json\`. All major text, sections, project details, achievements, links, images, colors and menus are read from this file.
+- Admin Studio writes to the **GitHub Contents API** with a fine-grained GitHub personal access token limited to this repository and \`Contents: Read and write\` permission.
+- Admin Studio does **not** store tokens in localStorage, cookies or repository files. Reload or disconnect clears token.
+- Media uploader accepts PNG, JPG, WebP, GIF, ICO and PDF up to 8MB/file. It commits uploads to \`media/\` automatically. The upload's URL is inserted into the selected field. SVG uploads intentionally blocked for security.
+- Custom favicon: update \`seo.favicon\` in studio; upload PNG/ICO or supply a trusted favicon URL.
+- Search metadata: Studio updates JSON **and** static head tags in \`index.html\` to keep social cards and search snippets synced.
+- Backups: GitHub commit history and branch \`backup/pre-redesign-2026-10-13\`.
 
-To edit, open `/admin-studio-nt26.html` and supply a GitHub fine-grained token limited to this repository with `Contents: Read and write`. Click Publish to commit the changes. The admin URL is deliberately absent from the public navigation, but security comes from GitHub authorization, not its obscurity.
+## IMPORTANT: MongoDB
 
-## Safety
+A MongoDB Atlas cluster exists in the separate project \`Nafis Academic Portfolio\`. Site content has been saved as a copy in \`academic_portfolio.site_content\` through the user's ChatGPT connector.
 
-Never include GitHub tokens, MongoDB connection strings with passwords, or private documents in publicly readable files. All awards and project claims should be evidence-based. Old site can be restored from `backup/pre-redesign-2026-10-13`.
+**The live GitHub Pages site does not connect directly to MongoDB.** Doing so from browser code would expose database credentials. Until a secure server-side integration is deployed, GitHub JSON is the source of truth; MongoDB is a separate snapshot, not a live sync target. Neither the website nor Studio ever asks for or stores a MongoDB password.
+
+## Adding media
+
+1. Open the Studio URL.
+2. Create a GitHub fine-grained token for only this repository, giving \`Contents: Read and write\`.
+3. Paste the token in Studio. It stays in this browser tab's memory.
+4. Open a relevant collection, select the entry and use **Upload image / PDF** on a media field. Gallery fields also offer upload.
+5. Edit text, URLs, captions and context. Click **Publish changes** to commit to GitHub; GitHub Pages refreshes automatically.
+6. You can also ask ChatGPT to edit this GitHub repository directly through the connected GitHub app, subject to authorization.
+
+## Credibility and evidence
+
+- ICSC 2026 Top 1 Ambassador: https://icscompetition.org/en/top-ambassadors
+- ICSC 2026 Most Participants Ambassador Award: https://icscompetition.org/en/announcement2026
+- IYMC Silver Honour and International Mother Language Institute national essay first place are included as user-provided milestones, pending a personal certificate or public verification link.
+- No claim of university admission, completed research publication or commercial impact is invented.
+
+## Accessibility
+
+Responsive, keyboard-operable detail modals, visible focus states, alt text, reduced-motion support and low-key constellation animation with optional motion off in the Studio.
