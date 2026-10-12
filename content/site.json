@@ -2,8 +2,8 @@
   "version": 4,
   "seo": {
     "title": "Nafis Tamim — Academic Portfolio | Research, Design & Achievement",
-    "description": "Nafis Tamim's academic portfolio: ICSC 2026 Top Ambassador, IYMC Silver Honour (top 5%), and TruthLens research accepted for publication by IJISRT, with projects, research and design.",
-    "keywords": "Nafis Tamim, TruthLens IJISRT26AUG102, IJISRT accepted research, LLM hallucination detection, multi-agent evidence verification, ICSC Top Ambassador, IYMC Silver Honour",
+    "description": "Nafis Tamim — ICSC 2026 Top Ambassador and Most Participants Award recipient, IYMC Silver Honour (top 5%), IJISRT-accepted TruthLens research, mathematics and creative work.",
+    "keywords": "Nafis Tamim, ICSC 2026 Most Participants Ambassador Award, ICSC Top 1 Ambassador, IYMC 2025 Silver Honour, IYMC 2026 organizer commendation, TruthLens IJISRT, academic research",
     "canonical": "https://nafis-tamim.github.io/",
     "ogImage": "",
     "favicon": "/favicon.svg"
@@ -164,23 +164,29 @@
       },
       {
         "id": "icsc-award-2026",
-        "title": "Most Participants — Ambassador Award",
+        "title": "ICSC 2026 — Ambassador Award for Most Participants",
         "institution": "International Computer Science Competition (ICSC)",
         "category": "Ambassador recognition",
         "year": "2026",
-        "summary": "Named recipient of the ICSC 2026 Most Participants Ambassador Award.",
-        "details": "ICSC's official 2026 results announcement names Nafis Tamim under the Ambassador Awards category 'Most Participants'.",
-        "result": "Official ICSC Ambassador Award",
+        "summary": "Official ICSC 2026 Ambassador Award for Most Participants, recognising outreach that encouraged student participation in computer science.",
+        "details": "The ICSC 2026 results page names Nafis Tamim as the Most Participants Ambassador Award recipient. A personal email from Program Coordinator Dr. Rami Aly, dated 23 September 2026, congratulates Nafis and provides an official soft-copy certificate link. The email also mentions physical certificate shipping arrangements; receipt of a hard-copy certificate is not independently documented. This is a competition ambassador distinction, not a Final Round participant medal.",
+        "result": "ICSC Ambassador Award — Most Participants (2026)",
         "verified": true,
         "verification": "https://icscompetition.org/en/announcement2026",
         "image": "",
-        "gallery": [],
+        "gallery": [
+          "https://icscompetition.org/c/SpecialCertificate-2026-33050a37b0128ae.pdf"
+        ],
         "tags": [
           "ICSC",
-          "Award",
-          "Outreach"
+          "International Outreach",
+          "Ambassador Award",
+          "Most Participants"
         ],
-        "featured": true
+        "featured": true,
+        "documentUrl": "https://icscompetition.org/c/SpecialCertificate-2026-33050a37b0128ae.pdf",
+        "evidenceStatus": "Award in official ICSC results; organizer email supplied; direct certificate link provided",
+        "certificateLinkSource": "Organizer email supplied by award recipient"
       },
       {
         "id": "iymc-silver",
@@ -205,6 +211,30 @@
         "certificateReviewed": true,
         "certificateDate": "23 February 2026",
         "evidenceStatus": "Personal certificate reviewed; public PDF upload pending"
+      },
+      {
+        "id": "iymc-2026-exceptional-submission",
+        "title": "Organizer Commendation — IYMC 2026 Qualification Round",
+        "institution": "International Youth Math Challenge (IYMC)",
+        "category": "Mathematical writing & presentation",
+        "year": "2026",
+        "summary": "Received a personal message from the IYMC evaluation team commending the quality, professionalism and digital formatting of the 2026 Qualification Round submission.",
+        "details": "In a message dated 12 October 2026, International Coordinator Fabian Schneider commended Nafis Tamim's solutions and the professional formatting of his submission, including the apparent use of TeX or a similar typesetting tool. The team said the submission was among those being considered for possible display on the IYMC website. The message does not confirm a prize, qualification to another round, or actual publication as a featured submission. The individual correspondence is retained privately.",
+        "result": "Personal evaluation-team commendation; website feature under consideration",
+        "verified": false,
+        "emailReviewed": true,
+        "emailDate": "12 October 2026",
+        "evidenceStatus": "Named coordinator email supplied; no public featured listing confirmed",
+        "verification": "",
+        "image": "",
+        "gallery": [],
+        "tags": [
+          "IYMC 2026",
+          "Mathematics",
+          "Academic Writing",
+          "LaTeX / TeX"
+        ],
+        "featured": false
       },
       {
         "id": "imli-national-first",
@@ -450,6 +480,16 @@
         "image": ""
       },
       {
+        "id": "iymc-2026-commendation",
+        "year": "2026",
+        "type": "Academic correspondence",
+        "title": "IYMC Qualification Round — Exceptional Submission Commendation",
+        "organization": "International Youth Math Challenge",
+        "description": "An October 2026 evaluation-team message commended the mathematical work and professionally typeset submission. Consideration for a public feature was mentioned, but no final feature decision was confirmed.",
+        "link": "",
+        "image": ""
+      },
+      {
         "id": "edu3",
         "year": "Ongoing",
         "type": "Practice",
@@ -467,9 +507,9 @@
     "intro": "A changing selection of work, writing and achievements. Update these in the studio to reflect what matters now.",
     "ids": [
       "icsc-top-2026",
+      "icsc-award-2026",
       "truthlens-researchgate",
-      "iymc-silver",
-      "imli-national-first"
+      "iymc-silver"
     ],
     "enabled": true
   },
@@ -506,6 +546,7 @@
     "mobileContact": "LET'S TALK",
     "modalLink": "VIEW DOCUMENT / PROJECT",
     "modalVerification": "OPEN OFFICIAL SOURCE",
-    "footerNote": "A living archive of evidence and imagination."
+    "footerNote": "A living archive of evidence and imagination.",
+    "achievementsEmail": "Personal organizer email reviewed"
   }
 }

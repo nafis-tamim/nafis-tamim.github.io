@@ -20,6 +20,7 @@ function tags(list){return '<div class="tags">'+arr(list).map(x=>'<span>'+esc(x)
 function verifyBadge(item){
   if(item.verified && item.verification) return '<span class="proof verified"><span class="proof-dot">✓</span> '+esc(DATA?.ui?.achievementsEvidence||"Official source available")+'</span>';
   if(item.certificateReviewed) return '<span class="proof verified"><span class="proof-dot">✓</span> Personal certificate reviewed</span>';
+  if(item.emailReviewed) return '<span class="proof"><span class="proof-dot">✉</span> '+esc(DATA?.ui?.achievementsEmail||"Personal organizer email reviewed")+'</span>';
   if(item.verification) return '<span class="proof"><span class="proof-dot">↗</span> Supporting link</span>';
   return '<span class="proof pending"><span class="proof-dot">○</span> '+esc(DATA?.ui?.achievementsPending||"Document can be requested")+'</span>';
 }
@@ -243,7 +244,8 @@ function modalContent(item){
  '</div>'+
  ((item.verified&&verify)?'<p class="modal-proof">✓ Recognition linked to an independently accessible official source.</p>':
  (item.certificateReviewed?'<p class="modal-proof">✓ A named personal certificate has been reviewed. Public certificate preview can be added through the Portfolio Studio.</p>':
- (item.kind==="achievement"&&!verify?'<p class="modal-proof">Supporting certificate or individual result link can be added through the private Portfolio Studio.</p>':"")));
+ (item.emailReviewed?'<p class="modal-proof">✉ Named organizer correspondence was provided for review. This is a commendation, not an officially announced medal or published featured submission.</p>':
+ (item.kind==="achievement"&&!verify?'<p class="modal-proof">Supporting certificate or individual result link can be added through the private Portfolio Studio.</p>':""))));
 }
 function openDetail(kind,id){
  const item=allDetails().find(x=>x.kind===kind&&x.id===id);
