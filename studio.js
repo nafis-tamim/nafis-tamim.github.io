@@ -275,7 +275,7 @@ function arrayEditor(parent,items,owner,key,group){
  if(!Array.isArray(items)){parent.append(node("p","mini-note","Collection not initialized."));return}
  const heading=node("div","array-head");heading.append(node("h3","",prettyLabel(key)));
  const plus=control("＋ ADD NEW",()=>{
-  const type=group.startsWith("about.principles")?"principles":group.includes("socials")?"socials":group.startsWith("customSections")?"customSections":activeModule;
+  const type=group.startsWith("about.principles")?"principles":group.includes("socials")?"socials":group.startsWith("customSections.items")?"items":group==="customSections"?"customSections":activeModule;
   const fresh=defaultRecord(type);
   items.push(fresh);currentItem=items.length-1;
   if(type==="customSections"){
