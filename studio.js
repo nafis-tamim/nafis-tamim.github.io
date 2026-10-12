@@ -28,6 +28,7 @@ const entries=[
  ["appearance","DESIGN SYSTEM","Colors & animations","Set every theme color and choose subtle science animations and motion effects.","appearance"],
  ["seo","SEARCH PRESENCE","SEO & favicon","Control page title, description, keywords, social image and browser tab icon.","seo"],
  ["customSections","FLEXIBLE CONTENT","Custom sections","Create completely new sections with their own heading, description and cards.","customSections"],
+ ["ui","SITE LANGUAGE","Labels & microcopy","All small labels, button captions, status text and non-editorial words.","ui"],
  ["advanced","ALL SITE CONTENT","Advanced JSON editor","Edit or add any text, property, array, label, menu or entire content block.","advanced"]
 ];
 const prettyLabel=x=>text(x).replace(/([a-z])([A-Z])/g,"$1 $2").replace(/[_-]/g," ").replace(/\b\w/g,c=>c.toUpperCase());

@@ -18,9 +18,9 @@ function section(id,inner,extra=""){return '<section id="'+esc(safeId(id))+'" cl
 function image(src,alt="",cls="",fallback=""){return src?'<img class="'+esc(cls)+'" src="'+esc(url(src))+'" alt="'+esc(alt)+'" loading="lazy" decoding="async" onerror="this.style.display=\'none\';this.parentElement.classList.add(\'image-failed\')">':fallback}
 function tags(list){return '<div class="tags">'+arr(list).map(x=>'<span>'+esc(x)+'</span>').join("")+'</div>'}
 function verifyBadge(item){
-  if(item.verified && item.verification) return '<span class="proof verified"><span class="proof-dot">✓</span> Official source available</span>';
+  if(item.verified && item.verification) return '<span class="proof verified"><span class="proof-dot">✓</span> '+esc(DATA?.ui?.achievementsEvidence||"Official source available")+'</span>';
   if(item.verification) return '<span class="proof"><span class="proof-dot">↗</span> Supporting link</span>';
-  return '<span class="proof pending"><span class="proof-dot">○</span> Document can be requested</span>';
+  return '<span class="proof pending"><span class="proof-dot">○</span> '+esc(DATA?.ui?.achievementsPending||"Document can be requested")+'</span>';
 }
 const addName=(data,id)=>{if(!data)return null;return {id,kind:data.kind||"record",...data}};
 function allDetails(){
@@ -46,7 +46,7 @@ function hero(d){
       '<h1 class="reveal"><span>'+esc(h.firstLine)+'</span><em>'+esc(h.secondLine)+'</em></h1>'+
       '<p class="hero-intro reveal">'+esc(h.intro)+'</p>'+
       '<div class="hero-actions reveal"><a href="#'+esc(safeId(h.primaryTarget||"projects"))+'" class="btn bright">'+esc(h.primaryLabel||"Explore projects")+'<span>↗</span></a><a href="#'+esc(safeId(h.secondaryTarget||"achievements"))+'" class="text-btn">'+esc(h.secondaryLabel||"Explore honours")+'<span>↗</span></a></div>'+
-      '<a class="hero-proof reveal" href="'+esc(url(h.verifiedUrl))+'" target="_blank" rel="noopener noreferrer"><span class="proof-symbol">✦</span><span class="proof-copy"><small>INDEPENDENTLY LISTED</small><b>'+esc(h.verifiedTag)+'</b></span><span class="proof-arrow">↗</span></a>'+
+      '<a class="hero-proof reveal" href="'+esc(url(h.verifiedUrl))+'" target="_blank" rel="noopener noreferrer"><span class="proof-symbol">✦</span><span class="proof-copy"><small>'+esc(d.ui?.heroEvidenceOverline||"INDEPENDENTLY LISTED")+'</small><b>'+esc(h.verifiedTag)+'</b></span><span class="proof-arrow">↗</span></a>'+
      '</div>'+
      '<div class="hero-visual reveal">'+
        '<div class="portrait-frame"><div class="portrait-sheen" aria-hidden="true"></div><div class="portrait-inner"><div class="portrait-fallback">'+esc(i.initials||"NT")+'</div>'+image(i.portrait,i.portraitAlt||i.name,"portrait-photo")+'</div>'+
@@ -56,18 +56,36 @@ function hero(d){
        '<div class="hero-research-label"><span class="crosshair">⌖</span><div><small>'+esc(h.stageLabel)+'</small><strong>'+esc(h.stageText)+'</strong></div></div>'+
      '</div>'+
     '</div>'+
-    '<div class="hero-baseline meta"><span>'+esc(h.smallCaption)+'</span><span>SCROLL TO INVESTIGATE ↓</span></div>'+
+    '<div class="hero-baseline meta"><span>'+esc(h.smallCaption)+'</span><span>'+esc(d.ui?.heroScroll||"SCROLL TO INVESTIGATE ↓")+'</span></div>'+
   '</div></section>'
 }
 function featureStrip(d){
  const h=d.hero||{};
  return '<section class="proof-strip"><div class="wrap proof-inner">'+
-   '<div class="proof-identity"><span class="mini-kicker">RECOGNITION / 2026</span><h2>'+esc(h.featureTitle||"#01")+'</h2><span>'+esc(h.featureSubtitle)+'</span></div>'+
+   '<div class="proof-identity"><span class="mini-kicker">'+esc(d.ui?.proofStripOverline||"RECOGNITION / 2026")+'</span><h2>'+esc(h.featureTitle||"#01")+'</h2><span>'+esc(h.featureSubtitle)+'</span></div>'+
    '<div class="proof-divider"></div>'+
-   '<div class="proof-message"><span class="mini-kicker">A PORTFOLIO OF MORE THAN ONE SUBJECT</span><p>Leadership. Mathematics. Research.<br>Design. Writing. Technology.</p></div>'+
+   '<div class="proof-message"><span class="mini-kicker">'+esc(d.ui?.disciplinesOverline||"MORE THAN ONE DISCIPLINE")+'</span><p>'+esc(d.ui?.disciplines||"Leadership. Mathematics. Research. Design. Writing. Technology.").replaceAll("\n","<br>")+'</p></div>'+
    '<a class="outline-circle" href="'+esc(url(h.featureUrl))+'" target="_blank" rel="noopener noreferrer" aria-label="View ICSC official source">↗</a>'+
   '</div></section>'
 }
+
+function spotlight(d){
+ const h=d.highlights||{};
+ if(h.enabled===false)return "";
+ const all=allDetails(),selected=arr(h.ids).map(id=>all.find(x=>x.id===id)).filter(Boolean);
+ if(!selected.length)return "";
+ return '<section class="spotlight-section" id="selected"><div class="wrap">'+
+  label(d.ui?.highlightOverline||"CURATED HIGHLIGHTS","✦")+
+  '<div class="spotlight-header"><h2 class="section-heading reveal">'+esc(d.ui?.highlightTitle||"A closer look.")+'</h2><p class="section-aside reveal">'+esc(d.ui?.highlightIntro||"An editor-selected index of work and evidence.")+'</p></div>'+
+  '<div class="spotlight-grid">'+selected.map((x,i)=>
+    '<article class="spotlight-card reveal" data-open="'+esc(x.kind)+'" data-id="'+esc(x.id)+'" role="button" tabindex="0" aria-label="Open '+esc(x.title)+'">'+
+      '<span class="spotlight-number">0'+(i+1)+' / '+esc(x.kind.toUpperCase())+'</span>'+
+      (x.image?'<div class="spotlight-pic">'+image(x.image,x.title,"")+'</div>':'<div class="spotlight-monogram">'+(x.kind==="achievement"?"✳":x.kind==="research"?"∑":"↗")+'</div>')+
+      '<div class="spotlight-copy"><h3>'+esc(x.title)+'</h3><p>'+esc(trunc(x.summary||x.abstract||x.description,125))+'</p></div>'+
+      '<span class="spotlight-arrow">'+esc(d.ui?.highlightOpen||"EXPLORE DETAILS")+' ↗</span>'+
+    '</article>').join("")+'</div></div></section>'
+}
+
 function about(d){
  const a=d.about||{};
  return section("about",label(a.eyebrow,"01")+
@@ -82,7 +100,7 @@ function achievementCard(x,index,featured=false){
   '<div class="award-art '+(hasImage?"has-img":"")+'">'+(hasImage?image(x.image,x.title,"award-img"):'<div class="award-glyph" aria-hidden="true">'+(x.id?.includes("icsc")?"✳":x.id?.includes("iymc")?"∑":"✎")+'</div>')+
   '<div class="award-art-top"><span>'+esc(x.year||"HONOUR")+'</span><span>'+esc(x.category)+'</span></div>'+
   '<div class="award-art-index">'+String(index+1).padStart(2,"0")+'</div></div>'+
-  '<div class="award-content"><span class="micro">'+esc(x.institution)+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.summary)+'</p><div class="award-bottom">'+verifyBadge(x)+'<span class="card-open">VIEW DETAILS ↗</span></div></div>'+
+  '<div class="award-content"><span class="micro">'+esc(x.institution)+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.summary)+'</p><div class="award-bottom">'+verifyBadge(x)+'<span class="card-open">'+esc(DATA?.ui?.sourceLabel||"VIEW DETAILS")+' ↗</span></div></div>'+
  '</article>'
 }
 function achievements(d){
@@ -90,14 +108,14 @@ function achievements(d){
  return section("achievements",label(a.eyebrow,"02")+
  '<div class="section-split"><h2 class="section-heading reveal">'+esc(a.heading)+'</h2><p class="section-aside reveal">'+esc(a.intro)+'</p></div>'+
  '<div class="award-grid">'+items.map((x,i)=>achievementCard(x,i,i===0)).join("")+'</div>'+
- '<div class="section-footnote"><span>↗</span> Official-source badges identify evidence links; other entries can be supported by uploaded certificates.</div>');
+ '<div class="section-footnote"><span>↗</span> '+esc(d.ui?.achievementsNote||"Official-source badges identify evidence links; other entries can be supported by uploaded certificates.")+'</div>');
 }
 function projectCard(p,i){
  return '<article class="project-card reveal" tabindex="0" role="button" data-open="project" data-id="'+esc(p.id)+'" aria-label="Open '+esc(p.title)+' project details">'+
   '<div class="project-image">'+(p.image?image(p.image,p.title,"project-cover"):'<div class="project-abstraction abstraction-'+(i%4)+'"><span class="project-geometry"></span><span class="project-geometry secondary-geom"></span></div>')+
   '<span class="project-serial">'+String(i+1).padStart(2,"0")+' / '+esc(p.category)+'</span><span class="project-status">'+esc(p.status)+'</span></div>'+
   '<div class="project-meta"><span>'+esc(p.subtitle)+'</span><span>'+esc(p.year)+'</span></div>'+
-  '<div class="project-body"><h3>'+esc(p.title)+'</h3><p>'+esc(p.summary)+'</p>'+tags(p.tags)+'<div class="project-more"><span>VIEW MORE</span><b>↗</b></div></div>'+
+  '<div class="project-body"><h3>'+esc(p.title)+'</h3><p>'+esc(p.summary)+'</p>'+tags(p.tags)+'<div class="project-more"><span>'+esc(DATA?.ui?.projectsDetails||"VIEW MORE")+'</span><b>↗</b></div></div>'+
  '</article>'
 }
 function projects(d){
@@ -109,7 +127,7 @@ function projects(d){
  '<div class="section-split"><h2 class="section-heading reveal">'+esc(p.heading)+'</h2><p class="section-aside reveal">'+esc(p.intro)+'</p></div>'+
  '<div class="filters" role="group" aria-label="Filter project categories">'+cats.map(cat=>'<button type="button" class="filter '+(filter===cat?"is-active":"")+'" data-filter="'+esc(cat)+'">'+esc(cat)+'</button>').join("")+'</div>'+
  '<div class="projects-grid">'+shown.map((x,i)=>projectCard(x,i)).join("")+'</div>'+
- (selected.length>shown.length?'<button class="view-more" type="button" id="more-projects">VIEW MORE PROJECTS <span>＋</span></button>':'')+
+ (selected.length>shown.length?'<button class="view-more" type="button" id="more-projects">'+esc(d.ui?.projectsMore||"VIEW MORE PROJECTS")+' <span>＋</span></button>':'')+
  (!selected.length?'<div class="empty-state">Nothing published in this category yet.</div>':'')
  );
 }
@@ -120,7 +138,7 @@ function researchCard(p,index){
 function research(d){
  const a=d.research||{},items=arr(a.items);
  return section("research",label(a.eyebrow,"04")+
- '<div class="research-head"><div><span class="micro">RESEARCH JOURNAL / WORKING ARCHIVE</span><h2 class="section-heading reveal">'+esc(a.heading)+'</h2></div><div class="research-note reveal"><div class="notation" aria-hidden="true">∂<span>ƒ</span><sup>∞</sup></div><p>'+esc(a.intro)+'</p></div></div>'+
+ '<div class="research-head"><div><span class="micro">'+esc(d.ui?.researchJournal||"RESEARCH JOURNAL / WORKING ARCHIVE")+'</span><h2 class="section-heading reveal">'+esc(a.heading)+'</h2></div><div class="research-note reveal"><div class="notation" aria-hidden="true">∂<span>ƒ</span><sup>∞</sup></div><p>'+esc(a.intro)+'</p></div></div>'+
  (items.length?'<div class="research-list">'+items.map(researchCard).join("")+'</div>':
  '<div class="research-empty"><div class="notation" aria-hidden="true">∑ <span>?</span></div><div><h3>'+esc(a.emptyTitle)+'</h3><p>'+esc(a.emptyBody)+'</p></div><span>ONGOING / ARCHIVE</span></div>'),
  "research-section");
@@ -190,11 +208,11 @@ function render(){
  const links=nav.filter(x=>x.id!=="contact").map(x=>'<a class="nav-item" href="#'+esc(safeId(x.id))+'">'+esc(x.label)+'</a>').join("");
  $('#app').innerHTML='<div class="site">'+
  '<header class="site-header"><div class="wrap nav-wrap">'+
- '<a href="#top" class="brand" aria-label="Nafis Tamim, home"><span class="brand-mark">'+esc(d.identity?.initials||"NT")+'</span><span class="brand-name">'+esc(d.identity?.name)+'</span></a>'+
+ '<a href="#top" class="brand" aria-label="Nafis Tamim, home"><span class="brand-mark">'+esc(d.identity?.initials||"NT")+(d.identity?.portrait?'<img src="'+esc(url(d.identity.portrait))+'" alt="" loading="eager" onerror="this.remove()">':"")+'</span><span class="brand-name">'+esc(d.identity?.name)+'</span></a>'+
  '<nav class="site-nav" id="site-nav" aria-label="Main navigation">'+links+'</nav>'+
- '<div class="nav-actions"><a class="nav-contact" href="#contact">LET’S TALK <span>↗</span></a><button id="menu-toggle" class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button></div>'+
+ '<div class="nav-actions"><a class="nav-contact" href="#contact">'+esc(d.ui?.mobileContact||"LET’S TALK")+' <span>↗</span></a><button id="menu-toggle" class="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-nav"><span></span><span></span></button></div>'+
  '</div><nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">'+nav.map(x=>'<a href="#'+esc(safeId(x.id))+'">'+esc(x.label)+'</a>').join("")+'</nav></header>'+
- '<main>'+hero(d)+featureStrip(d)+sections+'</main>'+
+ '<main>'+hero(d)+featureStrip(d)+spotlight(d)+sections+'</main>'+
  '<div id="detail-modal" class="modal" hidden role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-backdrop" data-close="1"></div><div class="modal-panel" tabindex="-1"><button class="modal-close" type="button" data-close="1" aria-label="Close details">✕</button><div id="modal-body"></div></div></div>'+
  '</div>';
  bind(); reveal(); startScienceCanvas(d.appearance||{});
@@ -218,8 +236,8 @@ function modalContent(item){
  gallery+
  '<div class="modal-sections">'+items.map(x=>'<section><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p></section>').join("")+'</div>'+
  tags(item.tags)+
- '<div class="modal-actions">'+(verify?btnLink("OPEN OFFICIAL SOURCE",verify,"btn dark",'target="_blank" rel="noopener noreferrer"'):"")+
- (direct?btnLink("VIEW PROJECT / DOCUMENT",direct,"btn outline",'target="_blank" rel="noopener noreferrer"'):"")+
+ '<div class="modal-actions">'+(verify?btnLink(DATA?.ui?.modalVerification||"OPEN OFFICIAL SOURCE",verify,"btn dark",'target="_blank" rel="noopener noreferrer"'):"")+
+ (direct?btnLink(DATA?.ui?.modalLink||"VIEW PROJECT / DOCUMENT",direct,"btn outline",'target="_blank" rel="noopener noreferrer"'):"")+
  '</div>'+
  ((item.verified&&verify)?'<p class="modal-proof">✓ Recognition linked to an independently accessible official source.</p>':
  (item.kind==="achievement"&&!verify?'<p class="modal-proof">Supporting certificate or individual result link can be added through the private Portfolio Studio.</p>':""));

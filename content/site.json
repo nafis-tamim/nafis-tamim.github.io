@@ -430,7 +430,8 @@
       "icsc-top-2026",
       "graphlair",
       "iymc-silver"
-    ]
+    ],
+    "enabled": true
   },
   "contact": {
     "eyebrow": "08 — LET'S TALK",
@@ -444,5 +445,27 @@
     "credit": "Designed around curiosity, evidence and change."
   },
   "customSections": [],
-  "lastEditedLabel": "LAST CURATED / OCT 2026"
+  "lastEditedLabel": "LAST CURATED / OCT 2026",
+  "ui": {
+    "proofStripOverline": "RECOGNITION / 2026",
+    "disciplinesOverline": "MORE THAN ONE DISCIPLINE",
+    "disciplines": "Leadership. Mathematics. Research.\nDesign. Writing. Technology.",
+    "heroEvidenceOverline": "INDEPENDENTLY LISTED",
+    "heroScroll": "SCROLL TO INVESTIGATE ↓",
+    "achievementsNote": "Official-source badges identify independently documented recognition. Other entries can be supported by uploaded certificates.",
+    "projectsMore": "VIEW MORE PROJECTS",
+    "projectsDetails": "VIEW MORE",
+    "sourceLabel": "VIEW DETAILS",
+    "researchJournal": "RESEARCH JOURNAL / WORKING ARCHIVE",
+    "achievementsEvidence": "Official source available",
+    "achievementsPending": "Documentation available on request",
+    "highlightOverline": "THE SELECTED INDEX",
+    "highlightTitle": "A closer look at the work.",
+    "highlightIntro": "A hand-picked selection of academic achievements, creative projects and ideas. Update it whenever the story changes.",
+    "highlightOpen": "EXPLORE DETAILS",
+    "mobileContact": "LET'S TALK",
+    "modalLink": "VIEW DOCUMENT / PROJECT",
+    "modalVerification": "OPEN OFFICIAL SOURCE",
+    "footerNote": "A living archive of evidence and imagination."
+  }
 }
