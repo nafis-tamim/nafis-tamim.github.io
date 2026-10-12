@@ -393,3 +393,7 @@ img{max-width:100%}
 .brand-mark{position:relative}
 .brand-mark img{position:absolute;inset:0;object-fit:cover}
 @media(max-width:800px){.spotlight-section{padding:80px 0}.spotlight-header{grid-template-columns:1fr}.spotlight-grid{grid-template-columns:1fr}.spotlight-card{min-height:265px}}
+
+/* Evidence-aware research acceptance badges */
+.research-status{display:inline-flex;margin:12px 0 3px;border:1px solid #bfff7770;color:var(--accent);padding:7px 11px;font:10px var(--mono);letter-spacing:.025em;max-width:100%;line-height:1.55}
+.modal-sections section:first-child h3{color:var(--teal)}

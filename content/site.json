@@ -2,8 +2,8 @@
   "version": 4,
   "seo": {
     "title": "Nafis Tamim — Academic Portfolio | Research, Design & Achievement",
-    "description": "Academic portfolio of Nafis Tamim: ICSC 2026 Top Ambassador, IYMC 2025 Silver Honour (top 5%), national essay recognition, TruthLens research record, design and projects.",
-    "keywords": "Nafis Tamim, ICSC Top Ambassador, IYMC Silver Honour Top 5 percent 2025, International Mother Language Institute, TruthLens, multi-agent LLM hallucination detection, research portfolio, graphic design",
+    "description": "Nafis Tamim's academic portfolio: ICSC 2026 Top Ambassador, IYMC Silver Honour (top 5%), and TruthLens research accepted for publication by IJISRT, with projects, research and design.",
+    "keywords": "Nafis Tamim, TruthLens IJISRT26AUG102, IJISRT accepted research, LLM hallucination detection, multi-agent evidence verification, ICSC Top Ambassador, IYMC Silver Honour",
     "canonical": "https://nafis-tamim.github.io/",
     "ogImage": "",
     "favicon": "/favicon.svg"
@@ -340,34 +340,42 @@
   },
   "research": {
     "eyebrow": "04 — RESEARCH & INQUIRY",
-    "heading": "Questions worth testing.",
-    "intro": "Independent research and technical inquiry, presented with research questions, methods and source links. Publication status is identified rather than assumed.",
+    "heading": "Research, reviewed and in progress.",
+    "intro": "Independent research with clearly identified editorial status, research methods, and evidence. TruthLens has documentation of editorial acceptance; final journal publication is distinguished from acceptance.",
     "emptyTitle": "Research archive in preparation",
     "emptyBody": "Current research manuscripts and supporting documents will be added here. Research interests do not imply published papers.",
     "items": [
       {
         "id": "truthlens-researchgate",
         "title": "TruthLens: An Explainable Multi-Agent Framework for Hallucination Detection through Evidence-Based Verification in Large Language Models",
-        "field": "Artificial Intelligence · LLM Reliability",
-        "year": "",
-        "abstract": "A research manuscript on explainable multi-agent approaches to detecting hallucinations in large language model outputs through evidence-based verification. The title and ResearchGate URL were provided by Nafis Tamim; detailed methods, author list and peer-review status have not been independently inspected.",
-        "question": "How can multiple agents collect and evaluate evidence to identify potentially hallucinated claims made by language models?",
-        "method": "Research record supplied via ResearchGate; the complete manuscript should be consulted for its methodology and experimental design.",
-        "result": "ResearchGate publication link supplied. No independent claim is made here about peer review, indexing, journal acceptance or empirical performance.",
-        "publication": "ResearchGate record (authorship and publication status not independently verified)",
-        "details": "The linked ResearchGate record is presented as a research portfolio entry based on information supplied by Nafis Tamim. It has not been independently verified as a peer-reviewed journal or conference paper.",
+        "field": "Explainable Artificial Intelligence · LLM Reliability",
+        "year": "2026",
+        "abstract": "TruthLens proposes a five-agent framework for detecting potentially hallucinated claims in large language model outputs through evidence retrieval, claim-level verification and explainable reasoning. The provided IJISRT reviewer report describes an auditable verification pipeline and evaluation considerations.",
+        "question": "Can claim-level, evidence-grounded verification make LLM hallucination detection more transparent and interpretable?",
+        "method": "The reviewer report describes five cooperating agents: Claim Extraction, Evidence Retrieval, Verification, Hallucination Assessment, and Explanation. It outlines evaluation using TruthfulQA, HaluEval, FEVER and HotpotQA, with attention to detection accuracy, evidence quality, explainability and computational overhead.",
+        "result": "The supplied IJISRT reviewer report records Stage 1: Accepted and Stage 2: Accepted. An editor acceptance email dated 4 August 2026 states acceptance for publication subject to completing registration. Final public journal publication and paper-specific DOI have not been independently located.",
+        "publication": "International Journal of Innovative Science and Research Technology (IJISRT), planned Volume 11, Issue 8 (August 2026), subject to registration and final publication procedures.",
+        "details": "TruthLens addresses hallucination detection in large language models through explainable, evidence-based multi-agent verification. The provided IJISRT four-page reviewer report describes supported, contradicted and unverifiable claim classification, confidence assessments and human-readable explanations. It notes limitations including computational latency, dependence on external evidence, threshold sensitivity, and multilingual challenges. The editor decision on page 4 is to accept the paper; the email states that publication follows completion of registration. Acceptance is distinct from confirmation of final journal publication.",
         "verification": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models",
         "documentUrl": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models",
         "image": "",
         "gallery": [],
         "tags": [
+          "IJISRT Acceptance",
           "Explainable AI",
           "Multi-Agent Systems",
           "Hallucination Detection",
-          "Evidence Verification"
+          "2026"
         ],
         "featured": true,
-        "status": "Research record linked"
+        "status": "Accepted for Publication",
+        "paperId": "IJISRT26AUG102",
+        "journal": "International Journal of Innovative Science and Research Technology (IJISRT)",
+        "acceptanceNotification": "4 August 2026",
+        "reviewStage1": "Accepted",
+        "reviewStage2": "Accepted",
+        "reviewEvidence": "Acceptance email and a 4-page IJISRT reviewer report were provided and reviewed. These are private supporting documents, not publicly hosted.",
+        "evidenceStatus": "Acceptance documented; journal publication/DOI not independently confirmed"
       }
     ]
   },
@@ -459,8 +467,8 @@
     "intro": "A changing selection of work, writing and achievements. Update these in the studio to reflect what matters now.",
     "ids": [
       "icsc-top-2026",
-      "iymc-silver",
       "truthlens-researchgate",
+      "iymc-silver",
       "imli-national-first"
     ],
     "enabled": true

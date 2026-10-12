@@ -134,7 +134,7 @@ function projects(d){
 }
 function researchCard(p,index){
  return '<article class="research-record reveal" role="button" tabindex="0" data-open="research" data-id="'+esc(p.id)+'" aria-label="View research '+esc(p.title)+'">'+
- '<span class="research-number">R / '+String(index+1).padStart(2,"0")+'</span><div><span class="micro">'+esc(p.field||"RESEARCH")+' / '+esc(p.year||"ONGOING")+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.abstract||p.summary)+'</p></div><span class="research-arrow">↗</span></article>';
+ '<span class="research-number">R / '+String(index+1).padStart(2,"0")+'</span><div><span class="micro">'+esc(p.field||"RESEARCH")+' / '+esc(p.year||"ONGOING")+'</span>'+(p.status?'<span class="research-status">'+esc(p.status)+(p.paperId?' · '+esc(p.paperId):"")+'</span>':"")+'<h3>'+esc(p.title)+'</h3><p>'+esc(p.abstract||p.summary)+'</p></div><span class="research-arrow">↗</span></article>';
 }
 function research(d){
  const a=d.research||{},items=arr(a.items);
@@ -222,6 +222,7 @@ function modalContent(item){
  const files=[item.image,...arr(item.gallery)].filter(Boolean);
  const gallery=files.length?'<div class="modal-gallery">'+files.map(f=>'<a href="'+esc(url(f))+'" target="_blank" rel="noopener noreferrer">'+(/\.(pdf)(\?|$)/i.test(f)?'<div class="pdf-tile">PDF DOCUMENT ↗</div>':image(f,item.title,"modal-img"))+'</a>').join("")+'</div>':"";
  const items=[
+ ...(item.kind==="research"?[["Editorial status",item.status],["Journal / publication plan",item.publication],["Paper ID",item.paperId],["Acceptance evidence",item.reviewEvidence],["Verification status",item.evidenceStatus]]:[]),
  ["Overview",item.summary||item.description||item.abstract],
  ["Question / Challenge",item.challenge||item.question],
  ["Method / Process",item.process||item.method],
