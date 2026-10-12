@@ -1,218 +1,448 @@
 {
-  "meta": {
-    "title": "Nafis Tamim — Student / Builder / Systems Thinker",
-    "description": "Nafis Tamim's academic portfolio: a living record of software experiments, engineering curiosity, design systems and verified work.",
-    "favicon": "favicon.svg",
-    "keywords": "Nafis Tamim, academic portfolio, engineering, computing, design, Bangladesh"
+  "version": 4,
+  "seo": {
+    "title": "Nafis Tamim — Academic Portfolio | Research, Design & Achievement",
+    "description": "The academic and creative portfolio of Nafis Tamim, featuring verified ICSC 2026 ambassador recognition, mathematics honours, research, visual design and selected projects.",
+    "keywords": "Nafis Tamim, ICSC top ambassador 2026, academic portfolio, research, mathematics, graphic design, Bangladesh",
+    "canonical": "https://nafis-tamim.github.io/",
+    "ogImage": "",
+    "favicon": "/favicon.svg"
   },
-  "theme": {
-    "bg": "#080c15",
-    "panel": "#141b2b",
-    "text": "#eff4fb",
-    "muted": "#a1adbf",
-    "accent": "#bfff79",
-    "accent2": "#91a8ff"
+  "appearance": {
+    "background": "#f6f5f0",
+    "paper": "#ffffff",
+    "ink": "#162b32",
+    "inkSoft": "#5b6e73",
+    "deep": "#102e32",
+    "accent": "#bbf079",
+    "teal": "#116d65",
+    "gold": "#bd9267",
+    "border": "#d9dfd9",
+    "animation": "constellation",
+    "motion": true,
+    "hoverEffects": true,
+    "sectionReveals": true,
+    "showLiveDate": false
   },
   "identity": {
     "name": "Nafis Tamim",
-    "monogram": "NT",
-    "eyebrow": "STUDENT / MAKER / CURIOUS MIND",
-    "location": "Bangladesh",
-    "status": "Learning, building, documenting",
-    "avatar": "",
+    "initials": "NT",
+    "descriptor": "A student of science, ideas and possibility",
+    "identityLine": "STUDENT · RESEARCH · DESIGN · TECHNOLOGY",
+    "institution": "Dhaka City College",
+    "location": "Dhaka, Bangladesh",
+    "availability": "Open to thoughtful projects, competitions and collaboration",
+    "portrait": "https://icscompetition.org/api/data/ambassadors/cropped_1776877938.6366_picture.png",
+    "portraitAlt": "Nafis Tamim — ICSC ambassador portrait",
+    "portraitCaption": "THE PERSON BEHIND THE WORK",
+    "email": "ntamim@amb.icscompetition.org",
     "socials": [
       {
         "label": "GitHub",
         "url": "https://github.com/nafis-tamim"
       },
       {
-        "label": "GRAPHLAIR",
+        "label": "ICSC profile",
+        "url": "https://icscompetition.org/en/ntamim"
+      },
+      {
+        "label": "Graphlair",
         "url": "https://github.com/nafis-tamim/GRAPHLAIR"
       }
     ]
   },
-  "hero": {
-    "overline": "INDEPENDENT ACADEMIC PORTFOLIO / 2026",
-    "line1": "Thinking beyond",
-    "line2": "the syllabus.",
-    "body": "I explore the intersection of software, design and difficult questions. I use projects to test ideas, develop technical judgment and document what actually works.",
-    "button": "Explore selected work",
-    "note": "AN OPEN RECORD OF CURIOSITY → EXPERIMENTS → EVIDENCE"
-  },
-  "sections": [
+  "navigation": [
     {
       "id": "about",
       "label": "Perspective",
-      "visible": true,
-      "kind": "about"
+      "visible": true
+    },
+    {
+      "id": "achievements",
+      "label": "Achievements",
+      "visible": true
     },
     {
       "id": "projects",
-      "label": "Selected work",
-      "visible": true,
-      "kind": "projects"
+      "label": "Projects",
+      "visible": true
     },
     {
-      "id": "journey",
-      "label": "Learning log",
-      "visible": true,
-      "kind": "journey"
+      "id": "research",
+      "label": "Research",
+      "visible": true
     },
     {
-      "id": "skills",
-      "label": "Current toolkit",
-      "visible": true,
-      "kind": "skills"
+      "id": "creative",
+      "label": "Creative work",
+      "visible": true
     },
     {
       "id": "writing",
-      "label": "Field notes",
-      "visible": true,
-      "kind": "writing"
+      "label": "Writing",
+      "visible": true
+    },
+    {
+      "id": "academics",
+      "label": "Academic path",
+      "visible": true
     },
     {
       "id": "contact",
-      "label": "Next conversation",
-      "visible": true,
-      "kind": "contact"
+      "label": "Contact",
+      "visible": true
     }
   ],
+  "hero": {
+    "overline": "NAFIS TAMIM / A LIVING PORTFOLIO",
+    "firstLine": "Curious by nature.",
+    "secondLine": "Deliberate by design.",
+    "intro": "I move between mathematics, research, creative design, computing and writing—following questions wherever they lead. This is a living record of the work, the thinking and the evidence.",
+    "primaryLabel": "Explore my work",
+    "primaryTarget": "projects",
+    "secondaryLabel": "View achievements",
+    "secondaryTarget": "achievements",
+    "portraitSideLabel": "ACADEMIC • CREATIVE • EXPERIMENTAL",
+    "stageLabel": "CURRENTLY EXPLORING",
+    "stageText": "Problems worth solving, ideas worth testing.",
+    "verifiedTag": "ICSC 2026 · TOP-RANKED AMBASSADOR",
+    "verifiedUrl": "https://icscompetition.org/en/top-ambassadors",
+    "smallCaption": "Proof over promises. Curiosity over categories.",
+    "featuredCategory": "Recognition",
+    "featureTitle": "#01",
+    "featureSubtitle": "ICSC 2026 Ambassador Leaderboard",
+    "featureUrl": "https://icscompetition.org/en/top-ambassadors"
+  },
   "about": {
-    "kicker": "01 / THE APPROACH",
-    "title": "Make the thinking visible.",
-    "body": "A project is more than a screenshot. I care about defining the right problem, trying approaches, understanding constraints and honestly documenting the outcome.",
-    "quote": "The goal is not to look finished. The goal is to keep getting better.",
-    "points": [
+    "eyebrow": "01 — PERSPECTIVE",
+    "heading": "A mind that doesn't stay in one discipline.",
+    "lead": "I believe ideas become stronger when science meets storytelling, logic meets imagination, and careful research meets real execution.",
+    "body": "My work includes independent technical experiments, graphic and brand design, academic writing, mathematics challenges and participation in international student initiatives. I value the process behind an outcome as much as the outcome itself.",
+    "quote": "The most interesting answers often begin with a better question.",
+    "principles": [
       {
-        "title": "Question first",
-        "body": "Understand the problem before choosing the tool."
+        "title": "Ask with rigor",
+        "body": "Investigate a problem before jumping to the solution.",
+        "number": "01"
       },
       {
-        "title": "Build to learn",
-        "body": "Use experiments to turn uncertainty into insight."
+        "title": "Make with care",
+        "body": "Connect technical precision with thoughtful visual expression.",
+        "number": "02"
       },
       {
-        "title": "Evidence matters",
-        "body": "Show decisions, artifacts and real outcomes."
+        "title": "Show the evidence",
+        "body": "Document outcomes with links, certificates and artifacts.",
+        "number": "03"
       }
     ]
   },
-  "projects": [
-    {
-      "id": "p1",
-      "title": "MonerBondhu AI",
-      "category": "AI / SOFTWARE EXPLORATION",
-      "year": "2026",
-      "summary": "An evolving public repository exploring the shape of an AI-oriented digital product.",
-      "process": "An opportunity to investigate product requirements, interaction design and incremental testing.",
-      "outcome": "Public repository available; no performance claims made.",
-      "status": "Exploration",
-      "tags": [
-        "AI concepts",
-        "Product thinking",
-        "Prototype"
-      ],
-      "url": "https://github.com/nafis-tamim/MonerBondhu-AI",
-      "image": "",
-      "featured": true
-    },
-    {
-      "id": "p2",
-      "title": "GRAPHLAIR",
-      "category": "DESIGN / DIGITAL SYSTEMS",
-      "year": "2026",
-      "summary": "A public digital creative initiative that explores brand systems and online visual communication.",
-      "process": "Combine deliberate visual choices with web-based presentation and iterative design.",
-      "outcome": "Public source repository available.",
-      "status": "Ongoing",
-      "tags": [
-        "Identity",
-        "Web",
-        "Brand systems"
-      ],
-      "url": "https://github.com/nafis-tamim/GRAPHLAIR",
-      "image": "",
-      "featured": true
-    },
-    {
-      "id": "p3",
-      "title": "This portfolio",
-      "category": "WEB / INFORMATION ARCHITECTURE",
-      "year": "2026",
-      "summary": "A living academic evidence archive with a responsive interface and editable content.",
-      "process": "Designing the interface around case studies, documentation and honest proof rather than empty metrics.",
-      "outcome": "Public GitHub repository.",
-      "status": "In development",
-      "tags": [
-        "Frontend",
-        "Information design",
-        "Documentation"
-      ],
-      "url": "https://github.com/nafis-tamim/nafis-tamim.github.io",
-      "image": "",
-      "featured": true
-    }
-  ],
-  "journey": [
-    {
-      "year": "2026",
-      "title": "Building a public learning record",
-      "context": "Independent projects",
-      "body": "Learning how to connect software, user experience, design and accessible explanations.",
-      "link": "https://github.com/nafis-tamim"
-    },
-    {
-      "year": "NOW",
-      "title": "Exploring technical fundamentals",
-      "context": "Self-directed learning",
-      "body": "Investigating computational problem-solving, interface engineering and the process behind better digital products.",
-      "link": ""
-    }
-  ],
-  "skills": [
-    {
-      "name": "Computational thinking",
-      "level": "Learning",
-      "body": "Decomposition, questions and iterative problem solving."
-    },
-    {
-      "name": "Frontend development",
-      "level": "Building",
-      "body": "Responsive interfaces, interaction design and web fundamentals."
-    },
-    {
-      "name": "Visual systems",
-      "level": "Practicing",
-      "body": "Brand thinking, typography and clear presentation."
-    },
-    {
-      "name": "AI concepts",
-      "level": "Exploring",
-      "body": "Experimenting carefully with AI product ideas and their limitations."
-    }
-  ],
-  "writing": [
-    {
-      "title": "Why evidence beats a long list of awards",
-      "date": "FIELD NOTE / 001",
-      "body": "A thoughtful project includes the challenge, choices, trade-offs and a record of what changed. The strongest portfolios show that thinking.",
-      "url": ""
-    },
-    {
-      "title": "Design as a form of engineering judgment",
-      "date": "FIELD NOTE / 002",
-      "body": "The interface is part of the system. Good design helps users understand what matters, what happens next and why it works.",
-      "url": ""
-    }
-  ],
-  "contact": {
-    "kicker": "06 / NEXT CHAPTER",
-    "title": "Have an idea worth building?",
-    "body": "I welcome interesting conversations about learning, digital products, student projects and thoughtful collaboration.",
-    "button": "Explore GitHub",
-    "url": "https://github.com/nafis-tamim",
-    "email": "",
-    "footer": "Built with curiosity. Updated with evidence."
+  "achievements": {
+    "eyebrow": "02 — RECOGNITION",
+    "heading": "A record of doing, not just dreaming.",
+    "intro": "Selected honours and academic milestones. Open each card to examine its context and supporting evidence.",
+    "cards": [
+      {
+        "id": "icsc-top-2026",
+        "title": "Top 1 Ambassador — 2026",
+        "institution": "International Computer Science Competition (ICSC)",
+        "category": "International leadership",
+        "year": "2026",
+        "summary": "Ranked #1 on ICSC's official 2026 Top Ambassadors leaderboard.",
+        "details": "The 2026 ICSC Top Ambassadors page places Nafis Tamim at number one. This is a leaderboard position in ambassador outreach, distinct from participant exam rankings. The leaderboard can update over time.",
+        "result": "Global ambassador leaderboard · #1 at verification",
+        "verified": true,
+        "verification": "https://icscompetition.org/en/top-ambassadors",
+        "image": "",
+        "gallery": [],
+        "tags": [
+          "ICSC",
+          "Leadership",
+          "International"
+        ],
+        "featured": true
+      },
+      {
+        "id": "icsc-award-2026",
+        "title": "Most Participants — Ambassador Award",
+        "institution": "International Computer Science Competition (ICSC)",
+        "category": "Ambassador recognition",
+        "year": "2026",
+        "summary": "Named recipient of the ICSC 2026 Most Participants Ambassador Award.",
+        "details": "ICSC's official 2026 results announcement names Nafis Tamim under the Ambassador Awards category 'Most Participants'.",
+        "result": "Official ICSC Ambassador Award",
+        "verified": true,
+        "verification": "https://icscompetition.org/en/announcement2026",
+        "image": "",
+        "gallery": [],
+        "tags": [
+          "ICSC",
+          "Award",
+          "Outreach"
+        ],
+        "featured": true
+      },
+      {
+        "id": "iymc-silver",
+        "title": "Silver Honour",
+        "institution": "International Youth Math Challenge (IYMC)",
+        "category": "Mathematics",
+        "year": "",
+        "summary": "Silver Honour recognition in the International Youth Math Challenge, as reported by Nafis Tamim.",
+        "details": "Mathematics competition recognition. Certificate and individual verification details can be attached through the Portfolio Studio.",
+        "result": "Silver Honour",
+        "verified": false,
+        "verification": "",
+        "image": "",
+        "gallery": [],
+        "tags": [
+          "IYMC",
+          "Mathematics",
+          "Honour"
+        ],
+        "featured": true
+      },
+      {
+        "id": "imli-national-first",
+        "title": "National First Place — Essay Competition",
+        "institution": "International Mother Language Institute, Bangladesh",
+        "category": "Academic writing",
+        "year": "",
+        "summary": "First place nationally in an essay-writing competition organized by the International Mother Language Institute, as reported by Nafis Tamim.",
+        "details": "An academic writing milestone. The result sheet, certificate or official recipient announcement can be uploaded to this entry.",
+        "result": "National first place",
+        "verified": false,
+        "verification": "",
+        "image": "",
+        "gallery": [],
+        "tags": [
+          "Writing",
+          "Bangladesh",
+          "National"
+        ],
+        "featured": true
+      }
+    ]
   },
-  "extras": []
+  "projects": {
+    "eyebrow": "03 — SELECTED PROJECTS",
+    "heading": "Different mediums. One way of thinking.",
+    "intro": "Not everything I create is a website. Explore software concepts, independent experiments, branding, design systems and other work.",
+    "categories": [
+      "All",
+      "Software",
+      "Graphic design",
+      "Research",
+      "Creative technology",
+      "Writing",
+      "Other"
+    ],
+    "items": [
+      {
+        "id": "graphlair",
+        "title": "GRAPHLAIR",
+        "subtitle": "Visual identity & digital initiative",
+        "category": "Graphic design",
+        "year": "2026",
+        "status": "Ongoing",
+        "summary": "A creative initiative exploring graphic design, contemporary branding, and digital identity.",
+        "challenge": "How can a visual system feel recognizable and purposeful across different formats?",
+        "process": "Experimenting with brand language, composition, repeatable elements and online presentation.",
+        "outcome": "A publicly accessible creative project and source repository.",
+        "tools": "Brand design, web presentation, visual communication",
+        "image": "",
+        "gallery": [],
+        "url": "https://github.com/nafis-tamim/GRAPHLAIR",
+        "verification": "",
+        "featured": true,
+        "tags": [
+          "Visual identity",
+          "Branding",
+          "Digital"
+        ]
+      },
+      {
+        "id": "monerbondhu",
+        "title": "MonerBondhu AI",
+        "subtitle": "An AI product exploration",
+        "category": "Software",
+        "year": "2026",
+        "status": "Exploration",
+        "summary": "A publicly accessible repository exploring ideas in AI-assisted digital products.",
+        "challenge": "How do you translate a broad AI idea into something usable and thoughtfully scoped?",
+        "process": "Exploring product questions, experiments, and iterative interface decisions.",
+        "outcome": "Public project repository; claims of deployment or user impact are not yet made.",
+        "tools": "AI concepts, product thinking",
+        "image": "",
+        "gallery": [],
+        "url": "https://github.com/nafis-tamim/MonerBondhu-AI",
+        "verification": "",
+        "featured": true,
+        "tags": [
+          "AI",
+          "Product",
+          "Exploration"
+        ]
+      },
+      {
+        "id": "footwear-solution",
+        "title": "Footwear Solution Bangladesh",
+        "subtitle": "Branding & visual communication",
+        "category": "Graphic design",
+        "year": "2026",
+        "status": "Portfolio case study",
+        "summary": "Visual branding work produced for Footwear Solution Bangladesh (FSBD), spanning brand presentation and creative concepts.",
+        "challenge": "Communicate an industry-focused identity through compelling, professional graphic language.",
+        "process": "Exploring graphic composition, editorial layouts and consistent branded visuals.",
+        "outcome": "Artwork and project documentation can be added to the gallery.",
+        "tools": "Graphic design, branding, campaign visuals",
+        "image": "",
+        "gallery": [],
+        "url": "",
+        "verification": "",
+        "featured": false,
+        "tags": [
+          "Brand design",
+          "Footwear",
+          "Visuals"
+        ]
+      },
+      {
+        "id": "portfolio",
+        "title": "A Living Academic Portfolio",
+        "subtitle": "Designing the presentation of evidence",
+        "category": "Creative technology",
+        "year": "2026",
+        "status": "Live",
+        "summary": "A publication-style digital portfolio designed to present academic work, creative output and recognition with context.",
+        "challenge": "How do you represent a multidisciplinary student without making every project look like software engineering?",
+        "process": "Evidence-led structure, responsive design, accessible interaction and a content administration workflow.",
+        "outcome": "Public website and inspectable repository.",
+        "tools": "HTML, CSS, JavaScript, GitHub Pages",
+        "image": "",
+        "gallery": [],
+        "url": "https://github.com/nafis-tamim/nafis-tamim.github.io",
+        "verification": "",
+        "featured": false,
+        "tags": [
+          "Web",
+          "Documentation",
+          "Design"
+        ]
+      }
+    ]
+  },
+  "research": {
+    "eyebrow": "04 — RESEARCH & INQUIRY",
+    "heading": "Questions, methods, discoveries.",
+    "intro": "An evolving space for investigations, papers, reports and independent research—with methods and evidence presented alongside conclusions.",
+    "emptyTitle": "Research archive in preparation",
+    "emptyBody": "Current research manuscripts and supporting documents will be added here. Research interests do not imply published papers.",
+    "items": []
+  },
+  "creative": {
+    "eyebrow": "05 — BEYOND THE CODE",
+    "heading": "Thinking in images, objects and stories.",
+    "intro": "Design work is a serious part of my practice—from brand concepts and packaging to posters, presentations and visual experimentation.",
+    "items": [
+      {
+        "id": "creative-1",
+        "title": "Identity & brand systems",
+        "category": "Visual communication",
+        "description": "Developing visual languages that balance clear meaning with distinctive aesthetics.",
+        "image": "",
+        "gallery": [],
+        "link": "https://github.com/nafis-tamim/GRAPHLAIR",
+        "featured": true
+      },
+      {
+        "id": "creative-2",
+        "title": "Packaging & product concepts",
+        "category": "Creative practice",
+        "description": "Exploring patterns, print-ready thinking and compelling visual compositions for product presentation.",
+        "image": "",
+        "gallery": [],
+        "link": "",
+        "featured": true
+      },
+      {
+        "id": "creative-3",
+        "title": "Posters & editorial graphics",
+        "category": "Graphic design",
+        "description": "Working with typography, visual hierarchy and storytelling through design.",
+        "image": "",
+        "gallery": [],
+        "link": "",
+        "featured": false
+      }
+    ]
+  },
+  "writing": {
+    "eyebrow": "06 — WRITING",
+    "heading": "Ideas that deserve more than a caption.",
+    "intro": "Essays, long-form reflections, explainers and competition writing will be presented here with full context.",
+    "emptyTitle": "Selected writing coming soon",
+    "emptyBody": "The first pieces and competition manuscripts are being prepared for the archive.",
+    "items": []
+  },
+  "academics": {
+    "eyebrow": "07 — THE PATH",
+    "heading": "Curiosity, with a direction.",
+    "intro": "Formal studies, extracurricular initiatives, independent learning and experiences form a more interesting picture together.",
+    "items": [
+      {
+        "id": "edu1",
+        "year": "Current",
+        "type": "Education",
+        "title": "Science studies",
+        "organization": "Dhaka City College",
+        "description": "Academic foundation alongside research, creative design, mathematics and digital technology interests.",
+        "link": "https://icscompetition.org/en/ntamim",
+        "image": ""
+      },
+      {
+        "id": "edu2",
+        "year": "2026",
+        "type": "Leadership",
+        "title": "ICSC Ambassador",
+        "organization": "International Computer Science Competition",
+        "description": "Worked to encourage participation and support interest in computer science; recognised on the 2026 leaderboard and in the official ambassador awards.",
+        "link": "https://icscompetition.org/en/announcement2026",
+        "image": ""
+      },
+      {
+        "id": "edu3",
+        "year": "Ongoing",
+        "type": "Practice",
+        "title": "Multidisciplinary creative & technical projects",
+        "organization": "Independent work",
+        "description": "Learning by making across graphic design, experimental digital products and written work.",
+        "link": "https://github.com/nafis-tamim",
+        "image": ""
+      }
+    ]
+  },
+  "highlights": {
+    "eyebrow": "EDITOR'S SELECTION",
+    "heading": "A few things worth noticing.",
+    "intro": "A changing selection of work, writing and achievements. Update these in the studio to reflect what matters now.",
+    "ids": [
+      "icsc-top-2026",
+      "graphlair",
+      "iymc-silver"
+    ]
+  },
+  "contact": {
+    "eyebrow": "08 — LET'S TALK",
+    "heading": "Have something interesting in mind?",
+    "intro": "I welcome thoughtful conversations about science, student initiatives, research, design and new ideas.",
+    "emailLabel": "Write to me",
+    "githubLabel": "Explore my GitHub",
+    "githubUrl": "https://github.com/nafis-tamim",
+    "footerLine": "A work in progress, deliberately.",
+    "copyrightName": "Nafis Tamim",
+    "credit": "Designed around curiosity, evidence and change."
+  },
+  "customSections": [],
+  "lastEditedLabel": "LAST CURATED / OCT 2026"
 }
