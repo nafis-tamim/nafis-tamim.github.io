@@ -19,6 +19,7 @@ function image(src,alt="",cls="",fallback=""){return src?'<img class="'+esc(cls)
 function tags(list){return '<div class="tags">'+arr(list).map(x=>'<span>'+esc(x)+'</span>').join("")+'</div>'}
 function verifyBadge(item){
   if(item.verified && item.verification) return '<span class="proof verified"><span class="proof-dot">✓</span> '+esc(DATA?.ui?.achievementsEvidence||"Official source available")+'</span>';
+  if(item.certificateReviewed) return '<span class="proof verified"><span class="proof-dot">✓</span> Personal certificate reviewed</span>';
   if(item.verification) return '<span class="proof"><span class="proof-dot">↗</span> Supporting link</span>';
   return '<span class="proof pending"><span class="proof-dot">○</span> '+esc(DATA?.ui?.achievementsPending||"Document can be requested")+'</span>';
 }
@@ -236,11 +237,12 @@ function modalContent(item){
  gallery+
  '<div class="modal-sections">'+items.map(x=>'<section><h3>'+esc(x[0])+'</h3><p>'+esc(x[1])+'</p></section>').join("")+'</div>'+
  tags(item.tags)+
- '<div class="modal-actions">'+(verify?btnLink(DATA?.ui?.modalVerification||"OPEN OFFICIAL SOURCE",verify,"btn dark",'target="_blank" rel="noopener noreferrer"'):"")+
+ '<div class="modal-actions">'+(verify?btnLink(item.kind==="research"?"OPEN RESEARCHGATE RECORD":(DATA?.ui?.modalVerification||"OPEN OFFICIAL SOURCE"),verify,"btn dark",'target="_blank" rel="noopener noreferrer"'):"")+
  (direct?btnLink(DATA?.ui?.modalLink||"VIEW PROJECT / DOCUMENT",direct,"btn outline",'target="_blank" rel="noopener noreferrer"'):"")+
  '</div>'+
  ((item.verified&&verify)?'<p class="modal-proof">✓ Recognition linked to an independently accessible official source.</p>':
- (item.kind==="achievement"&&!verify?'<p class="modal-proof">Supporting certificate or individual result link can be added through the private Portfolio Studio.</p>':""));
+ (item.certificateReviewed?'<p class="modal-proof">✓ A named personal certificate has been reviewed. Public certificate preview can be added through the Portfolio Studio.</p>':
+ (item.kind==="achievement"&&!verify?'<p class="modal-proof">Supporting certificate or individual result link can be added through the private Portfolio Studio.</p>':"")));
 }
 function openDetail(kind,id){
  const item=allDetails().find(x=>x.kind===kind&&x.id===id);

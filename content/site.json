@@ -2,8 +2,8 @@
   "version": 4,
   "seo": {
     "title": "Nafis Tamim — Academic Portfolio | Research, Design & Achievement",
-    "description": "The academic and creative portfolio of Nafis Tamim, featuring verified ICSC 2026 ambassador recognition, mathematics honours, research, visual design and selected projects.",
-    "keywords": "Nafis Tamim, ICSC top ambassador 2026, academic portfolio, research, mathematics, graphic design, Bangladesh",
+    "description": "Academic portfolio of Nafis Tamim: ICSC 2026 Top Ambassador, IYMC 2025 Silver Honour (top 5%), national essay recognition, TruthLens research record, design and projects.",
+    "keywords": "Nafis Tamim, ICSC Top Ambassador, IYMC Silver Honour Top 5 percent 2025, International Mother Language Institute, TruthLens, multi-agent LLM hallucination detection, research portfolio, graphic design",
     "canonical": "https://nafis-tamim.github.io/",
     "ogImage": "",
     "favicon": "/favicon.svg"
@@ -184,13 +184,13 @@
       },
       {
         "id": "iymc-silver",
-        "title": "Silver Honour",
+        "title": "Silver Honour · Top 5% — IYMC 2025",
         "institution": "International Youth Math Challenge (IYMC)",
         "category": "Mathematics",
-        "year": "",
-        "summary": "Silver Honour recognition in the International Youth Math Challenge, as reported by Nafis Tamim.",
-        "details": "Mathematics competition recognition. Certificate and individual verification details can be attached through the Portfolio Studio.",
-        "result": "Silver Honour",
+        "year": "2025",
+        "summary": "Silver Honour in the Final Round of the International Youth Math Challenge 2025, placing among the top 5% of all participants.",
+        "details": "The personal IYMC Silver Honour certificate provided by Nafis Tamim explicitly names the recipient, notes successful participation in the 2025 Final Round, and states that the student was placed among the top 5% of all participants. The certificate is dated 23 February 2026 and includes organizer signatures. The original PDF was reviewed but has not yet been placed on the public website.",
+        "result": "Silver Honour · Top 5% of participants",
         "verified": false,
         "verification": "",
         "image": "",
@@ -198,29 +198,35 @@
         "tags": [
           "IYMC",
           "Mathematics",
-          "Honour"
+          "Silver Honour",
+          "Top 5%"
         ],
-        "featured": true
+        "featured": true,
+        "certificateReviewed": true,
+        "certificateDate": "23 February 2026",
+        "evidenceStatus": "Personal certificate reviewed; public PDF upload pending"
       },
       {
         "id": "imli-national-first",
-        "title": "National First Place — Essay Competition",
-        "institution": "International Mother Language Institute, Bangladesh",
-        "category": "Academic writing",
-        "year": "",
-        "summary": "First place nationally in an essay-writing competition organized by the International Mother Language Institute, as reported by Nafis Tamim.",
-        "details": "An academic writing milestone. The result sheet, certificate or official recipient announcement can be uploaded to this entry.",
-        "result": "National first place",
+        "title": "National First Place — Essay Writing",
+        "institution": "International Mother Language Institute (IMLI), Bangladesh",
+        "category": "National essay competition",
+        "year": "2026",
+        "summary": "National first-place result in the International Mother Language Institute's 2026 essay-writing competition, reported by Nafis Tamim; official results notice linked.",
+        "details": "The International Mother Language Institute published an official essay competition results notice dated 20 August 2026. Nafis Tamim reports finishing first nationally. The government results notice is linked; the individual name and ranking could not yet be independently checked against its attached result sheet.",
+        "result": "First place nationally (student-reported; individual notice entry unconfirmed)",
         "verified": false,
-        "verification": "",
+        "verification": "https://imli.portal.gov.bd/pages/notices/%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7-%E0%A6%B0%E0%A6%9A%E0%A6%A8%E0%A6%BE-%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%AF%E0%A7%8B%E0%A6%97%E0%A6%BF%E0%A6%A4%E0%A6%BE%E0%A6%B0-%E0%A6%AB%E0%A6%B2%E0%A6%BE%E0%A6%AB%E0%A6%B2-eps7ir-6a870fe09ab15f916080e4d4",
         "image": "",
         "gallery": [],
         "tags": [
-          "Writing",
-          "Bangladesh",
-          "National"
+          "IMLI",
+          "National",
+          "Essay Writing",
+          "Language"
         ],
-        "featured": true
+        "featured": true,
+        "evidenceStatus": "Official government results notice linked; individual rank pending independent matching"
       }
     ]
   },
@@ -334,11 +340,36 @@
   },
   "research": {
     "eyebrow": "04 — RESEARCH & INQUIRY",
-    "heading": "Questions, methods, discoveries.",
-    "intro": "An evolving space for investigations, papers, reports and independent research—with methods and evidence presented alongside conclusions.",
+    "heading": "Questions worth testing.",
+    "intro": "Independent research and technical inquiry, presented with research questions, methods and source links. Publication status is identified rather than assumed.",
     "emptyTitle": "Research archive in preparation",
     "emptyBody": "Current research manuscripts and supporting documents will be added here. Research interests do not imply published papers.",
-    "items": []
+    "items": [
+      {
+        "id": "truthlens-researchgate",
+        "title": "TruthLens: An Explainable Multi-Agent Framework for Hallucination Detection through Evidence-Based Verification in Large Language Models",
+        "field": "Artificial Intelligence · LLM Reliability",
+        "year": "",
+        "abstract": "A research manuscript on explainable multi-agent approaches to detecting hallucinations in large language model outputs through evidence-based verification. The title and ResearchGate URL were provided by Nafis Tamim; detailed methods, author list and peer-review status have not been independently inspected.",
+        "question": "How can multiple agents collect and evaluate evidence to identify potentially hallucinated claims made by language models?",
+        "method": "Research record supplied via ResearchGate; the complete manuscript should be consulted for its methodology and experimental design.",
+        "result": "ResearchGate publication link supplied. No independent claim is made here about peer review, indexing, journal acceptance or empirical performance.",
+        "publication": "ResearchGate record (authorship and publication status not independently verified)",
+        "details": "The linked ResearchGate record is presented as a research portfolio entry based on information supplied by Nafis Tamim. It has not been independently verified as a peer-reviewed journal or conference paper.",
+        "verification": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models",
+        "documentUrl": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models",
+        "image": "",
+        "gallery": [],
+        "tags": [
+          "Explainable AI",
+          "Multi-Agent Systems",
+          "Hallucination Detection",
+          "Evidence Verification"
+        ],
+        "featured": true,
+        "status": "Research record linked"
+      }
+    ]
   },
   "creative": {
     "eyebrow": "05 — BEYOND THE CODE",
@@ -428,8 +459,9 @@
     "intro": "A changing selection of work, writing and achievements. Update these in the studio to reflect what matters now.",
     "ids": [
       "icsc-top-2026",
-      "graphlair",
-      "iymc-silver"
+      "iymc-silver",
+      "truthlens-researchgate",
+      "imli-national-first"
     ],
     "enabled": true
   },
