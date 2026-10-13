@@ -381,3 +381,6 @@ img{max-width:100%;display:block}[hidden]{display:none!important}
  .reveal-card{opacity:1!important;transform:none!important}
  #orbit-canvas{display:none}
 }
+
+.disable-motion .award-wheel::before,.disable-motion .diagram-connectors,.disable-motion .diagram-stage{animation:none!important}
+.disable-motion .profile-motion-frame{transition:none}

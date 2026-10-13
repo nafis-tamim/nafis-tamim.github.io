@@ -296,6 +296,7 @@ function contact(d){
 function setTheme(d){
  const ap=d.appearance||{};
  document.body?.classList?.toggle("disable-hover",ap.hoverEffects===false);
+ document.body?.classList?.toggle("disable-motion",ap.motion===false);
  const map={background:"--bg",paper:"--paper",ink:"--ink",inkSoft:"--muted",deep:"--deep",accent:"--accent",teal:"--teal",gold:"--gold",border:"--border"};
  Object.entries(map).forEach(([k,prop])=>{if(/^#[0-9a-f]{6}$/i.test(str(ap[k])))document.documentElement.style.setProperty(prop,ap[k])});
  document.title=d.seo?.title||"Nafis Tamim";

@@ -1,4 +1,21 @@
-# Nafis Tamim — Multidisciplinary Academic Portfolio (v4)
+# Nafis Tamim — Interactive Research and Creative Portfolio (V7)
+
+
+## V7 — Scientific Interactive Portfolio (13 October 2026)
+
+The public site uses a five-color system: **#06070C, #10162A, #1D4ED8, #60A5FA, #F8FAFC**. Key changes from V6:
+
+- Scientific 3D hero: interactive toroidal wireframe plus a tilting, faceted real portrait card. The original portrait image source remains unchanged.
+- **Achievements**: interactive circular category navigation; choose an award to reveal its detail panel. Each panel provides an image/PDF slider and direct certificate/result links. Bangladesh Government, International and Academic Recognition are separate categories with editable logos.
+- **Projects and Design**: multi-image sliders with next/previous controls and full-size image links.
+- **Research**: an animated five-agent schematic paired with a direct research preview and document links. The linked TruthLens IJISRT editorial acceptance statement has not been promoted to a final journal publication claim.
+- **Scroll-controlled science**: a sticky square resonance panel renders nodal contours of a standing-wave equation through marching squares, with shape mode and 3D presentation adjusting to scroll progress. This is Chladni-inspired rather than a copy of a separate website.
+- The empty Writing section, surplus photo crosshairs, floating filler card, and Verified badges are not rendered. Existing writing data remains in content JSON as a backup.
+- Accessibility: keyboard-accessible gallery/orbit controls, mobile breakpoints, reduced-motion and Admin motion settings.
+- **Admin Studio**: image/PDF gallery accepts multiple files, supports item-by-item removal, UP/DOWN reordering, and **COVER** selection. Other existing editing options remain, including logos, text, menus, sections, links, SEO/favicon, and safe unused-media deletion.
+- Photo upload still requires a GitHub fine-grained Personal Access Token scoped to the repository with **Contents: Read and write**. The site cannot bypass GitHub permission policy.
+- Backup branch: \`backup/pre-v7-scientific-motion-20261013\`. This snapshot is GitHub commit history, separate from any database backup.
+
 
 ## V6 — The Working Index (2026)
 
