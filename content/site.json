@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 6,
   "seo": {
     "title": "Nafis Tamim — Academic Portfolio | Research, Design & Achievement",
     "description": "Nafis Tamim — ICSC 2026 Top Ambassador and Most Participants Award recipient, IYMC Silver Honour (top 5%), IJISRT-accepted TruthLens research, mathematics and creative work.",
@@ -9,15 +9,15 @@
     "favicon": "/favicon.svg"
   },
   "appearance": {
-    "background": "#E8E9E7",
-    "paper": "#F5F5F2",
-    "ink": "#202833",
-    "inkSoft": "#61707C",
-    "deep": "#131E2A",
-    "accent": "#D5B78A",
-    "teal": "#4A677A",
-    "gold": "#AC906D",
-    "border": "#CCD2D2",
+    "background": "#F2F3F4",
+    "paper": "#FFFFFF",
+    "ink": "#151C2B",
+    "inkSoft": "#5D687A",
+    "deep": "#111A2B",
+    "accent": "#5274FF",
+    "teal": "#1385A2",
+    "gold": "#D6BA93",
+    "border": "#D9DFE8",
     "animation": "constellation",
     "motion": true,
     "hoverEffects": true,
@@ -27,8 +27,8 @@
   "identity": {
     "name": "Nafis Tamim",
     "initials": "NT",
-    "descriptor": "A student of science, ideas and possibility",
-    "identityLine": "STUDENT · RESEARCH · DESIGN · TECHNOLOGY",
+    "descriptor": "Student · Researcher · Designer · Builder",
+    "identityLine": "RESEARCH / MATHEMATICS / DESIGN / COMPUTING",
     "institution": "Dhaka City College",
     "location": "Dhaka, Bangladesh",
     "availability": "Open to thoughtful projects, competitions and collaboration",
@@ -55,59 +55,75 @@
     {
       "id": "about",
       "label": "Perspective",
-      "visible": true
+      "visible": true,
+      "href": "#about",
+      "openNewTab": false
     },
     {
       "id": "achievements",
       "label": "Achievements",
-      "visible": true
+      "visible": true,
+      "href": "#achievements",
+      "openNewTab": false
     },
     {
       "id": "projects",
       "label": "Projects",
-      "visible": true
+      "visible": true,
+      "href": "#projects",
+      "openNewTab": false
     },
     {
       "id": "research",
       "label": "Research",
-      "visible": true
+      "visible": true,
+      "href": "#research",
+      "openNewTab": false
     },
     {
       "id": "creative",
       "label": "Creative work",
-      "visible": true
+      "visible": true,
+      "href": "#creative",
+      "openNewTab": false
     },
     {
       "id": "writing",
       "label": "Writing",
-      "visible": true
+      "visible": true,
+      "href": "#writing",
+      "openNewTab": false
     },
     {
       "id": "academics",
       "label": "Academic path",
-      "visible": true
+      "visible": true,
+      "href": "#academics",
+      "openNewTab": false
     },
     {
       "id": "contact",
       "label": "Contact",
-      "visible": true
+      "visible": true,
+      "href": "#contact",
+      "openNewTab": false
     }
   ],
   "hero": {
-    "overline": "NAFIS TAMIM / A LIVING PORTFOLIO",
-    "firstLine": "Curious by nature.",
-    "secondLine": "Deliberate by design.",
-    "intro": "I move between mathematics, research, creative design, computing and writing—following questions wherever they lead. This is a living record of the work, the thinking and the evidence.",
-    "primaryLabel": "Explore my work",
+    "overline": "NAFIS TAMIM — THE WORKING INDEX / 2026",
+    "firstLine": "Curiosity",
+    "secondLine": "is a serious craft.",
+    "intro": "Research, mathematics, design, software and writing. Different fields, the same approach: question everything, make something useful, and document what actually happened.",
+    "primaryLabel": "See the work",
     "primaryTarget": "projects",
-    "secondaryLabel": "View achievements",
+    "secondaryLabel": "Academic records",
     "secondaryTarget": "achievements",
     "portraitSideLabel": "ACADEMIC • CREATIVE • EXPERIMENTAL",
-    "stageLabel": "CURRENTLY EXPLORING",
-    "stageText": "Problems worth solving, ideas worth testing.",
+    "stageLabel": "CURRENT EXPLORATIONS",
+    "stageText": "Ideas, evidence, iteration.",
     "verifiedTag": "ICSC 2026 · TOP-RANKED AMBASSADOR",
     "verifiedUrl": "https://icscompetition.org/en/top-ambassadors",
-    "smallCaption": "Proof over promises. Curiosity over categories.",
+    "smallCaption": "Multidisciplinary by nature. Specific about the work.",
     "featuredCategory": "Recognition",
     "featureTitle": "#01",
     "featureSubtitle": "ICSC 2026 Ambassador Leaderboard",
@@ -115,9 +131,9 @@
   },
   "about": {
     "eyebrow": "01 — PERSPECTIVE",
-    "heading": "A mind that doesn't stay in one discipline.",
-    "lead": "I believe ideas become stronger when science meets storytelling, logic meets imagination, and careful research meets real execution.",
-    "body": "My work includes independent technical experiments, graphic and brand design, academic writing, mathematics challenges and participation in international student initiatives. I value the process behind an outcome as much as the outcome itself.",
+    "heading": "One curiosity. Many mediums.",
+    "lead": "I don't treat software, research, mathematics, writing and visual design as separate identities. They are tools for asking better questions and making more thoughtful work.",
+    "body": "This portfolio is organized as an evidence-led catalogue: achievements carry results and links; projects show the work; research connects to its documents. My interests change and develop, so the site is intentionally editable.",
     "quote": "The most interesting answers often begin with a better question.",
     "principles": [
       {
@@ -135,12 +151,13 @@
         "body": "Document outcomes with links, certificates and artifacts.",
         "number": "03"
       }
-    ]
+    ],
+    "sectionLinks": []
   },
   "achievements": {
     "eyebrow": "02 — RECOGNITION",
-    "heading": "Distinction, with the evidence.",
-    "intro": "National recognition, international honours and meaningful academic commendations—clearly separated and supported by source links.",
+    "heading": "The record speaks.",
+    "intro": "National, international and academic recognitions, organized by origin. Every entry has its own cover, evidence links and space for photographs or certificate PDFs.",
     "cards": [
       {
         "id": "icsc-top-2026",
@@ -153,7 +170,7 @@
         "result": "Global ambassador leaderboard · #1 at verification",
         "verified": true,
         "verification": "https://icscompetition.org/en/top-ambassadors",
-        "image": "",
+        "image": "/assets/aw-icsc.svg",
         "gallery": [],
         "tags": [
           "ICSC",
@@ -167,7 +184,8 @@
             "label": "Official Results",
             "url": "https://icscompetition.org/en/top-ambassadors"
           }
-        ]
+        ],
+        "imageAlt": "Graphic cover illustration, not an actual certificate photo"
       },
       {
         "id": "icsc-award-2026",
@@ -180,7 +198,7 @@
         "result": "ICSC Ambassador Award — Most Participants (2026)",
         "verified": true,
         "verification": "https://icscompetition.org/en/announcement2026",
-        "image": "",
+        "image": "/assets/aw-icsc-award.svg",
         "gallery": [
           "https://icscompetition.org/c/SpecialCertificate-2026-33050a37b0128ae.pdf"
         ],
@@ -204,7 +222,8 @@
             "label": "Award Certificate (PDF)",
             "url": "https://icscompetition.org/c/SpecialCertificate-2026-33050a37b0128ae.pdf"
           }
-        ]
+        ],
+        "imageAlt": "Graphic cover illustration, not an actual certificate photo"
       },
       {
         "id": "iymc-silver",
@@ -217,7 +236,7 @@
         "result": "Silver Honour · Top 5% of participants",
         "verified": false,
         "verification": "",
-        "image": "",
+        "image": "/assets/aw-math.svg",
         "gallery": [],
         "tags": [
           "IYMC",
@@ -230,7 +249,8 @@
         "certificateDate": "23 February 2026",
         "evidenceStatus": "Personal certificate reviewed; public PDF upload pending",
         "groupId": "international",
-        "supportingLinks": []
+        "supportingLinks": [],
+        "imageAlt": "Graphic cover illustration, not an actual certificate photo"
       },
       {
         "id": "iymc-2026-exceptional-submission",
@@ -246,7 +266,7 @@
         "emailDate": "12 October 2026",
         "evidenceStatus": "Named coordinator email supplied; no public featured listing confirmed",
         "verification": "",
-        "image": "",
+        "image": "/assets/aw-notes.svg",
         "gallery": [],
         "tags": [
           "IYMC 2026",
@@ -256,7 +276,8 @@
         ],
         "featured": false,
         "groupId": "academic",
-        "supportingLinks": []
+        "supportingLinks": [],
+        "imageAlt": "Graphic cover illustration, not an actual certificate photo"
       },
       {
         "id": "imli-national-first",
@@ -269,7 +290,7 @@
         "result": "First place nationally (student-reported; individual notice entry unconfirmed)",
         "verified": false,
         "verification": "https://imli.portal.gov.bd/pages/notices/%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7-%E0%A6%B0%E0%A6%9A%E0%A6%A8%E0%A6%BE-%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%AF%E0%A7%8B%E0%A6%97%E0%A6%BF%E0%A6%A4%E0%A6%BE%E0%A6%B0-%E0%A6%AB%E0%A6%B2%E0%A6%BE%E0%A6%AB%E0%A6%B2-eps7ir-6a870fe09ab15f916080e4d4",
-        "image": "",
+        "image": "/assets/aw-gov.svg",
         "gallery": [],
         "tags": [
           "IMLI",
@@ -285,15 +306,16 @@
             "label": "Government Result Notice",
             "url": "https://imli.portal.gov.bd/pages/notices/%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7-%E0%A6%B0%E0%A6%9A%E0%A6%A8%E0%A6%BE-%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%AF%E0%A7%8B%E0%A6%97%E0%A6%BF%E0%A6%A4%E0%A6%BE%E0%A6%B0-%E0%A6%AB%E0%A6%B2%E0%A6%BE%E0%A6%AB%E0%A6%B2-eps7ir-6a870fe09ab15f916080e4d4"
           }
-        ]
+        ],
+        "imageAlt": "Graphic cover illustration, not an actual certificate photo"
       }
     ],
     "groups": [
       {
         "id": "government",
-        "eyebrow": "01 / NATIONAL",
+        "eyebrow": "NATIONAL RECOGNITION / 01",
         "title": "Bangladesh Government",
-        "subtitle": "Recognition from government-organized academic competitions",
+        "subtitle": "Recognition from public institutions in Bangladesh",
         "description": "Awards and competition results issued by public institutions in Bangladesh. The institutional emblem describes the organizer, not government endorsement of this website.",
         "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Seal_of_the_Government_of_Bangladesh.svg/500px-Seal_of_the_Government_of_Bangladesh.svg.png",
         "logoAlt": "Seal of the Government of Bangladesh",
@@ -302,9 +324,9 @@
       },
       {
         "id": "international",
-        "eyebrow": "02 / GLOBAL",
-        "title": "International Honours",
-        "subtitle": "Competition achievements and international recognition",
+        "eyebrow": "GLOBAL / 02",
+        "title": "International",
+        "subtitle": "International competitions and ambassador distinctions",
         "description": "Competition distinctions, ambassador recognitions and global academic milestones. Each entry links to the available evidence.",
         "logo": "/assets/international-mark.svg",
         "logoAlt": "Globe symbol representing international achievement",
@@ -313,21 +335,22 @@
       },
       {
         "id": "academic",
-        "eyebrow": "03 / ACADEMIC NOTES",
-        "title": "Academic Commendations",
-        "subtitle": "Meaningful feedback and notable work",
+        "eyebrow": "REMARKS / 03",
+        "title": "Academic Recognition",
+        "subtitle": "Selected academic commendations and noteworthy work",
         "description": "Individual commendations and academic correspondence, described accurately without treating them as formal prizes.",
         "logo": "",
         "logoAlt": "",
         "logoSource": "",
         "visible": true
       }
-    ]
+    ],
+    "sectionLinks": []
   },
   "projects": {
     "eyebrow": "03 — SELECTED PROJECTS",
-    "heading": "Different mediums. One way of thinking.",
-    "intro": "Not everything I create is a website. Explore software concepts, independent experiments, branding, design systems and other work.",
+    "heading": "Built, designed, investigated.",
+    "intro": "A project may be a visual identity, digital prototype, research investigation, essay or something yet to be categorized. The format changes; the thinking matters.",
     "categories": [
       "All",
       "Software",
@@ -350,7 +373,7 @@
         "process": "Experimenting with brand language, composition, repeatable elements and online presentation.",
         "outcome": "A publicly accessible creative project and source repository.",
         "tools": "Brand design, web presentation, visual communication",
-        "image": "",
+        "image": "/assets/pr-graphlair.svg",
         "gallery": [],
         "url": "https://github.com/nafis-tamim/GRAPHLAIR",
         "verification": "",
@@ -359,7 +382,15 @@
           "Visual identity",
           "Branding",
           "Digital"
-        ]
+        ],
+        "imageAlt": "Editorial illustration for the project",
+        "links": [
+          {
+            "label": "Open project",
+            "url": "https://github.com/nafis-tamim/GRAPHLAIR"
+          }
+        ],
+        "pdf": ""
       },
       {
         "id": "monerbondhu",
@@ -373,7 +404,7 @@
         "process": "Exploring product questions, experiments, and iterative interface decisions.",
         "outcome": "Public project repository; claims of deployment or user impact are not yet made.",
         "tools": "AI concepts, product thinking",
-        "image": "",
+        "image": "/assets/pr-ai.svg",
         "gallery": [],
         "url": "https://github.com/nafis-tamim/MonerBondhu-AI",
         "verification": "",
@@ -382,7 +413,15 @@
           "AI",
           "Product",
           "Exploration"
-        ]
+        ],
+        "imageAlt": "Editorial illustration for the project",
+        "links": [
+          {
+            "label": "Open project",
+            "url": "https://github.com/nafis-tamim/MonerBondhu-AI"
+          }
+        ],
+        "pdf": ""
       },
       {
         "id": "footwear-solution",
@@ -396,7 +435,7 @@
         "process": "Exploring graphic composition, editorial layouts and consistent branded visuals.",
         "outcome": "Artwork and project documentation can be added to the gallery.",
         "tools": "Graphic design, branding, campaign visuals",
-        "image": "",
+        "image": "/assets/pr-design.svg",
         "gallery": [],
         "url": "",
         "verification": "",
@@ -405,7 +444,10 @@
           "Brand design",
           "Footwear",
           "Visuals"
-        ]
+        ],
+        "imageAlt": "Editorial illustration for the project",
+        "links": [],
+        "pdf": ""
       },
       {
         "id": "portfolio",
@@ -419,7 +461,7 @@
         "process": "Evidence-led structure, responsive design, accessible interaction and a content administration workflow.",
         "outcome": "Public website and inspectable repository.",
         "tools": "HTML, CSS, JavaScript, GitHub Pages",
-        "image": "",
+        "image": "/assets/pr-web.svg",
         "gallery": [],
         "url": "https://github.com/nafis-tamim/nafis-tamim.github.io",
         "verification": "",
@@ -428,14 +470,28 @@
           "Web",
           "Documentation",
           "Design"
-        ]
+        ],
+        "imageAlt": "Editorial illustration for the project",
+        "links": [
+          {
+            "label": "Open project",
+            "url": "https://github.com/nafis-tamim/nafis-tamim.github.io"
+          }
+        ],
+        "pdf": ""
+      }
+    ],
+    "sectionLinks": [
+      {
+        "label": "All GitHub projects",
+        "url": "https://github.com/nafis-tamim"
       }
     ]
   },
   "research": {
     "eyebrow": "04 — RESEARCH & INQUIRY",
-    "heading": "Research, reviewed and in progress.",
-    "intro": "Independent research with clearly identified editorial status, research methods, and evidence. TruthLens has documentation of editorial acceptance; final journal publication is distinguished from acceptance.",
+    "heading": "Research & open questions.",
+    "intro": "Research notes, papers and study material. Each record links to its manuscript or supporting evidence and is clear about its publication status.",
     "emptyTitle": "Research archive in preparation",
     "emptyBody": "Current research manuscripts and supporting documents will be added here. Research interests do not imply published papers.",
     "items": [
@@ -452,7 +508,7 @@
         "details": "TruthLens addresses hallucination detection in large language models through explainable, evidence-based multi-agent verification. The provided IJISRT four-page reviewer report describes supported, contradicted and unverifiable claim classification, confidence assessments and human-readable explanations. It notes limitations including computational latency, dependence on external evidence, threshold sensitivity, and multilingual challenges. The editor decision on page 4 is to accept the paper; the email states that publication follows completion of registration. Acceptance is distinct from confirmation of final journal publication.",
         "verification": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models",
         "documentUrl": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models",
-        "image": "",
+        "image": "/assets/re-truthlens.svg",
         "gallery": [],
         "tags": [
           "IJISRT Acceptance",
@@ -469,59 +525,78 @@
         "reviewStage1": "Accepted",
         "reviewStage2": "Accepted",
         "reviewEvidence": "Acceptance email and a 4-page IJISRT reviewer report were provided and reviewed. These are private supporting documents, not publicly hosted.",
-        "evidenceStatus": "Acceptance documented; journal publication/DOI not independently confirmed"
+        "evidenceStatus": "Acceptance documented; journal publication/DOI not independently confirmed",
+        "imageAlt": "Illustrated research cover art",
+        "links": [
+          {
+            "label": "Read research",
+            "url": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models"
+          }
+        ],
+        "pdf": ""
       }
-    ]
+    ],
+    "sectionLinks": []
   },
   "creative": {
     "eyebrow": "05 — BEYOND THE CODE",
-    "heading": "Thinking in images, objects and stories.",
-    "intro": "Design work is a serious part of my practice—from brand concepts and packaging to posters, presentations and visual experimentation.",
+    "heading": "Visual thinking, made tangible.",
+    "intro": "Packaging, identity, poster systems and experiments that translate thought into something you can see.",
     "items": [
       {
         "id": "creative-1",
         "title": "Identity & brand systems",
         "category": "Visual communication",
         "description": "Developing visual languages that balance clear meaning with distinctive aesthetics.",
-        "image": "",
+        "image": "/assets/pr-graphlair.svg",
         "gallery": [],
         "link": "https://github.com/nafis-tamim/GRAPHLAIR",
-        "featured": true
+        "featured": true,
+        "links": [
+          {
+            "label": "See work",
+            "url": "https://github.com/nafis-tamim/GRAPHLAIR"
+          }
+        ]
       },
       {
         "id": "creative-2",
         "title": "Packaging & product concepts",
         "category": "Creative practice",
         "description": "Exploring patterns, print-ready thinking and compelling visual compositions for product presentation.",
-        "image": "",
+        "image": "/assets/pr-design.svg",
         "gallery": [],
         "link": "",
-        "featured": true
+        "featured": true,
+        "links": []
       },
       {
         "id": "creative-3",
         "title": "Posters & editorial graphics",
         "category": "Graphic design",
         "description": "Working with typography, visual hierarchy and storytelling through design.",
-        "image": "",
+        "image": "/assets/pr-web.svg",
         "gallery": [],
         "link": "",
-        "featured": false
+        "featured": false,
+        "links": []
       }
-    ]
+    ],
+    "sectionLinks": []
   },
   "writing": {
     "eyebrow": "06 — WRITING",
-    "heading": "Ideas that deserve more than a caption.",
-    "intro": "Essays, long-form reflections, explainers and competition writing will be presented here with full context.",
+    "heading": "Thinking on paper.",
+    "intro": "Essays, articles and long-form reflections, collected with the same curiosity as technical work.",
     "emptyTitle": "Selected writing coming soon",
     "emptyBody": "The first pieces and competition manuscripts are being prepared for the archive.",
-    "items": []
+    "items": [],
+    "sectionLinks": []
   },
   "academics": {
     "eyebrow": "07 — THE PATH",
-    "heading": "Curiosity, with a direction.",
-    "intro": "Formal studies, extracurricular initiatives, independent learning and experiences form a more interesting picture together.",
+    "heading": "A path that keeps unfolding.",
+    "intro": "Formal studies and the decisions, experiments and activities that happen around them.",
     "items": [
       {
         "id": "edu1",
@@ -531,7 +606,13 @@
         "organization": "Dhaka City College",
         "description": "Academic foundation alongside research, creative design, mathematics and digital technology interests.",
         "link": "https://icscompetition.org/en/ntamim",
-        "image": ""
+        "image": "/assets/aw-notes.svg",
+        "links": [
+          {
+            "label": "Related source",
+            "url": "https://icscompetition.org/en/ntamim"
+          }
+        ]
       },
       {
         "id": "edu2",
@@ -541,7 +622,13 @@
         "organization": "International Computer Science Competition",
         "description": "Worked to encourage participation and support interest in computer science; recognised on the 2026 leaderboard and in the official ambassador awards.",
         "link": "https://icscompetition.org/en/announcement2026",
-        "image": ""
+        "image": "/assets/aw-notes.svg",
+        "links": [
+          {
+            "label": "Related source",
+            "url": "https://icscompetition.org/en/announcement2026"
+          }
+        ]
       },
       {
         "id": "iymc-2026-commendation",
@@ -551,7 +638,8 @@
         "organization": "International Youth Math Challenge",
         "description": "An October 2026 evaluation-team message commended the mathematical work and professionally typeset submission. Consideration for a public feature was mentioned, but no final feature decision was confirmed.",
         "link": "",
-        "image": ""
+        "image": "/assets/aw-notes.svg",
+        "links": []
       },
       {
         "id": "edu3",
@@ -561,14 +649,21 @@
         "organization": "Independent work",
         "description": "Learning by making across graphic design, experimental digital products and written work.",
         "link": "https://github.com/nafis-tamim",
-        "image": ""
+        "image": "/assets/aw-notes.svg",
+        "links": [
+          {
+            "label": "Related source",
+            "url": "https://github.com/nafis-tamim"
+          }
+        ]
       }
-    ]
+    ],
+    "sectionLinks": []
   },
   "highlights": {
     "eyebrow": "EDITOR'S SELECTION",
-    "heading": "A few things worth noticing.",
-    "intro": "A changing selection of work, writing and achievements. Update these in the studio to reflect what matters now.",
+    "heading": "What to look at first.",
+    "intro": "A small rotating editorial index of work and recognition.",
     "ids": [
       "icsc-top-2026",
       "icsc-award-2026",
@@ -586,7 +681,8 @@
     "githubUrl": "https://github.com/nafis-tamim",
     "footerLine": "A work in progress, deliberately.",
     "copyrightName": "Nafis Tamim",
-    "credit": "Designed around curiosity, evidence and change."
+    "credit": "Designed around curiosity, evidence and change.",
+    "sectionLinks": []
   },
   "customSections": [],
   "lastEditedLabel": "LAST CURATED / OCT 2026",
@@ -596,24 +692,33 @@
     "disciplines": "Leadership. Mathematics. Research.\nDesign. Writing. Technology.",
     "heroEvidenceOverline": "INDEPENDENTLY LISTED",
     "heroScroll": "SCROLL TO INVESTIGATE ↓",
-    "achievementsNote": "Use the supporting links on each card to inspect official records. A government organizer does not imply endorsement of this portfolio.",
-    "projectsMore": "VIEW MORE PROJECTS",
-    "projectsDetails": "VIEW MORE",
-    "sourceLabel": "VIEW DETAILS",
+    "achievementsNote": "Links lead directly to certificates, official results or supporting material.",
+    "projectsMore": "SEE MORE WORK",
+    "projectsDetails": "VIEW PROJECT",
+    "sourceLabel": "OPEN DOCUMENT",
     "researchJournal": "RESEARCH JOURNAL / WORKING ARCHIVE",
-    "achievementsEvidence": "Official source available",
-    "achievementsPending": "Documentation available on request",
+    "achievementsEvidence": "Official document",
+    "achievementsPending": "",
     "highlightOverline": "THE SELECTED INDEX",
-    "highlightTitle": "A closer look at the work.",
-    "highlightIntro": "A hand-picked selection of academic achievements, creative projects and ideas. Update it whenever the story changes.",
+    "highlightTitle": "Selected / notable.",
+    "highlightIntro": "A carefully chosen view of the work, across disciplines.",
     "highlightOpen": "EXPLORE DETAILS",
     "mobileContact": "LET'S TALK",
     "modalLink": "VIEW DOCUMENT / PROJECT",
     "modalVerification": "OPEN OFFICIAL SOURCE",
     "footerNote": "A living archive of evidence and imagination.",
-    "achievementsEmail": "Personal organizer email reviewed",
-    "supportingLinksTitle": "SUPPORTING LINKS",
-    "supportingLinksEmpty": "Documentation can be provided on request",
-    "achievementDetails": "VIEW THE RECORD"
+    "achievementsEmail": "",
+    "supportingLinksTitle": "DOCUMENTS & LINKS",
+    "supportingLinksEmpty": "Photos and files can be added soon",
+    "achievementDetails": "OPEN SUPPORTING MATERIAL"
+  },
+  "design": {
+    "label": "V6 / INDEX OF IDEAS",
+    "creativeStatement": "Ideas have no single discipline.",
+    "stripLabel": "THE LABORATORY IS OPEN",
+    "motif": "ORBITAL DATA FIELD",
+    "footerMotif": "ALWAYS BUILDING, ALWAYS LEARNING",
+    "layout": "editorial",
+    "showTicker": true
   }
 }
