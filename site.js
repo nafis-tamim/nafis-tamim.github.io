@@ -23,7 +23,7 @@ function navHref(entry){
  return "#"+safeId(entry.id);
 }
 function externalAttrs(n){
- return n.openNewTab||/^(https?:)/.test(str(n.href||n.target))?'target="_blank" rel="noopener noreferrer"':"";
+ return n.openNewTab?'target="_blank" rel="noopener noreferrer"':"";
 }
 function navigation(d){
  const list=arr(d.navigation).filter(n=>n.visible!==false);
@@ -191,6 +191,7 @@ function contact(d){
 }
 function setTheme(d){
  const ap=d.appearance||{};
+ document.body?.classList?.toggle("disable-hover",ap.hoverEffects===false);
  const map={background:"--bg",paper:"--paper",ink:"--ink",inkSoft:"--muted",deep:"--deep",accent:"--accent",teal:"--teal",gold:"--gold",border:"--border"};
  Object.entries(map).forEach(([k,prop])=>{if(/^#[0-9a-f]{6}$/i.test(str(ap[k])))document.documentElement.style.setProperty(prop,ap[k])});
  document.title=d.seo?.title||"Nafis Tamim";

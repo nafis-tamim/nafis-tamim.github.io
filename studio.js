@@ -429,10 +429,16 @@ function mediaPanel(container){
  (async()=>{
   if(!writeOK){status.textContent="A token with Contents: Read and write is required to manage uploaded files.";return}
   try{
-   const files=await request("GET","/contents/uploads");
+   const folders=["uploads","media"];
+   const records=[];
+   for(const folder of folders){
+    try{
+     const found=await request("GET","/contents/"+folder);
+     records.push(...a(found).filter(x=>x.type==="file"));
+    }catch(e){if(!/404|Not Found/i.test(s(e.message)))throw e}
+   }
    if(mode!=="files")return;
-   const records=a(files).filter(x=>x.type==="file");
-   status.textContent=records.length+" uploaded file(s)";
+   status.textContent=records.length+" uploaded file(s) in uploads/ and legacy media/";
    if(!records.length)list.append(make("div","record-empty","No uploads yet. Upload an image from an Achievement or Project."));
    for(const entry of records){
     const row=make("div","media-line");

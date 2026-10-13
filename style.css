@@ -404,3 +404,8 @@ img{display:block;max-width:100%}
 .research-content .research-status{letter-spacing:.03em}
 .portfolio-site .section-action:hover{text-decoration:underline;text-underline-offset:7px}
 @media(prefers-reduced-motion:reduce){.hero-pulse{animation:none}}
+
+/* Optional reduced visual movement controlled by Admin → Style */
+.disable-hover .record-card:hover,.disable-hover .work-card:hover,.disable-hover .creative-item:hover,
+.disable-hover .spotlight-card:hover,.disable-hover .media-anchor:hover .cover-image,
+.disable-hover .hero-image-frame:hover .hero-portrait {transform:none;box-shadow:none}

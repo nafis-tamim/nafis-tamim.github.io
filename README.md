@@ -1,5 +1,24 @@
 # Nafis Tamim — Multidisciplinary Academic Portfolio (v4)
 
+## V6 — The Working Index (2026)
+
+**Design:** a responsive computational editorial portfolio with asymmetric layout, dark navy hero, editorial serif accents, particle constellation, light typography-first sections and image-led direct evidence cards.
+
+**Every award, project, research record, design or writing item** has an image field and a gallery, and publicly accessible supporting links appear directly in each card (no "View more" modal). The initial SVG covers in `assets/` are labeled original illustrations, not scanned certificates or project screenshots; replace them with your real photos via Studio.
+
+**New Admin Studio:** `/admin-studio-nt26.html`. Modules include Home & profile, Achievements, Award category logos, Projects, Research, Design, Writing, Education, Pages & menu, Style / SEO / favicon, All site text, Media library and Advanced JSON. Admin edits `content/site.json`, and Sync Search Meta updates static `index.html` metadata. Add arbitrary sections and menu URLs through Pages & menu; each section supports custom section links.
+
+**GitHub permission troubleshooting:** user must sign in with a fine-grained GitHub token scoped to `nafis-tamim/nafis-tamim.github.io` with Repository permissions → Contents → **Read and write**. Studio performs a write-permission preflight through GitHub's Git Blobs API before enabling Publish or Upload. A 403 "Resource not accessible by personal access token" is a token/account permission issue and cannot be bypassed in browser code. Never share personal tokens.
+
+**Media:** Photo/PDF uploads (max 8MB; PNG, JPEG, WebP, GIF, ICO, PDF) go into `uploads/`. SVG image uploads are disallowed for security, but existing trusted repository SVG editorial art can be linked. Delete media after unlinking it from all records and publishing; Media Library checks the live content before deleting unused files. Old `media/` uploads are also discoverable.
+
+**No public "verified" label:** Removed from the new UI; legitimate evidence and official documents remain linked directly. TruthLens acceptance status remains differentiated from journal publication.
+
+**Backups:** GitHub history and `backup/before-v6-redesign-20261013`. MongoDB Atlas snapshot is a separate backup, not a live database server; the website uses GitHub JSON as its public data source.
+
+---
+
+
 A responsive editorial portfolio with a scientific visual layer, evidence-linked achievements, design and software projects, research, writing and editable content.
 
 ## Live site
