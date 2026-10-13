@@ -397,3 +397,164 @@ img{max-width:100%}
 /* Evidence-aware research acceptance badges */
 .research-status{display:inline-flex;margin:12px 0 3px;border:1px solid #bfff7770;color:var(--accent);padding:7px 11px;font:10px var(--mono);letter-spacing:.025em;max-width:100%;line-height:1.55}
 .modal-sections section:first-child h3{color:var(--teal)}
+
+
+/* -------------------------------------------------------------
+   V5 / REFINED ACADEMIC EDITORIAL SYSTEM
+   Graphite · limestone · antique brass. No neon/gamified UI.
+   ------------------------------------------------------------- */
+:root{
+ --bg:#E8E9E7;--paper:#F5F5F2;--ink:#202833;--muted:#61707C;
+ --deep:#131E2A;--accent:#D5B78A;--teal:#4A677A;--gold:#AC906D;
+ --border:#CCD2D2;
+}
+body{background:var(--bg)}
+.site-header{background:rgba(245,245,242,.96);box-shadow:0 6px 20px rgba(8,17,29,.045)}
+.brand-name{font-weight:800;letter-spacing:-.045em}
+.brand-mark{background:#1B2B38;border-radius:7px;border:1px solid #334451;color:var(--accent)}
+.nav-contact{background:var(--deep);color:#f2eee7;border-radius:2px}
+.nav-contact:hover{background:#34495A}
+.site-nav .nav-item{font-family:var(--sans);font-size:11px;font-weight:650;letter-spacing:-.005em;color:#52626B}
+.hero{background:var(--deep);color:#f3f4f2}
+.hero-lattice{opacity:.16;background-size:130px 130px}
+.hero h1{font-size:clamp(54px,6.2vw,100px);font-weight:790;letter-spacing:-.076em}
+.hero h1 em{color:var(--accent);font-size:1.02em}
+.hero-intro{color:#C7D0D3;line-height:1.85}
+.hero .eyebrow,.hero-research-label small{color:#D9C39C}
+.hero .eyebrow-line{background:var(--accent)}
+.btn{border-radius:2px}
+.hero .btn.bright{background:var(--accent);color:var(--deep);border-color:var(--accent)}
+.hero .btn.bright:hover{background:#EBDEC4}
+.hero .portrait-frame{transform:none;background:#1A2B37;box-shadow:15px 19px 0 #0C152055}
+.hero .portrait-frame:hover{transform:translateY(-3px)}
+.hero .portrait-inner{filter:saturate(.92)}
+.hero .portrait-caption{letter-spacing:.04em}
+.hero-proof{border-color:#56667287}
+.hero-proof .proof-symbol{color:var(--accent)}
+.hero-proof:hover{border-color:var(--accent)}
+.proof-strip{background:#222D38;color:#F1F0EC;border-bottom:1px solid #394653}
+.proof-identity h2{color:var(--accent)}
+.proof-divider{background:#89939B3D}
+.proof-message p{color:#D8DCE0}
+.outline-circle{border-color:#BCC5CC66;color:var(--accent)}
+.outline-circle:hover{background:#485464;color:white}
+.proof-identity .mini-kicker,.proof-message .mini-kicker{color:#AAB6BD}
+.section-heading{font-weight:790;letter-spacing:-.067em}
+.section-overline,.section-overline .seq{color:var(--teal)}
+.on-paper,.creative-section,.academic-section{background:#F5F5F2}
+.about-copy .lead{color:#2D3942}
+.quotation{color:#657783}
+.principle{border-color:#BEC7CB}
+.principle h3{font-weight:750}
+.principle p{color:var(--muted)}
+.spotlight-section{background:#DBE0E0}
+.spotlight-card,.spotlight-card:nth-child(2),.spotlight-card:nth-child(3){background:#F2F2EF;border-radius:0;border:1px solid #BFC8CA}
+.spotlight-card:nth-child(2) .spotlight-monogram{color:#526981}
+.spotlight-card:nth-child(3) .spotlight-monogram{color:#8B755B}
+.spotlight-card:hover{transform:translateY(-3px);border-color:#7E929F;box-shadow:0 14px 40px #15242F18}
+.spotlight-monogram{color:#647584}
+.spotlight-number,.spotlight-arrow{color:#556C7A}
+.award-groups{display:flex;flex-direction:column;gap:88px}
+.award-group{position:relative;scroll-margin-top:112px}
+.award-group-heading{
+ display:grid;grid-template-columns:100px minmax(0,1fr) auto;align-items:center;
+ gap:26px;margin-bottom:25px;padding:24px 27px;
+ background:#ECEFED;border:1px solid #C4CDCE;
+ border-top:3px solid #495F71;
+}
+.award-group-logo{
+ display:flex;align-items:center;justify-content:center;
+ width:96px;height:96px;overflow:hidden;
+ background:#F8F8F4;border:1px solid #C8D0CF;
+ padding:9px;
+}
+.award-group-logo-image{display:block;max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain}
+.award-group-symbol{font-size:45px;font-family:var(--serif);color:#415869}
+.award-group-text .micro{font-size:10px;letter-spacing:.11em;color:#61737E}
+.award-group-text h3{font-size:clamp(29px,3.2vw,46px);font-weight:770;letter-spacing:-.055em;line-height:1.14;margin:8px 0 7px}
+.award-group-text p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}
+.award-group-count{display:flex;flex-direction:column;align-items:center;border-left:1px solid #C5CECE;padding-left:27px;gap:1px}
+.award-group-count b{font-family:var(--serif);font-weight:400;font-size:52px;letter-spacing:-.06em}
+.award-group-count span{font:9px var(--mono);letter-spacing:.08em;color:var(--muted)}
+.award-group-disclaimer{font:10px/1.9 var(--mono);color:#6F7C82;border-left:2px solid #93A2A9;padding-left:14px;max-width:900px;margin:20px 0 0}
+.award-logo-credit{display:inline-block;color:#607B86;font:10px var(--mono);text-decoration:underline;text-underline-offset:4px;margin-top:12px}
+.award-grid{gap:14px}
+.award-card{border:1px solid #C8CFCE;background:#F8F8F5;box-shadow:none}
+.award-card:hover{transform:translateY(-3px);box-shadow:0 14px 42px #1D2B3512;border-color:#8398A5}
+.award-art,.award-card:nth-child(2) .award-art,.award-card:nth-child(3) .award-art,.award-card:nth-child(4) .award-art{
+ background:linear-gradient(135deg,#D4DDDB 0%,#E8EBE8 52%,#C9D4D5 100%)
+}
+.award-art::before{border-color:#566A7B4A}
+.award-glyph{font-size:80px;font-family:var(--serif);color:#536A77}
+.award-art-index{color:#2D445020}
+.award-content h3{font-size:clamp(23px,2.15vw,33px)}
+.award-content p{min-height:0}
+.award-bottom{color:var(--ink);margin-top:25px}
+.award-source-list{border-top:1px solid var(--border);margin-top:14px;padding-top:15px}
+.award-source-list>strong{display:block;color:#687984;font:9px var(--mono);letter-spacing:.1em;margin-bottom:12px}
+.award-source-chips{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.award-source-chips a{
+ display:inline-flex;align-items:center;gap:12px;background:#E4E9E9;
+ border:1px solid #C5CED0;padding:10px 12px;color:#29475A;
+ font:11px var(--sans);font-weight:720;transition:background .2s,border-color .2s,transform .2s
+}
+.award-source-chips a:hover{background:#D2DDE2;border-color:#637D8C;transform:translateY(-1px)}
+.award-source-chips a span{font-size:15px}
+.award-source-empty{color:#7B8487;font-size:11px;font-style:italic}
+.proof.verified{color:#3E6873}
+.card-open{color:#536C7D}
+#awards-government .award-grid{grid-template-columns:minmax(0,1fr)}
+#awards-government .award-card{display:grid;grid-template-columns:33% 67%}
+#awards-government .award-art{height:100%;min-height:310px}
+#awards-government .award-content{display:flex;flex-direction:column;justify-content:center}
+#awards-government .award-source-list{width:100%}
+.project-card,.custom-card{background:#F4F5F2;border-color:#C4CECD}
+.project-card:hover{transform:translateY(-3px);box-shadow:0 15px 40px #15232A15}
+.project-image{background:#CDD6D8}
+.project-abstraction,.abstraction-1,.abstraction-2,.abstraction-3{
+ background:radial-gradient(circle at 60% 35%,#A9BBC184 0%,transparent 50%),linear-gradient(145deg,#526774,#243745)
+}
+.project-geometry{border-radius:5%;border-color:#DCE5E4AA}
+.project-geometry.secondary-geom{border-radius:50%;border-color:#D6B78A88}
+.project-serial,.project-status{background:#172735B3}
+.project-body h3{letter-spacing:-.055em}
+.project-more{color:#496477}
+.project-card:hover .project-more b{transform:translate(2px,-2px)}
+.creative-v1,.creative-v2,.creative-v3,.creative-visual{background:#DDE2E1}
+.creative-shape,.creative-shape.shape-1,.creative-shape.shape-2{border-color:#63788A}
+.creative-title h3{font-size:22px}
+.research-section{background:#18232F}
+.research-section .section-overline,.research-section .research-number{color:var(--accent)}
+.research-section .notation{color:#D5B78A}
+.research-status{border-color:#D3B48466;color:#D5B78A}
+.writing-section{background:#E0E4E2}
+.writing-mark{color:#748696}
+.contact-section{background:#D5DADF;color:var(--deep)}
+.contact-section .section-overline{color:#425B6A}
+.contact-section .section-rule{background:#8D9FA5}
+.contact-actions .btn.dark{background:#172632;border-color:#172632;color:white}
+.outlined-btn{border-color:#788C93}
+.outlined-btn:hover{background:#EAF0F0}
+.modal-panel{background:#F9FAF7}
+.modal-sections section:first-child h3{color:#536D7D}
+.btn.outline{color:#243C4A;border-color:#ACB8BC}
+.btn.outline:hover{background:#E5EBEA}
+@media(max-width:900px){
+ .award-group-heading{grid-template-columns:78px minmax(0,1fr) auto;padding:20px;gap:15px}
+ .award-group-logo{width:76px;height:76px}
+ .award-group-count{padding-left:13px}
+ #awards-government .award-card{grid-template-columns:1fr}
+ #awards-government .award-art{min-height:235px;height:240px}
+}
+@media(max-width:620px){
+ .award-groups{gap:62px}
+ .award-group-heading{grid-template-columns:65px minmax(0,1fr);padding:17px}
+ .award-group-logo{width:64px;height:64px;padding:6px}
+ .award-group-count{grid-column:2;display:none}
+ .award-group-text h3{font-size:27px}
+ .award-group-text p{font-size:11px}
+ .award-source-chips{gap:6px}
+ .award-source-chips a{font-size:10px;padding:9px}
+ .hero h1{font-size:clamp(48px,11vw,76px)}
+ .spotlight-monogram{font-size:60px}
+}
