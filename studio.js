@@ -1,575 +1,574 @@
-
+/* NAFIS TAMIM — PORTFOLIO STUDIO V6
+ GitHub-backed, browser-only admin. Tokens are never stored or committed.
+*/
 "use strict";
-/* NT Portfolio Studio v4 — secure GitHub repository-scoped publishing */
-const REPO="nafis-tamim/nafis-tamim.github.io";
-const FILE="content/site.json";
-const API="https://api.github.com/repos/"+REPO;
-let token="",documentData=null,contentSha="",dirty=false,activeModule="overview",currentItem=0,busy=false;
-let sourceJson="";
-const nestedSelections=Object.create(null);
+const GITHUB="nafis-tamim/nafis-tamim.github.io";
+const API="https://api.github.com/repos/"+GITHUB;
+const CONTENT="content/site.json";
 const $=s=>document.querySelector(s);
-const node=(name,cls="",text="")=>{const n=document.createElement(name);if(cls)n.className=cls;if(text!==undefined&&text!==null)n.textContent=text;return n};
-const text=x=>String(x===null||x===undefined?"":x);
-const arr=x=>Array.isArray(x)?x:[];
-const itemId=()=>typeof crypto!=="undefined"&&crypto.randomUUID?crypto.randomUUID():Date.now()+"-"+Math.random().toString(16).slice(2);
-const entries=[
- ["overview","OVERVIEW","Dashboard","Manage the whole portfolio from one secure space.",null],
- ["identity","IDENTITY","Profile & photo","Name, profile photo, academic identity, social accounts and contact email.","identity"],
- ["hero","LANDING PAGE","Hero & spotlight","Every headline, introduction and featured recognition on the first screen.","hero"],
- ["achievements","RECOGNITION","Achievements & photos","Upload, remove or edit award photos, certificates, supporting links and group assignments.","achievements"],
- ["awardGroups","CATEGORY BRANDING","Government & international logos","Upload, replace or remove each category logo and edit group titles, descriptions and order.","achievements.groups"],
- ["projects","ALL CATEGORIES","Projects & case studies","Software, research, design, writing, products and any other project type.","projects"],
- ["research","RESEARCH ARCHIVE","Research & inquiry","Research abstracts, methods, conclusions, publications and supporting images or PDFs.","research"],
- ["creative","DESIGN / ART","Creative work","Branding, posters, product concepts, creative collections and downloadable work.","creative"],
- ["writing","PUBLICATIONS","Writing & essays","Academic essays, publications, writing prizes, reviews and independent ideas.","writing"],
- ["academics","EDUCATION","Academic journey","Education, activities, internships, leadership and other milestones.","academics"],
- ["about","PERSONAL STATEMENT","About & approach","Edit the complete personal statement and three guiding principles.","about"],
- ["navigation","SITE STRUCTURE","Menus & sections","Edit navigation labels, reorder, hide, show, or add a custom section.","navigation"],
- ["highlights","FEATURED","Editorial highlights","Choose the entries featured in changing selected-work collections.","highlights"],
- ["contact","OUTREACH","Contact & footer","Edit footer and call-to-action content; social links are under Profile & photo.","contact"],
- ["appearance","DESIGN SYSTEM","Colors & animations","Set every theme color and choose subtle science animations and motion effects.","appearance"],
- ["seo","SEARCH PRESENCE","SEO & favicon","Control page title, description, keywords, social image and browser tab icon.","seo"],
- ["media","FILE CLEANUP","Media library & delete","Manage uploaded images and PDFs. Unlink assets first, publish, then securely delete unused files.",null],
- ["customSections","FLEXIBLE CONTENT","Custom sections","Create completely new sections with their own heading, description and cards.","customSections"],
- ["ui","SITE LANGUAGE","Labels & microcopy","All small labels, button captions, status text and non-editorial words.","ui"],
- ["advanced","ALL SITE CONTENT","Advanced JSON editor","Edit or add any text, property, array, label, menu or entire content block.","advanced"]
+const make=(tag,className="",string)=>{const x=document.createElement(tag);if(className)x.className=className;if(string!==undefined)x.textContent=String(string);return x};
+const a=x=>Array.isArray(x)?x:[];
+const s=x=>x===undefined||x===null?"":String(x);
+const uuid=()=>globalThis.crypto?.randomUUID?.()||("entry-"+Date.now()+"-"+Math.random().toString(16).slice(2,10));
+const clone=x=>JSON.parse(JSON.stringify(x));
+const labelize=x=>s(x).replace(/([a-z])([A-Z])/g,"$1 $2").replace(/[_-]/g," ").replace(/^./,ch=>ch.toUpperCase());
+const isMedia=k=>/^(image|portrait|logo|favicon|ogImage|pdf|documentUrl|banner|cover|thumbnail|photo)$/i.test(k);
+const isLong=k=>/(description|body|summary|detail|abstract|intro|challenge|process|outcome|method|question|quote|lead|heading|evidenceStatus|editorial)/i.test(k);
+const freshId=prefix=>prefix+"-"+uuid().replace(/[^a-z0-9-]/gi,"").slice(0,14);
+const modules=[
+ ["start","Dashboard","See your website at a glance"],
+ ["home","Home & profile","Profile, landing text, about and contact"],
+ ["awards","Achievements","Images, certificates, awards and sources"],
+ ["groups","Award categories & logos","Government, international and custom groups"],
+ ["projects","Projects","All categories, images, work and PDF links"],
+ ["research","Research","Paper covers, manuscripts and sources"],
+ ["creative","Design gallery","Brand work, packaging, posters and graphics"],
+ ["writing","Writing","Essays, publications and long-form ideas"],
+ ["academics","Education & activities","Your academic journey"],
+ ["menu","Pages & menu","Custom links, new sections and navigation order"],
+ ["look","Style, photos & SEO","Website theme, motion, favicon, search"],
+ ["labels","All site text","Headings, small labels and editorial copy"],
+ ["files","Media library","Remove unused uploads after publishing"],
+ ["advanced","Advanced editor","Full content document as JSON"]
 ];
-const prettyLabel=x=>text(x).replace(/([a-z])([A-Z])/g,"$1 $2").replace(/[_-]/g," ").replace(/\b\w/g,c=>c.toUpperCase());
-const fieldLong=k=>/(body|summary|description|intro|details|challenge|process|outcome|method|abstract|quote|caption|lead|content|heading)/i.test(k);
-const fieldMedia=k=>/(^image$|^logo$|portrait|photo|favicon|cover|ogImage|thumbnail|banner|pdf|documentUrl)/i.test(k);
-const fieldLink=k=>/(^url$|Url$|^link$|verification|email)/i.test(k);
-function api(method,endpoint,body){
- return fetch(endpoint.startsWith("https://")?endpoint:API+endpoint,{
-  method,headers:{
+let token="",data=null,sha="",writeOK=false,dirty=false,mode="start",chosen={},busy=false;
+let previewBlobUrls=[];
+function dropPreviews(){previewBlobUrls.forEach(u=>URL.revokeObjectURL(u));previewBlobUrls=[]}
+function errorMessage(e){
+ const msg=s(e?.message||e);
+ if(/Resource not accessible by personal access token|403|permission.*denied|Write access|requires.*write/i.test(msg))return "GitHub rejected this token for writing. Open GitHub Settings → Developer settings → Personal access tokens → Fine-grained tokens. Select nafis-tamim.github.io and set Repository permissions → Contents → Read and write. Generate/update a token and reconnect. Never paste tokens in chat.";
+ if(/404|not found/i.test(msg))return "Repository/file not found for this token. Make sure Repository access includes nafis-tamim.github.io and you are signed into the right account.";
+ if(/409|conflict/i.test(msg))return "GitHub detected a conflict. Reload the editor to get the newest repository version.";
+ if(/rate limit/i.test(msg))return "GitHub API rate limit reached. Try again shortly.";
+ return msg;
+}
+async function request(method,endpoint,body){
+ const url=endpoint.startsWith("https://")?endpoint:API+endpoint;
+ const res=await fetch(url,{
+  method,
+  headers:{
    "Authorization":"Bearer "+token,
    "Accept":"application/vnd.github+json",
    "X-GitHub-Api-Version":"2022-11-28",
    ...(body?{"Content-Type":"application/json"}:{})
   },
-  body:body?JSON.stringify(body):undefined
- }).then(async r=>{
-   const raw=await r.text();let data;
-   try{data=JSON.parse(raw)}catch{data={message:raw}}
-   if(!r.ok)throw Error(data.message||"GitHub API returned "+r.status);
-   return data;
+  ...(body?{body:JSON.stringify(body)}:{})
  });
+ const raw=await res.text();let result;
+ try{result=JSON.parse(raw)}catch{result={message:raw}}
+ if(!res.ok)throw new Error((result.message||"GitHub API error")+" ("+res.status+")");
+ return result;
 }
-function b64encode(str){
- const bytes=new TextEncoder().encode(str);
- let result="";
- for(let i=0;i<bytes.length;i+=8192)result+=String.fromCharCode(...bytes.slice(i,i+8192));
- return btoa(result);
+function encode(text){
+ const u=new TextEncoder().encode(text);let str="";
+ for(let k=0;k<u.length;k+=8192)str+=String.fromCharCode(...u.slice(k,k+8192));
+ return btoa(str);
 }
-function b64decode(raw){
- const binary=atob(raw.replace(/\s+/g,""));const bytes=Uint8Array.from(binary,x=>x.charCodeAt(0));
- return new TextDecoder().decode(bytes);
+function decode(content){
+ const raw=atob(s(content).replace(/\s/g,""));
+ return new TextDecoder().decode(Uint8Array.from(raw,c=>c.charCodeAt(0)));
 }
-function flash(message,type="success"){
- const box=$("#status-banner");
- box.textContent=message;box.className=type;
+function notice(txt,kind="success"){
+ const el=$("#notice");el.textContent=txt;el.className="notice is-visible"+(kind==="success"?"":" "+kind);
 }
-function markDirty(){
- dirty=true;
- $("#dirty-label").textContent="UNPUBLISHED CHANGES";
- $("#dirty-label").style.color="#a46616";
- $("#publish").textContent="PUBLISH CHANGES ↗";
+function dirtyNow(){
+ dirty=true;const n=$("#draft-indicator");if(n){n.textContent="UNPUBLISHED CHANGES";n.className="draft-indicator dirty"}
 }
-function clearDirty(){
- dirty=false;$("#dirty-label").textContent="ALL CHANGES PUBLISHED";
- $("#dirty-label").style.color="#24755e";
+function cleanNow(){
+ dirty=false;const n=$("#draft-indicator");if(n){n.textContent="ALL CHANGES SAVED";n.className="draft-indicator"}
 }
-async function connect(){
- const entered=$("#token").value.trim(),error=$("#login-error");error.textContent="";
- if(!entered){error.textContent="Paste your GitHub fine-grained personal access token.";return}
- token=entered;$("#connect").disabled=true;
- try{
-  const r=await api("GET","/contents/"+FILE);
-  documentData=JSON.parse(b64decode(r.content));sourceJson=JSON.stringify(documentData);
-  contentSha=r.sha;$("#token").value="";
-  $("#login").hidden=true;$("#dashboard").hidden=false;
-  clearDirty();renderNavigation();renderModule();
-  flash("Connected securely to "+REPO+". All edits remain drafts until you choose Publish.");
- }catch(e){
-  token="";
-  error.textContent="Could not connect: "+e.message+" . Check the repository selection and Contents: Read & Write permissions.";
- }finally{$("#connect").disabled=false}
+function button(txt,fn,cl="small-action"){
+ const x=make("button",cl,txt);x.type="button";x.addEventListener("click",fn);return x;
 }
-function renderNavigation(){
- const nav=$("#sections-nav");nav.innerHTML="";
- entries.forEach(([key,kicker,title],i)=>{
-  const b=node("button",key===activeModule?"active":"");
-  b.dataset.mod=key;
-  b.innerHTML="<span>"+String(i+1).padStart(2,"0")+"</span>";
-  b.append(document.createTextNode(title));
-  b.addEventListener("click",()=>{activeModule=key;currentItem=0;renderNavigation();renderModule()});
-  nav.append(b);
- });
+function input(label,value,changed,{multiline=false,type="text",hint="",wide=false}={}){
+ const wrapper=make("label","form-field"+(wide?" span2":""));
+ const title=make("span","",labelize(label));wrapper.append(title);
+ const el=multiline?make("textarea"):make("input");
+ if(!multiline)el.type=type;
+ el.value=value===undefined||value===null?"":s(value);
+ if(multiline)el.rows=3;
+ el.spellcheck=false;
+ el.oninput=()=>changed(type==="number"?Number(el.value):el.value);
+ wrapper.append(el);
+ if(hint)wrapper.append(make("small","field-tip",hint));
+ return {wrapper,el};
 }
-function control(text,fn,cls="small-btn"){
- const b=node("button",cls,text);b.type="button";b.onclick=fn;return b;
+function caption(title,subtitle){
+ const x=make("div","panel-header"),copy=make("div");
+ copy.append(make("span","small-cap","EDITOR / "+mode.toUpperCase()),make("h2","",title),make("p","",subtitle||""));
+ x.append(copy);return x;
 }
-function renderModule(){
- const definition=entries.find(x=>x[0]===activeModule)||entries[0];
- $("#panel-kicker").textContent=definition[1];
- $("#panel-title").textContent=definition[2];
- $("#panel-description").textContent=definition[3];
- const count=$("#panel-count"),area=$("#editor-area");count.textContent="";area.innerHTML="";
- if(activeModule==="overview"){overview(area);return}
- if(activeModule==="advanced"){advanced(area);return}
- if(activeModule==="media"){mediaLibrary(area);return}
- if(activeModule==="achievements"){
-  const awards=documentData.achievements;
-  const fields=node("div","editor-grid");
-  for(const key of ["eyebrow","heading","intro"])renderField(fields,awards,key,awards[key]??"");
-  area.append(fields);
-  const note=node("div","highlight-message","Select an award below to edit its group, photo, gallery, official result links and supporting evidence. Group logos and headings have their own module: Government & international logos.");
-  area.append(note);
-  arrayEditor(area,awards.cards,awards,"cards","achievements");
-  count.textContent=arr(awards.cards).length+" AWARDS";
-  return;
- }
- const segments=(definition[4]||"").split(".");
- const field=segments.pop();
- const parentObj=segments.reduce((obj,key)=>obj?.[key],documentData);
- const root=parentObj?.[field];
- if(activeModule==="customSections"){
-  customEditor(area);count.textContent=arr(root).length+" SECTIONS";return;
- }
- if(activeModule==="navigation"){
-  const info=node("div","highlight-message","Navigation order defines the order visitors see sections. Hidden sections are removed from public navigation and the public page. Custom sections appear here automatically.");
-  area.append(info);
-  arrayEditor(area,root,documentData,"navigation","navigation");
-  count.textContent=arr(root).length+" ITEMS";return;
- }
- if(Array.isArray(root)){
-  if(activeModule==="awardGroups")area.append(node("div","highlight-message","Every section has an editable logo. Remove the logo for a clean typographic fallback, or upload a PNG/JPG/WebP. Government recognition identifies the organizer and does not imply an endorsement of your website."));
-  arrayEditor(area,root,parentObj,field,activeModule);
-  count.textContent=root.length+" ITEMS";return;
- }
- if(root&&typeof root==="object"){
-  objectEditor(area,root,definition[4]);
-  const listing=root.cards||root.items;
-  if(Array.isArray(listing))count.textContent=listing.length+" ENTRIES";
- }else{
-  area.append(node("p","mini-note","No content yet. Try the Advanced JSON Editor."));
- }
+function section(parent,title,desc){
+ const el=make("section","simple-section");
+ el.append(make("h3","",title));
+ if(desc)el.append(make("p","field-tip",desc));
+ parent.append(el);return el;
 }
-function overview(area){
- const counts=[
-  [arr(documentData.achievements?.cards).length,"ACHIEVEMENTS"],
-  [arr(documentData.projects?.items).length,"PROJECTS"],
-  [arr(documentData.research?.items).length,"RESEARCH"],
-  [arr(documentData.creative?.items).length,"DESIGN RECORDS"],
-  [arr(documentData.writing?.items).length,"WRITINGS"],
-  [arr(documentData.navigation).filter(x=>x.visible).length,"LIVE SECTIONS"]
- ];
- const note=node("div","highlight-message");
- note.innerHTML="<strong>One editorial system, unlimited types of work.</strong>  The site reads everything from the repository content document. You can upload PNG, JPG, WebP, GIF and PDF files directly to GitHub; the editor inserts their links automatically. For privacy, your token is kept in memory and disappears on disconnect.";
- area.append(note);
- const g=node("div","overview-stats");counts.forEach(([count,label])=>{const x=node("div","overview-stat");x.innerHTML="<strong>"+count+"</strong><small>"+label+"</small>";g.append(x)});area.append(g);
- const shortcuts=node("div","overview-actions");
- for(const [key,title,detail] of [
-  ["achievements","Recognition & certificates","Add an award and attach a public official source"],
-  ["projects","Projects & case studies","Publish software, graphic design or any other work"],
-  ["research","Research & academic papers","Add abstracts, methods and supporting documents"],
-  ["seo","Browser icon & Google SEO","Edit favicon, social preview, title and description"],
-  ["navigation","Menu & layout","Reorder sections, create custom pages and hide sections"],
-  ["appearance","Colors & effects","Change the visual system without writing CSS"]
- ]){
-  const b=control(title,()=>{activeModule=key;currentItem=0;renderNavigation();renderModule()},"");
-  b.append(node("small","",detail));shortcuts.append(b);
- }
- area.append(shortcuts);
- area.append(node("p","mini-note","GitHub Pages is a static hosting service, so MongoDB access credentials must not be placed in browser code. The live website uses this GitHub-backed content system; MongoDB is a separate backed-up dataset until a secure server-side integration is deployed."));
-}
-function makeLabel(title){
- const label=node("label","field");const name=node("span","field-label",prettyLabel(title));label.append(name);return label;
-}
-function createMediaInput(container,obj,key){
- const media=node("div","field-controls");
- const action=control("↑ UPLOAD / REPLACE",()=>picker.click());
- media.append(action);
- const picker=node("input","file-input");picker.type="file";
- picker.accept=".png,.jpg,.jpeg,.webp,.gif,.pdf,.ico,image/png,image/jpeg,image/webp,image/gif,application/pdf,image/x-icon";
- picker.style.display="none";media.append(picker);
- const status=node("span","micro","");
- media.append(status);
- picker.onchange=async()=>{
-  const file=picker.files?.[0];if(!file)return;
-  status.textContent="Uploading "+file.name+"…";
-  try{
-   const path=await uploadFile(file);
-   obj[key]=path;markDirty();status.textContent="Uploaded! Image URL inserted.";
-   renderModule();
-   flash("Uploaded "+file.name+" to GitHub. Remember to Publish the portfolio changes to link the image.");
-  }catch(e){status.textContent="Upload failed: "+e.message;flash("File upload failed: "+e.message,"warning")}
-  picker.value="";
- };
- if(obj[key]){
-  media.append(control("× REMOVE FROM WEBSITE",()=>{
-   if(!confirm("Remove this image or file link from the portfolio? You can Publish the removal, then permanently delete the unused uploaded file in Media library."))return;
-   obj[key]="";markDirty();renderModule();
-   flash("Removed from the draft. Publish to update the public site. For stored files, use Media library to permanently delete after publishing.");
-  },"remove-photo"));
- }
- container.append(media);
- if(obj[key]&&/\.(png|jpe?g|webp|gif|ico)(\?|$)/i.test(obj[key])){
-  const im=node("img","field-preview");im.src=obj[key];im.alt="Media preview";im.loading="lazy";im.onerror=()=>im.remove();container.append(im);
- }
-}
-function renderField(parent,obj,key,value){
- const label=makeLabel(key);
- const multiline=fieldLong(key)||text(value).length>130;
- label.classList.toggle("span-full",multiline||fieldMedia(key));
- if(typeof value==="boolean"){
-  label.classList.add("field-check");
-  const box=node("input");box.type="checkbox";box.checked=value;box.onchange=()=>{obj[key]=box.checked;markDirty()};
-  label.append(box);
- }else if(typeof value==="number"){
-  const input=node("input");input.type="number";input.value=String(value);
-  input.oninput=()=>{obj[key]=Number(input.value);markDirty()};label.append(input);
- }else if(key==="groupId"){
-  const list=arr(documentData.achievements?.groups),select=node("select");
-  list.forEach(g=>{const option=node("option");option.value=g.id;option.textContent=g.title;select.append(option)});
-  if(!list.some(g=>g.id===value)){const other=node("option");other.value=value;other.textContent=value||"Uncategorized";select.append(other)}
-  select.value=value;
-  select.onchange=()=>{obj[key]=select.value;markDirty()};
-  label.append(select);
- }else if(typeof value==="string"){
-  const isHex=/^#[a-fA-F0-9]{6}$/.test(value);
-  const el=isHex?node("input"):multiline?node("textarea"):node("input");
-  if(isHex)el.type="color";else if(fieldLink(key))el.type=key==="email"?"email":"text";
-  el.value=value;
-  el.autocomplete="off";
-  el.oninput=()=>{obj[key]=el.value;markDirty()};
-  label.append(el);
-  if(fieldMedia(key))createMediaInput(label,obj,key);
- }else{
-  const el=node("textarea");el.value=JSON.stringify(value??null,null,2);
-  el.onchange=()=>{try{obj[key]=JSON.parse(el.value);el.style.borderColor="#448866";markDirty()}catch(e){flash("Invalid JSON in "+key+": "+e.message,"warning");el.style.borderColor="red"}};
-  label.append(el);
- }
- parent.append(label);
-}
-function objectEditor(parent,obj,path=""){
- if(!obj||typeof obj!=="object")return;
- const grid=node("div","editor-grid");parent.append(grid);
- Object.entries(obj).forEach(([key,v])=>{
+function editorFields(parent,obj,{omit=[],title="",desc=""}={}){
+ if(title)parent.append(make("h3","",title));
+ if(desc)parent.append(make("p","field-tip",desc));
+ const grid=make("div","field-grid");parent.append(grid);
+ for(const [key,v] of Object.entries(obj||{})){
+  if(omit.includes(key))continue;
+  if(key==="verified"||key==="certificateReviewed"||key==="emailReviewed")continue;
   if(Array.isArray(v)){
-   if(key==="gallery"){
-    createGalleryEditor(grid,obj,key);
-   }else if(["tags","ids"].includes(key)||v.length>0&&typeof v[0]!=="object"){
-    const label=makeLabel(key);label.classList.add("span-full");
-    const input=node("textarea");input.rows=3;input.value=v.join("\n");input.onchange=()=>{obj[key]=input.value.split("\n").map(x=>x.trim()).filter(Boolean);markDirty()};
-    label.append(input);label.append(node("div","field-desc","One value per line."));grid.append(label);
-   }else if(arr(v).length===0||typeof v[0]==="object"){
-    const box=node("div","group-box");box.style.gridColumn="1/-1";
-    box.append(node("div","group-legend",prettyLabel(key).toUpperCase()+" / COLLECTION"));
-    grid.append(box);
-    arrayEditor(box,v,obj,key,path+"."+key);
-   }else{
-    const label=makeLabel(key);label.classList.add("span-full");
-    const input=node("textarea");input.rows=3;input.value=v.join("\n");input.onchange=()=>{obj[key]=input.value.split("\n").map(s=>s.trim()).filter(Boolean);markDirty()};
-    label.append(input);label.append(node("div","field-desc","One item per line. You can also upload assets to add to this gallery."));
-    createArrayMediaUpload(label,obj,key);
-    grid.append(label);
+   if(["gallery"].includes(key)){const wrap=make("div","span2");grid.append(wrap);mediaGallery(wrap,obj,key);continue}
+   if(["supportingLinks","links","sectionLinks","socials"].includes(key)){const wrap=make("div","span2");grid.append(wrap);linkEditor(wrap,obj,key);continue}
+   if(["tags","ids","categories"].includes(key)){
+    const item=input(labelize(key),v.join("\n"),t=>{obj[key]=t.split("\n").map(x=>x.trim()).filter(Boolean);dirtyNow()},{multiline:true,wide:true,hint:"One item per line."});
+    grid.append(item.wrapper);continue;
    }
-  }else if(v&&typeof v==="object"){
-   const group=node("div","group-box");group.style.gridColumn="1/-1";
-   group.append(node("h3","group-heading",prettyLabel(key)));grid.append(group);
-   objectEditor(group,v,path+"."+key);
-  }else renderField(grid,obj,key,v);
- });
-}
-function createGalleryEditor(parent,obj,key){
- const box=node("div","group-box");box.style.gridColumn="1/-1";
- box.append(node("h3","group-heading","Photo & PDF gallery"));
- box.append(node("p","mini-note","Add photos or certificates, view existing files, and remove any item. To delete uploaded files from GitHub storage too: Publish, then open Media library."));
- const list=node("div","gallery-list");box.append(list);
- const media=arr(obj[key]);
- media.forEach((link,i)=>{
-  const row=node("div","media-item");
-  if(/\.(png|jpe?g|webp|gif|ico)(?:[?#]|$)/i.test(link)){
-   const img=node("img");img.src=link;img.alt="Gallery image "+(i+1);img.loading="lazy";row.append(img);
+   if(v.length&&typeof v[0]==="object"||!v.length){
+    const wrap=make("div","span2");grid.append(wrap);
+    nestedEditor(wrap,obj,key);continue;
+   }
+   const item=input(key,v.join("\n"),t=>{obj[key]=t.split("\n").filter(Boolean);dirtyNow()},{multiline:true,wide:true});
+   grid.append(item.wrapper);
+   continue;
   }
-  const meta=node("div","media-meta",link);row.append(meta);
-  const view=node("a","","VIEW ↗");view.href=link;view.target="_blank";view.rel="noopener noreferrer";row.append(view);
-  row.append(control("× REMOVE",()=>{
-   obj[key].splice(i,1);markDirty();renderModule();flash("Gallery item removed from the draft. Publish changes to update the website.");
-  },"remove-photo"));
-  list.append(row);
- });
- const tools=node("div","media-tools");
- const picker=node("input");picker.type="file";picker.accept=".png,.jpg,.jpeg,.webp,.gif,.pdf,.ico";picker.style.display="none";
- const add=control("↑ UPLOAD IMAGE / PDF",()=>picker.click());tools.append(add);
- tools.append(control("+ ADD EXTERNAL LINK",()=>{
-  const value=prompt("Paste the full HTTPS image or PDF URL:","");
-  if(!value)return;
-  try{const u=new URL(value);if(u.protocol!=="https:")throw Error("Only HTTPS URLs");obj[key].push(u.href);markDirty();renderModule()}
-  catch(e){flash("Invalid gallery URL. Use a full HTTPS link.","warning")}
- }));
- tools.append(picker);box.append(tools);
- picker.onchange=async()=>{
-  const f=picker.files?.[0];if(!f)return;
-  add.disabled=true;
-  try{const link=await uploadFile(f);obj[key].push(link);markDirty();renderModule();flash("Uploaded and added to gallery. Publish to show on the website.")}
-  catch(e){flash("Upload failed: "+e.message,"warning")}
-  finally{add.disabled=false}
- };
- parent.append(box);
-}
-function createArrayMediaUpload(parent,obj,key){
- const b=control("↑ UPLOAD FILE",()=>input.click());parent.append(b);
- const input=node("input");input.type="file";input.accept=".png,.jpg,.jpeg,.webp,.gif,.pdf,.ico";input.style.display="none";
- parent.append(input);input.onchange=async()=>{
-  if(!input.files?.[0])return;
-  try{const link=await uploadFile(input.files[0]);obj[key].push(link);markDirty();renderModule()}
-  catch(e){flash("Upload failed: "+e.message,"warning")}
- };
-}
-function defaultRecord(type){
- const defaults={
-  achievements:{id:itemId(),groupId:"international",title:"New achievement",institution:"",category:"Academic achievement",year:"",summary:"",details:"",result:"",verified:false,verification:"",documentUrl:"",supportingLinks:[],image:"",gallery:[],tags:[],featured:false},
-  awardGroups:{id:"new-"+itemId().slice(0,6),eyebrow:"CATEGORY",title:"New recognition group",subtitle:"",description:"",logo:"",logoAlt:"",logoSource:"",visible:true},
-  supportingLinks:{label:"Official Results",url:"https://"},
-  projects:{id:itemId(),title:"New project",subtitle:"",category:"Other",year:"",status:"In progress",summary:"",challenge:"",process:"",outcome:"",tools:"",image:"",gallery:[],url:"",verification:"",featured:false,tags:[]},
-  research:{id:itemId(),title:"New research record",field:"Independent research",year:"",abstract:"",question:"",method:"",result:"",publication:"",verification:"",documentUrl:"",image:"",gallery:[],tags:[],featured:false},
-  creative:{id:itemId(),title:"New creative work",category:"Graphic design",description:"",image:"",gallery:[],link:"",featured:false},
-  writing:{id:itemId(),title:"New writing",year:"",category:"Essay",summary:"",body:"",verification:"",documentUrl:"",image:"",gallery:[],tags:[],featured:false},
-  academics:{id:itemId(),year:"",type:"Education",title:"New milestone",organization:"",description:"",link:"",image:""},
-  navigation:{id:"custom-"+Date.now(),label:"New menu item",visible:true},
-  customSections:{id:"custom-"+Date.now(),label:"New section",eyebrow:"NEW COLLECTION",heading:"New section",intro:"Edit this description.",visible:true,items:[]},
-  principles:{number:"04",title:"New principle",body:""},
-  socials:{label:"New profile",url:"https://"},
-  items:{id:itemId(),title:"New item",category:"",description:"",image:"",url:""}
- };
- return structuredClone(defaults[type]||defaults.items);
-}
-function listTitle(item,i){
- return item?.title||item?.name||item?.label||item?.heading||item?.id||"Item "+(i+1);
-}
-function arrayEditor(parent,items,owner,key,group){
- if(!Array.isArray(items)){parent.append(node("p","mini-note","Collection not initialized."));return}
- const heading=node("div","array-head");heading.append(node("h3","",prettyLabel(key)));
- const plus=control("＋ ADD NEW",()=>{
-  const type=group.startsWith("about.principles")?"principles":group.includes("socials")?"socials":group.includes("supportingLinks")?"supportingLinks":group.startsWith("customSections.items")?"items":group==="customSections"?"customSections":activeModule;
-  const fresh=defaultRecord(type);
-  items.push(fresh);
-  if(group.includes(".")||group.includes("["))nestedSelections[group]=items.length-1;
-  else currentItem=items.length-1;
-  if(type==="customSections"){
-   documentData.navigation.push({id:fresh.id,label:fresh.label,visible:true});
+  if(v&&typeof v==="object"){const wrap=make("div","span2");grid.append(wrap);const name=make("h3","",labelize(key));wrap.append(name);editorFields(wrap,v);continue}
+  if(typeof v==="boolean"){
+   const l=make("label","checkbox-field");const chk=make("input");chk.type="checkbox";chk.checked=v;
+   chk.onchange=()=>{obj[key]=chk.checked;dirtyNow()};l.append(chk,make("span","",labelize(key)));grid.append(l);continue;
   }
-  markDirty();renderModule();
- },"");heading.append(plus);parent.append(heading);
- if(!items.length){
-  parent.append(node("p","mini-note","This collection is empty. Click ＋ Add New to create the first entry."));
-  return;
+  if(key==="groupId"){
+   const field=make("label","form-field");field.append(make("span","","Award category"));
+   const sel=make("select");for(const group of a(data.achievements?.groups)){const option=make("option","",group.title);option.value=group.id;sel.append(option)}
+   if(!a(data.achievements?.groups).some(g=>g.id===v)){const option=make("option","",v||"Other");option.value=v;sel.append(option)}
+   sel.value=v;sel.onchange=()=>{obj[key]=sel.value;dirtyNow()};field.append(sel);grid.append(field);continue;
+  }
+  if(typeof v==="string"&&/^#[0-9a-fA-F]{6}$/.test(v)){
+   const field=input(key,v,t=>{obj[key]=t;dirtyNow()},{type:"color"});grid.append(field.wrapper);continue;
+  }
+  const media=isMedia(key);
+  const item=input(key,v,t=>{obj[key]=t;dirtyNow()},{multiline:!media&&(isLong(key)||s(v).length>115),wide:media||isLong(key)||s(v).length>115,
+   hint:key==="href"?"Use #achievements, #research or a complete https:// link.":key==="imageAlt"?"Describe the image for visitors using screen readers.":""});
+  grid.append(item.wrapper);
+  if(media)renderMediaControls(item.wrapper,obj,key);
  }
- const nested=group.includes(".")||group.includes("[");
- const getSelection=()=>nested?(nestedSelections[group]??0):currentItem;
- const setSelection=i=>{if(nested)nestedSelections[group]=i;else currentItem=i};
- const selected=Math.min(Math.max(0,getSelection()),items.length-1);setSelection(selected);
- if(typeof items[0]!=="object" || items[0]===null){
-  const area=node("textarea","");area.value=items.join("\n");area.onchange=()=>{owner[key]=area.value.split("\n").filter(Boolean);markDirty()};
-  parent.append(area);return;
- }
- const layout=node("div","item-layout"),left=node("div","item-list"),right=node("div","item-edit");layout.append(left,right);parent.append(layout);
- items.forEach((item,i)=>{
-  const b=node("button",selected===i?"is-active":"");
-  const mini=node("span","",String(i+1).padStart(2,"0")+" / "+text(item.category||item.type||"ENTRY"));b.append(mini);
-  b.append(document.createTextNode(listTitle(item,i)));
-  b.onclick=()=>{setSelection(i);renderModule()};left.append(b);
- });
- const actions=node("div","toolbar");
- actions.append(control("↑ UP",()=>move(-1)),control("↓ DOWN",()=>move(1)));
- actions.append(control("⧉ DUPLICATE",()=>{
-  const at=getSelection(),copy=structuredClone(items[at]);copy.id=itemId();items.splice(at+1,0,copy);setSelection(at+1);markDirty();renderModule();
- }));
- actions.append(control("× DELETE",()=>{
-  if(!confirm("Delete this entry? You can recover from GitHub history until published."))return;
-  const at=getSelection(),item=items[at];
-  if(activeModule==="customSections")documentData.navigation=documentData.navigation.filter(x=>x.id!==item.id);
-  items.splice(at,1);setSelection(Math.max(0,at-1));markDirty();renderModule();
- },"small-btn danger"));
- right.append(actions);
- objectEditor(right,items[selected],group+"["+selected+"]");
- function move(delta){
-  const at=getSelection(),to=at+delta;if(to<0||to>=items.length)return;
-  [items[to],items[at]]=[items[at],items[to]];
-  setSelection(to);markDirty();renderModule();
- }
+ return grid;
 }
-function customEditor(area){
- const note=node("div","highlight-message","Add your own section with any label, heading, descriptive text, and a set of image cards. The new section is automatically added to navigation; move it using Menus & sections.");
- area.append(note);
- arrayEditor(area,documentData.customSections,documentData,"customSections","customSections");
-}
-function advanced(area){
- const warn=node("div","highlight-message","This editor allows unrestricted changes to all text, metadata and content—including properties not shown in the visual editor. JSON syntax must be valid. Use Backup JSON first.");
- area.append(warn);
- const code=node("textarea","json-editor");code.spellcheck=false;code.value=JSON.stringify(documentData,null,2);
- area.append(code);
- const actions=node("div","json-actions");
- actions.append(control("APPLY JSON CHANGES",()=>{
+function renderMediaControls(container,obj,key){
+ const tools=make("div","media-field-actions");
+ const file=make("input");file.type="file";file.accept=".jpg,.jpeg,.png,.webp,.gif,.ico,.pdf";file.style.display="none";
+ const upload=button("↑ UPLOAD / REPLACE",()=>file.click());
+ if(!writeOK)upload.disabled=true;
+ tools.append(upload,file);
+ if(obj[key]){
+  tools.append(button("× REMOVE FROM WEBSITE",()=>{
+   if(!confirm("Remove this image or file link from the website? You can separately delete an unused uploaded file from Media library after publishing."))return;
+   obj[key]="";dirtyNow();render();
+  },"remove"));
+ }
+ container.append(tools);
+ file.onchange=async()=>{
+  const f=file.files?.[0];if(!f)return;
+  upload.disabled=true;
   try{
-   const proposed=JSON.parse(code.value);
-   if(!proposed||typeof proposed!=="object"||!Array.isArray(proposed.navigation))throw Error("Missing top-level navigation array");
-   documentData=proposed;markDirty();flash("Advanced JSON applied to the draft. Publish to make changes public.");renderModule();
-  }catch(e){flash("Invalid JSON: "+e.message,"warning")}
- },"button-primary"));
- actions.append(control("RESET TO CURRENT DRAFT",()=>{code.value=JSON.stringify(documentData,null,2)}));
- area.append(actions);
+   const path=await uploadFile(f);obj[key]=path;dirtyNow();render();
+   notice("File uploaded and linked in your draft. Click Publish to update the public website.");
+  }catch(e){notice(errorMessage(e),"error")}finally{upload.disabled=false}
+ };
+ if(obj[key]&&/\.(png|jpe?g|webp|gif|ico|svg)(?:[?#]|$)/i.test(obj[key])){
+  const view=make("img","media-preview");view.src=obj[key];view.alt="Current image preview";view.onerror=()=>view.remove();
+  container.append(view);
+ }
 }
-function bytesToB64(file){
- return new Promise((resolve,reject)=>{
-  const reader=new FileReader();
-  reader.onload=()=>{const result=String(reader.result||"");resolve(result.split(",")[1]||"")};
-  reader.onerror=()=>reject(Error("Cannot read this file"));
-  reader.readAsDataURL(file);
+function mediaGallery(container,obj,key){
+ const x=make("div","inline-list");
+ const head=make("div","inline-list-heading");head.append(make("h4","","Photo / PDF gallery"));
+ const up=button("＋ UPLOAD",()=>picker.click());up.disabled=!writeOK;
+ head.append(up);x.append(head);
+ x.append(make("small","field-tip","Add as many photos, certificates and PDFs as needed. Each file will have a direct link on the public card."));
+ a(obj[key]).forEach((path,i)=>{
+  const row=make("div","inline-preview");
+  if(/\.(png|jpe?g|gif|webp|svg)(?:[?#]|$)/i.test(path)){const pic=make("img");pic.src=path;pic.alt="Gallery media";row.append(pic)}
+  const short=make("span","asset-name",path);row.append(short);
+  const view=make("a","","OPEN ↗");view.href=path;view.target="_blank";view.rel="noopener noreferrer";row.append(view);
+  row.append(button("REMOVE",()=>{obj[key].splice(i,1);dirtyNow();render()},"danger-action"));
+  x.append(row);
  });
+ const actions=make("div","media-field-actions");
+ actions.append(button("＋ ADD IMAGE/PDF URL",()=>{
+  const raw=prompt("Paste the HTTPS link to an image or PDF:");
+  if(!raw)return;
+  if(!/^https:\/\//i.test(raw)){notice("Please use a complete HTTPS link.","warning");return}
+  obj[key].push(raw.trim());dirtyNow();render();
+ }));
+ const picker=make("input");picker.type="file";picker.accept=".jpg,.jpeg,.png,.webp,.gif,.ico,.pdf";picker.style.display="none";
+ picker.onchange=async()=>{
+  const f=picker.files?.[0];if(!f)return;up.disabled=true;
+  try{const path=await uploadFile(f);obj[key].push(path);dirtyNow();render();notice("Gallery image uploaded. Publish the draft when ready.")}
+  catch(e){notice(errorMessage(e),"error")}finally{up.disabled=false}
+ };
+ actions.append(picker);x.append(actions);container.append(x);
+}
+function linkEditor(container,obj,key){
+ const wrap=make("div","inline-list"),head=make("div","inline-list-heading");
+ head.append(make("h4","",labelize(key)+" / custom buttons"));
+ head.append(button("+ ADD LINK",()=>{
+  if(!Array.isArray(obj[key]))obj[key]=[];
+  obj[key].push({label:"New link",url:"https://"});dirtyNow();render();
+ }));
+ wrap.append(head);
+ wrap.append(make("small","field-tip","Set the button text and paste any public https:// link, PDF, image URL, or an internal #section anchor."));
+ a(obj[key]).forEach((entry,index)=>{
+  const row=make("div","link-item");
+  const label=make("input");label.placeholder="Button text";label.value=entry.label||"";
+  label.oninput=()=>{entry.label=label.value;dirtyNow()};
+  const url=make("input");url.placeholder="https:// or #section";url.value=entry.url||"";
+  url.oninput=()=>{entry.url=url.value;dirtyNow()};
+  row.append(label,url,button("×",()=>{obj[key].splice(index,1);dirtyNow();render()},"danger-action"));
+  wrap.append(row);
+ });
+ container.append(wrap);
+}
+function nestedEditor(parent,obj,key){
+ if(!Array.isArray(obj[key]))return;
+ const x=make("div","inline-list");
+ const head=make("div","inline-list-heading");
+ head.append(make("h4","",labelize(key)));
+ head.append(button("＋ ADD",()=>{
+  const src=a(obj[key])[0];
+  let item;
+  if(key==="principles")item={number:"",title:"New principle",body:""};
+  else if(key==="items")item={id:freshId("item"),title:"New item",category:"Other",description:"",image:"/assets/pr-web.svg",imageAlt:"Illustration",gallery:[],links:[]};
+  else item=src?Object.fromEntries(Object.keys(src).map(k=>[k,typeof src[k]==="boolean"?false:Array.isArray(src[k])?[]:""])):{id:freshId("item"),title:"New item"};
+  obj[key].push(item);dirtyNow();render();
+ }));
+ x.append(head);
+ a(obj[key]).forEach((record,i)=>{
+  const details=make("details","group-panel");
+  const summary=make("summary","",record.title||record.label||record.name||("Item "+(i+1)));
+  details.append(summary);
+  const actions=make("div","record-actions");
+  actions.append(button("↑",()=>moveItem(obj[key],i,-1)));
+  actions.append(button("↓",()=>moveItem(obj[key],i,1)));
+  actions.append(button("REMOVE",()=>{if(!confirm("Remove this entry?"))return;obj[key].splice(i,1);dirtyNow();render()},"danger-action"));
+  details.append(actions);
+  editorFields(details,record);
+  x.append(details);
+ });
+ parent.append(x);
+}
+function moveItem(list,index,delta){
+ const next=index+delta;if(next<0||next>=list.length)return;
+ [list[index],list[next]]=[list[next],list[index]];dirtyNow();render();
+}
+function schema(type){
+ const base={id:freshId(type),image:"/assets/pr-web.svg",imageAlt:"Editorial placeholder image. Replace with a photograph.",gallery:[],links:[]};
+ const map={
+  awards:{id:freshId("achievement"),title:"New achievement",groupId:"international",institution:"",category:"Recognition",year:String(new Date().getFullYear()),summary:"",details:"",result:"",image:"/assets/aw-notes.svg",imageAlt:"Editorial cover illustration",gallery:[],supportingLinks:[],documentUrl:"",featured:false},
+  projects:{...base,title:"New project",subtitle:"",category:"Other",year:String(new Date().getFullYear()),status:"In progress",summary:"",challenge:"",process:"",outcome:"",tools:"",pdf:"",url:"",verification:"",featured:false,tags:[]},
+  research:{...base,image:"/assets/re-truthlens.svg",title:"New research",field:"Independent research",year:String(new Date().getFullYear()),status:"Draft",abstract:"",question:"",method:"",result:"",publication:"",paperId:"",documentUrl:"",pdf:"",verification:"",featured:false,tags:[]},
+  creative:{...base,title:"New creative work",category:"Graphic design",description:"",link:"",featured:false},
+  writing:{...base,title:"New essay or article",category:"Writing",year:String(new Date().getFullYear()),summary:"",body:"",documentUrl:"",featured:false},
+  academics:{...base,title:"New activity",organization:"",type:"Academic activity",year:String(new Date().getFullYear()),description:"",link:""},
+  groups:{id:freshId("group"),title:"New category",eyebrow:"CATEGORY / INDEX",subtitle:"",description:"",logo:"",logoAlt:"",logoSource:"",visible:true},
+  menu:{id:freshId("custom"),label:"New menu link",href:"https://",openNewTab:true,visible:true},
+  custom:{id:freshId("section"),label:"New custom section",eyebrow:"EXPERIMENT / INDEX",heading:"New section",intro:"Introduce the work here.",visible:true,sectionLinks:[],items:[]}
+ };
+ return clone(map[type]||base);
+}
+const groupsByMode={
+ awards:{path:"achievements.cards",title:"Achievements",singular:"Achievement",intro:"Each record can have a photo, certificates, direct evidence links and a chosen award category."},
+ groups:{path:"achievements.groups",title:"Award categories & logos",singular:"Award category",intro:"Upload your own government or international category logo, change the category name and move groups."},
+ projects:{path:"projects.items",title:"Projects",singular:"Project",intro:"Create case studies in any discipline. Every project displays its image, gallery and direct PDF/source buttons."},
+ research:{path:"research.items",title:"Research",singular:"Research entry",intro:"Add a cover, abstract, publication status, research PDF and supporting sources."},
+ creative:{path:"creative.items",title:"Design gallery",singular:"Design record",intro:"Add visual work, covers, supporting images and project links."},
+ writing:{path:"writing.items",title:"Writing",singular:"Writing entry",intro:"A visual archive for essays and publications with file links."},
+ academics:{path:"academics.items",title:"Education & activities",singular:"Timeline entry",intro:"Study, student leadership and academic milestones with direct links."},
+ menu:{path:"navigation",title:"Pages & menu",singular:"Menu link",intro:"Create internal section links (#research) or external links (https://...). Reorder freely; custom sections are below."},
+ custom:{path:"customSections",title:"Custom sections",singular:"Section",intro:"Create unlimited new website sections with their own images, cards and links."}
+};
+function lookup(path){
+ const parts=path.split(".");let parent=data;
+ for(let i=0;i<parts.length-1;i++)parent=parent[parts[i]];
+ return {parent,key:parts[parts.length-1],items:parent[parts[parts.length-1]]};
+}
+function collection(parent,type){
+ const config=groupsByMode[type],loc=lookup(config.path),list=a(loc.items);
+ const key=type;let position=chosen[key]||0;
+ position=Math.min(Math.max(0,position),Math.max(0,list.length-1));chosen[key]=position;
+ const head=make("div","collection-head");head.append(make("p","",list.length+" "+(list.length===1?config.singular:"entries")));
+ head.append(button("＋ ADD "+config.singular.toUpperCase(),()=>{
+  if(!Array.isArray(loc.parent[loc.key]))loc.parent[loc.key]=[];
+  const newObj=schema(type);loc.parent[loc.key].push(newObj);chosen[key]=loc.parent[loc.key].length-1;
+  if(type==="custom"){data.navigation.push({id:newObj.id,label:newObj.label,href:"#"+newObj.id,openNewTab:false,visible:true})}
+  dirtyNow();render();
+ },"main-action"));
+ parent.append(head);
+ if(!list.length){parent.append(make("div","record-empty","No entries yet. Click Add to create the first one."));return}
+ const layout=make("div","collection-layout"),aside=make("div","record-list"),form=make("div","record-form");
+ list.forEach((record,i)=>{
+  const b=make("button",i===position?"active":"");
+  if(record.image||record.logo){const image=make("img");image.src=record.image||record.logo;image.alt="";image.onerror=()=>image.remove();b.append(image)}
+  else b.append(make("span","record-icon","✳"));
+  const text=make("div");text.append(make("strong","",record.title||record.heading||record.label||record.name||record.id||("Item "+(i+1))));
+  text.append(make("small","",record.category||record.type||record.year||record.id||"ENTRY"));
+  b.append(text);
+  b.onclick=()=>{chosen[key]=i;render()};aside.append(b);
+ });
+ const item=list[position];
+ const actions=make("div","record-actions");
+ actions.append(button("↑ MOVE UP",()=>moveItem(list,position,-1)));
+ actions.append(button("↓ MOVE DOWN",()=>moveItem(list,position,1)));
+ actions.append(button("⧉ DUPLICATE",()=>{
+  const duplicate=clone(item);duplicate.id=freshId(type);
+  list.splice(position+1,0,duplicate);chosen[key]=position+1;
+  if(type==="custom")data.navigation.push({id:duplicate.id,label:duplicate.label,href:"#"+duplicate.id,openNewTab:false,visible:true});
+  dirtyNow();render();
+ }));
+ actions.append(button("× DELETE",()=>{
+  if(!confirm("Remove this "+config.singular+" from the website? Publish to confirm."))return;
+  if(type==="custom")data.navigation=data.navigation.filter(x=>x.id!==item.id);
+  list.splice(position,1);chosen[key]=Math.max(0,position-1);dirtyNow();render();
+ },"danger-action"));
+ form.append(actions);
+ if(type==="awards")form.append(make("div","record-card-intro","Choose a category, upload its cover image and add supporting links. Every link appears directly on the public award card. No separate View more popup."));
+ if(type==="menu")form.append(make("div","record-card-intro","For an existing section, use a link like #research or #projects. For custom external navigation use a full https:// URL and enable Open new tab."));
+ editorFields(form,item);
+ layout.append(aside,form);parent.append(layout);
+}
+function editorHeading(container,title,detail,number){
+ const top=caption(title,detail);
+ if(number){const pill=make("span","panel-badge",number);top.append(pill)}
+ container.append(top);
+}
+function dashboard(container){
+ editorHeading(container,"Your website, without the code.","Pick an area to edit. No technical database setup is needed for the public content.");
+ const list=[
+ [a(data.achievements.cards).length,"Achievements","awards"],
+ [a(data.projects.items).length,"Projects","projects"],
+ [a(data.research.items).length,"Research","research"],
+ [a(data.creative.items).length,"Design work","creative"],
+ [a(data.writing.items).length,"Writing","writing"],
+ [a(data.navigation).filter(x=>x.visible!==false).length,"Menu links","menu"]
+ ];
+ const stats=make("div","overview-grid");
+ list.forEach(([count,name],i)=>{const el=make("button","overview-tile");el.append(make("strong","",count),make("small","",name));el.onclick=()=>setMode(list[i][2]);stats.append(el)});
+ container.append(stats);
+ const links=make("div","quick-links");
+ for(const [id,title,subtitle] of [
+ ["home","Edit hero & your photo","Update your image, titles, profile and about text."],
+ ["awards","Add achievement photos","Upload certificates, covers, and source links."],
+ ["projects","Show new work","Graphic design, software, product concepts and more."],
+ ["research","Publish a research entry","Add a research image, manuscript and source buttons."],
+ ["menu","Add a menu or a section","Custom navigation, custom links and new sections."],
+ ["look","Change favicon & colors","Adjust your site style, animation and Google description."]
+ ]){
+  const b=button("",()=>setMode(id),"");b.append(make("strong","",title),make("small","",subtitle));links.append(b)
+ }
+ container.append(links);
+}
+function rootSections(container,defs){
+ for(const [key,title,help] of defs){
+  const info=make("div","simple-section");
+  info.append(make("h3","",title),make("p","field-tip",help));
+  editorFields(info,data[key]);
+  container.append(info);
+ }
+}
+function recordPanel(container){
+ const config=groupsByMode[mode];
+ editorHeading(container,config.title,config.intro);
+ if(["awards","projects","research","creative","writing","academics"].includes(mode)){
+  const baseKey=mode==="awards"?"achievements":mode;
+  const root=make("section","simple-section");
+  root.append(make("h3","","Section heading & introductory text"));
+  const edit={};
+  for(const k of ["eyebrow","heading","intro","emptyTitle","emptyBody"])if(typeof data[baseKey]?.[k]==="string")edit[k]=data[baseKey][k];
+  const grid=make("div","field-grid");
+  root.append(grid);
+  Object.entries(edit).forEach(([k,v])=>{
+   const f=input(k,v,t=>{data[baseKey][k]=t;dirtyNow()},{multiline:isLong(k),wide:isLong(k)});grid.append(f.wrapper);
+  });
+  if(data[baseKey]?.sectionLinks)linkEditor(root,data[baseKey],"sectionLinks");
+  container.append(root);
+ }
+ collection(container,mode);
+}
+function menuPanel(container){
+ editorHeading(container,"Pages, menus & custom links","You can change the order, hide a section, add an external menu link, or create an entirely new page section.");
+ container.append(make("div","help-box","Each menu link has a label, destination (href), and visibility. Use #achievements, #projects, #research, or a complete https:// link. You can add links to each section from its editor, too."));
+ collection(container,"menu");
+ const sub=section(container,"New custom sections","Create a new homepage section with its own images and links. Adding a section creates its navigation item.");
+ collection(sub,"custom");
+}
+function lookPanel(container){
+ editorHeading(container,"Style, photos & search","Website colors, motion settings, Google SEO, favicon and social preview.");
+ rootSections(container,[
+  ["appearance","Theme colors & motion","Pick a palette for your website and adjust animations."],
+  ["seo","Search engines & favicon","Upload an icon or photo, and update the text Google and social previews may show."]
+ ]);
+}
+function homePanel(container){
+ editorHeading(container,"Home, profile & all key text","Everything that identifies you: name, photo, introductory statement, contact and editorial highlights.");
+ rootSections(container,[
+  ["identity","Your identity & portrait","Name, photo, academic interests, email and social links."],
+  ["hero","Landing page","Every headline, introduction, button and top-of-page line."],
+  ["about","About & perspective","Your personal statement, principles, and inline section links."],
+  ["contact","Contact & footer","Closing message and all outbound links."],
+  ["design","Small creative details","Editorial labels, running strips and site motif language."],
+  ["highlights","Selected index","Edit featured entry IDs, headline and intro. IDs can be copied from a card."]
+ ]);
+}
+function labelsPanel(container){
+ editorHeading(container,"All little words & labels","Change even small text such as link headings, chips, captions and featured intro.");
+ const box=section(container,"Website microcopy","Text here is displayed throughout the portfolio.");
+ editorFields(box,data.ui||{});
+ const path=section(container,"Academic section introduction","Other headings and labels also live in Home, Achievements, Projects, Research, Design, Writing and Education.");
+ path.append(make("div","help-box","For a field not yet in the visual form, the Advanced editor allows changing the entire content object. No code changes are required."));
+}
+function mediaPanel(container){
+ editorHeading(container,"Media library & deletion","Uploaded images and PDFs stored in your GitHub repository.");
+ const help=make("div","help-box");
+ help.textContent="Remove the media link from its card first and Publish. Then return here to permanently delete the unused upload. Assets in assets/ are original design files and are not deleted by this tool.";
+ container.append(help);
+ const status=make("p","field-tip","Loading uploaded files…"),list=make("div");container.append(status,list);
+ (async()=>{
+  if(!writeOK){status.textContent="A token with Contents: Read and write is required to manage uploaded files.";return}
+  try{
+   const files=await request("GET","/contents/uploads");
+   if(mode!=="files")return;
+   const records=a(files).filter(x=>x.type==="file");
+   status.textContent=records.length+" uploaded file(s)";
+   if(!records.length)list.append(make("div","record-empty","No uploads yet. Upload an image from an Achievement or Project."));
+   for(const entry of records){
+    const row=make("div","media-line");
+    if(/\.(png|jpe?g|webp|gif|ico)$/i.test(entry.name)){const pic=make("img");pic.src="/"+entry.path;pic.alt=entry.name;row.append(pic)}
+    else row.append(make("span","record-icon","PDF"));
+    const name=make("div","filename",entry.name),path="/"+entry.path;
+    const used=JSON.stringify(data).includes(path);name.append(make("small","",used?"Linked in your current draft":"Not linked in the current draft"));
+    row.append(name);
+    const del=button(used?"IN USE":"DELETE FILE",async()=>{
+     if(used||dirty){notice("First remove this file from the card, then Publish before deleting it.","warning");return}
+     if(!confirm("Permanently delete "+entry.name+" from your GitHub branch? Older commits might still contain copies."))return;
+     try{
+      const current=await request("GET","/contents/"+CONTENT);
+      if(current.sha!==sha)throw Error("Portfolio was updated elsewhere; reconnect before deleting.");
+      if(decode(current.content).includes(path))throw Error("This file is still referenced by the published content.");
+      const f=await request("GET","/contents/"+entry.path);
+      await request("DELETE","/contents/"+entry.path,{message:"Delete unused portfolio media: "+entry.name,sha:f.sha,branch:"main"});
+      notice("Deleted unused file. It may remain in Git history.");render();
+     }catch(e){notice(errorMessage(e),"error")}
+    },used?"sub-action":"danger-action");
+    del.disabled=used||dirty;row.append(del);list.append(row);
+   }
+  }catch(e){
+   status.textContent=/404|Not Found/i.test(s(e.message))?"No uploads folder exists yet. Add your first photo from a portfolio card.":errorMessage(e);
+  }
+ })();
+}
+function advancedPanel(container){
+ editorHeading(container,"Full content / advanced","Every field that appears on the website can be edited here too. Make a backup before making structural changes.");
+ container.append(make("div","help-box","Changes in this screen are drafts only. Press Apply JSON, then Publish to send them to your GitHub website."));
+ const box=make("textarea","json-textarea");box.value=JSON.stringify(data,null,2);box.spellcheck=false;container.append(box);
+ const actions=make("div","advanced-actions");
+ actions.append(button("APPLY JSON",()=>{
+  try{const candidate=JSON.parse(box.value);if(!candidate||typeof candidate!=="object"||!Array.isArray(candidate.navigation))throw Error("navigation array required");data=candidate;dirtyNow();render();notice("Advanced changes applied to the draft. Publish when ready.")}
+  catch(e){notice("Invalid JSON: "+e.message,"error")}
+ },"main-action"),button("RESET TEXT",()=>box.value=JSON.stringify(data,null,2)));
+ container.append(actions);
+}
+function setMode(next){mode=next;render();document.getElementById("workspace")?.scrollIntoView({behavior:"smooth",block:"start"})}
+function render(){
+ if(!data)return;
+ const editor=$("#editor");editor.innerHTML="";
+ const nav=$("#admin-nav");nav.innerHTML="";
+ modules.forEach(([key,name],i)=>{
+  const b=button("",()=>setMode(key),key===mode?"current":"");
+  b.append(make("span","nav-index",String(i+1).padStart(2,"0")),make("span","",name));nav.append(b)
+ });
+ const names=modules.find(m=>m[0]===mode)||modules[0];
+ $("#screen-title").innerHTML="";
+ $("#screen-title").append(document.createTextNode(names[1]));$("#screen-title").append(make("span","","."));
+ $("#screen-note").textContent=names[2];
+ if(mode==="start")dashboard(editor);
+ else if(mode==="home")homePanel(editor);
+ else if(mode==="look")lookPanel(editor);
+ else if(mode==="labels")labelsPanel(editor);
+ else if(mode==="menu")menuPanel(editor);
+ else if(mode==="files")mediaPanel(editor);
+ else if(mode==="advanced")advancedPanel(editor);
+ else recordPanel(editor);
+ $("#publish").disabled=!writeOK||busy;
 }
 async function uploadFile(file){
- if(!token)throw Error("Connect to GitHub first.");
+ if(!writeOK)throw Error("Write access required. This token cannot upload files.");
+ if(!file)throw Error("Select a file.");
  const allowed=["image/png","image/jpeg","image/webp","image/gif","application/pdf","image/x-icon","image/vnd.microsoft.icon"];
- if(!allowed.includes(file.type)&&!/\.(ico)$/i.test(file.name))throw Error("Only PNG, JPG, WebP, GIF, ICO or PDF is supported. SVG is intentionally excluded for security.");
- if(file.size>8*1024*1024)throw Error("Files must be 8 MB or smaller on the free GitHub media uploader.");
- if(!file.size)throw Error("Empty file");
- const ext=String(file.name.split(".").pop()||"bin").toLowerCase();
- const base=String(file.name).replace(/\.[^.]+$/,"").toLowerCase().replace(/[^a-z0-9_-]+/g,"-").slice(0,36)||"asset";
- const filename=Date.now()+"-"+itemId().slice(0,8)+"-"+base+"."+ext;
- const path="media/"+filename;
- const b64=await bytesToB64(file);
- await api("PUT","/contents/"+encodeURIComponent(path).replaceAll("%2F","/"),{
-  message:"Portfolio media: upload "+filename,content:b64,branch:"main"
- });
- return "/"+path;
+ const extension=s(file.name.split(".").pop()).toLowerCase();
+ if(!allowed.includes(file.type)&&extension!=="ico")throw Error("Use PNG, JPEG, WebP, GIF, ICO or PDF. SVG upload is disabled for security.");
+ if(file.size<=0||file.size>8*1024*1024)throw Error("Choose a non-empty image or PDF smaller than 8 MB.");
+ const basename=s(file.name).replace(/\.[^.]+$/,"").replace(/[^a-z0-9_-]+/gi,"-").slice(0,44)||"media";
+ const final="uploads/"+Date.now()+"-"+uuid().slice(0,8)+"-"+basename+"."+extension;
+ const buf=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(s(reader.result).split(",")[1]);reader.onerror=()=>reject(Error("Could not read file"));reader.readAsDataURL(file)});
+ await request("PUT","/contents/"+final,{message:"Upload portfolio asset: "+basename,content:buf,branch:"main"});
+ return "/"+final;
 }
-
-async function mediaLibrary(area){
- const wrap=node("div","media-manager"),note=node("div","highlight-message",
- "Delete workflow: (1) Remove the photo or PDF link from its award, project, research or logo field. (2) Publish. (3) Return here to permanently delete unused uploads. Images hosted elsewhere are only unlinked, never deleted from their source.");
- wrap.append(note);
- const head=node("h3","media-head","Stored uploads / media directory");
- wrap.append(head);
- const status=node("p","media-status","Checking GitHub media directory…");wrap.append(status);
- const list=node("div");wrap.append(list);
- area.append(wrap);
- try{
-  const content=await api("GET","/contents/media");
-  if(activeModule!=="media")return;
-  const files=arr(content).filter(x=>x.type==="file");
-  const referenced=JSON.stringify(documentData);
-  status.textContent=files.length+" stored files. Files used anywhere in the current portfolio cannot be deleted.";
-  if(!files.length)list.append(node("p","mini-note","No uploaded files yet. Upload an image in an entry first."));
-  files.forEach(file=>{
-   const row=node("div","media-card"),path="/"+file.path;
-   if(/\.(png|jpe?g|webp|gif|ico)$/i.test(file.name)){
-    const img=node("img");img.src=path;img.alt=file.name;img.loading="lazy";row.append(img);
-   }else row.append(node("span","","PDF FILE"));
-   const meta=node("div");meta.append(node("div","file-name",file.name));
-   const inUse=referenced.includes(path);
-   meta.append(node("small","",inUse?"In use by the current draft":"Not referenced by this portfolio"));
-   row.append(meta);
-   const action=control(inUse?"IN USE":"DELETE FILE",async()=>{
-    if(inUse||dirty){flash(dirty?"Publish changes before permanently deleting files.":"Remove this file from entries first.","warning");return}
-    if(!confirm("Permanently delete "+file.name+" from the GitHub repository? This changes the live file immediately. Previous commits may still contain it."))return;
-    action.disabled=true;
-    try{
-     const current=await api("GET","/contents/"+FILE);
-     if(current.sha!==contentSha)throw Error("Site content changed remotely. Reconnect before deleting.");
-     const contentText=b64decode(current.content);
-     if(contentText.includes(path))throw Error("This file is still referenced by the published site.");
-     const latest=await api("GET","/contents/"+file.path);
-     await api("DELETE","/contents/"+file.path,{
-      message:"Portfolio media cleanup: remove unused "+file.name,
-      sha:latest.sha,branch:"main"
-     });
-     flash("Unused file permanently removed from the GitHub branch. GitHub history may retain earlier copies.");
-     mediaLibrary(area);
-     wrap.remove();
-    }catch(e){flash("Could not delete: "+e.message,"warning");action.disabled=false}
-   },"");
-   action.disabled=inUse||dirty;
-   row.append(action);list.append(row);
-  });
- }catch(e){
-  status.textContent=e.message.includes("Not Found")||e.message.includes("404")?"No media/ folder yet. It will appear after your first upload.":"Could not load Media library: "+e.message;
- }
-}
-
 function download(){
- const blob=new Blob([JSON.stringify(documentData,null,2)],{type:"application/json"});
- const u=URL.createObjectURL(blob);
- const a=node("a");a.href=u;a.download="nafis-portfolio-backup-"+new Date().toISOString().slice(0,10)+".json";
- a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);
+ const content=JSON.stringify(data,null,2),blob=new Blob([content],{type:"application/json"});
+ const href=URL.createObjectURL(blob),anchor=make("a");anchor.href=href;anchor.download="nafis-portfolio-"+new Date().toISOString().slice(0,10)+".json";
+ anchor.click();setTimeout(()=>URL.revokeObjectURL(href),1000);
 }
-function setMetaTag(html,selector,replacement){
- return html.replace(selector,replacement);
-}
-function escapeHtmlAttr(s){return text(s).replaceAll("&","&amp;").replaceAll('"',"&quot;").replaceAll("<","&lt;")}
-async function publishIndexHead(){
- const file=await api("GET","/contents/index.html");
- let html=b64decode(file.content);
- const seo=documentData.seo||{},i=documentData.identity||{};
- const updates={
-  "site-title":seo.title||i.name,
-  "site-description":seo.description||"",
-  "site-keywords":seo.keywords||"",
-  "og-title":seo.title||i.name,
-  "og-description":seo.description||"",
-  "og-image":seo.ogImage||i.portrait||"",
-  "site-favicon":seo.favicon||"/favicon.svg",
-  "canonical":seo.canonical||"https://nafis-tamim.github.io/"
- };
- html=html.replace(/<title data-sync="site-title">[\s\S]*?<\/title>/i,'<title data-sync="site-title">'+text(updates["site-title"]).replaceAll("<","&lt;")+'</title>');
- for(const [key,value] of Object.entries(updates)){
-  if(key==="site-title")continue;
-  const pattern=new RegExp('(<(?:meta|link)\\b(?=[^>]*data-sync="'+key+'")[^>]*\\b(?:content|href)=")[^"]*(")',"i");
-  html=html.replace(pattern,(_,a,b)=>a+escapeHtmlAttr(value)+b);
+async function syncSearchMeta(){
+ const file=await request("GET","/contents/index.html");
+ let html=decode(file.content);
+ const fields={"site-title":data.seo?.title||data.identity?.name,"site-description":data.seo?.description||"","site-keywords":data.seo?.keywords||"","og-title":data.seo?.title||"","og-description":data.seo?.description||"","og-image":data.seo?.ogImage||data.identity?.portrait||"","site-favicon":data.seo?.favicon||"/favicon.svg","canonical":data.seo?.canonical||"https://nafis-tamim.github.io/"};
+ const encoded=s=>s.replaceAll("&","&amp;").replaceAll('"',"&quot;").replaceAll("<","&lt;");
+ const original=html;
+ html=html.replace(/<title data-sync="site-title">[\s\S]*?<\/title>/i,'<title data-sync="site-title">'+encoded(fields["site-title"])+'</title>');
+ for(const [name,val] of Object.entries(fields)){
+  if(name==="site-title")continue;
+  const re=new RegExp('(<(?:meta|link)\\b(?=[^>]*data-sync="'+name+'")[^>]*\\b(?:content|href)=")[^"]*(")',"i");
+  html=html.replace(re,(_match,prefix,end)=>prefix+encoded(s(val))+end);
  }
- if(html===b64decode(file.content))return;
- await api("PUT","/contents/index.html",{
-  message:"Portfolio Studio: refresh static SEO and social metadata",
-  content:b64encode(html),sha:file.sha,branch:"main"
- });
+ if(html===original)return;
+ await request("PUT","/contents/index.html",{message:"Update site meta description, title and favicon",content:encode(html),sha:file.sha,branch:"main"});
 }
 async function publish(){
- if(!token||busy)return;
- busy=true;$("#publish").disabled=true;
- flash("Publishing content to the public repository…");
+ if(!writeOK||busy||!data)return;
+ busy=true;$("#publish").disabled=true;notice("Publishing content to GitHub…");
  try{
-  const current=await api("GET","/contents/"+FILE);
-  if(current.sha!==contentSha){
-    if(!confirm("The GitHub content file changed since you connected. Overwrite the newer version with your current draft? Choose Cancel to protect the newer content.")){
-      flash("Publish cancelled. Please disconnect and reconnect to load the latest content.","warning");return;
-    }
-    contentSha=current.sha;
-  }
-  const updated=await api("PUT","/contents/"+FILE,{
-   message:"Portfolio Studio: publish new academic content",
-   content:b64encode(JSON.stringify(documentData,null,2)+"\n"),
-   sha:contentSha,branch:"main"
-  });
-  contentSha=updated.content.sha;
-  sourceJson=JSON.stringify(documentData);
-  clearDirty();
+  const latest=await request("GET","/contents/"+CONTENT);
+  if(latest.sha!==sha)throw Error("Content changed on GitHub after you logged in. Disconnect and reconnect to load the latest version before publishing.");
+  const saved=await request("PUT","/contents/"+CONTENT,{message:"Portfolio Studio: publish content changes",content:encode(JSON.stringify(data,null,2)+"\n"),sha,branch:"main"});
+  sha=saved.content.sha;cleanNow();
+  try{await syncSearchMeta();notice("Published successfully! GitHub Pages normally refreshes within a minute or two.")}
+  catch(e){notice("Content published successfully. Static SEO update did not finish: "+errorMessage(e),"warning")}
+ }catch(e){notice("Could not publish: "+errorMessage(e),"error")}
+ finally{busy=false;render()}
+}
+async function login(){
+ const input=$("#token"),auth=$("#auth-message");auth.textContent="";
+ token=input.value.trim();
+ if(!token){auth.textContent="Paste a GitHub token first.";return}
+ const b=$("#connect");b.disabled=true;b.textContent="CHECKING ACCOUNT…";
+ try{
+  const file=await request("GET","/contents/"+CONTENT);
+  data=JSON.parse(decode(file.content));sha=file.sha;
   try{
-   await publishIndexHead();
-   flash("Published! Content, favicon setting and search metadata committed. GitHub Pages may need 1–2 minutes to update.");
-  }catch(e){
-   flash("Content published, but the static SEO update could not finish: "+e.message+" . Your changes are live after GitHub Pages deploys.","warning");
-  }
- }catch(e){flash("Publish failed: "+e.message,"warning")}
- finally{busy=false;$("#publish").disabled=false}
+   /* An unreferenced Git blob is a safe write-permission test; no file or commit is added to main. */
+   await request("POST","/git/blobs",{content:"NT Studio permission check",encoding:"utf-8"});
+   writeOK=true;
+  }catch(e){writeOK=false;auth.textContent=errorMessage(e)}
+  input.value="";
+  $("#login").hidden=true;$("#workspace").hidden=false;$("#disconnect").hidden=false;
+  cleanNow();render();
+  if(writeOK)notice("Connected. Upload and Publish access are available. Your token remains only in this tab.");
+  else notice("Read-only connection. Upload and Publish are disabled until you reconnect with Contents: Read and write permission. "+auth.textContent,"warning");
+ }catch(e){
+  auth.textContent=errorMessage(e);token="";data=null;
+ }finally{b.disabled=false;b.textContent="CONNECT & CHECK PERMISSIONS ↗"}
 }
-function disconnect(){
- if(dirty&&!confirm("Disconnect and discard unpublished changes?"))return;
- token="";documentData=null;contentSha="";location.reload();
+function logout(){
+ if(dirty&&!confirm("Discard unpublished changes and disconnect?"))return;
+ token="";writeOK=false;data=null;sha="";location.reload();
 }
-window.addEventListener("beforeunload",e=>{if(dirty){e.preventDefault();e.returnValue=""}});
-$("#connect").onclick=connect;
-$("#token").addEventListener("keydown",e=>{if(e.key==="Enter")connect()});
+$("#connect").onclick=login;
+$("#token").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
 $("#publish").onclick=publish;
-$("#download").onclick=download;
-$("#disconnect").onclick=disconnect;
+$("#backup").onclick=download;
+$("#disconnect").onclick=logout;
+window.addEventListener("beforeunload",e=>{if(dirty){e.preventDefault();e.returnValue=""}});
