@@ -109,6 +109,7 @@ function evidenceLinks(item){
  if(item.kind==="achievement"||!item.kind){
   add(item.groupId==="government"?"Government results notice":"Official result",item.verification);
   add(/\.pdf(?:[?#]|$)/i.test(item.documentUrl||"")?"Certificate PDF":"Document",item.documentUrl);
+  arr(item.gallery).filter(link=>/\.pdf(?:[?#]|$)/i.test(link)).forEach((link,i)=>add("Certificate / PDF "+(i+1),link));
  }
  return evidence;
 }
@@ -278,7 +279,7 @@ function modalContent(item){
  tags(item.tags)+
  '<div class="modal-actions">'+(verify?btnLink(item.kind==="research"?"OPEN RESEARCHGATE RECORD":(DATA?.ui?.modalVerification||"OPEN OFFICIAL SOURCE"),verify,"btn dark",'target="_blank" rel="noopener noreferrer"'):"")+
  (direct?btnLink(DATA?.ui?.modalLink||"VIEW PROJECT / DOCUMENT",direct,"btn outline",'target="_blank" rel="noopener noreferrer"'):"")+
- (item.kind==="achievement"?support.map(l=>btnLink(l.label,l.href,"btn outline",'target="_blank" rel="noopener noreferrer"')).join(""):"")+
+ (item.kind==="achievement"?support.filter(l=>l.href!==url(verify)&&l.href!==url(direct)).map(l=>btnLink(l.label,l.href,"btn outline",'target="_blank" rel="noopener noreferrer"')).join(""):"")+
  '</div>'+
  ((item.verified&&verify)?'<p class="modal-proof">✓ Recognition linked to an independently accessible official source.</p>':
  (item.certificateReviewed?'<p class="modal-proof">✓ A named personal certificate has been reviewed. Public certificate preview can be added through the Portfolio Studio.</p>':
@@ -307,7 +308,7 @@ function bind(){
  $$(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>{nav.classList.remove("open");toggle?.setAttribute("aria-expanded","false")}));
  $$("[data-open]").forEach(card=>{
   card.addEventListener("click",e=>{if(e.target.closest("a"))return;openDetail(card.dataset.open,card.dataset.id)});
-  card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openDetail(card.dataset.open,card.dataset.id)}});
+  card.addEventListener("keydown",e=>{if(e.target!==card)return;if(e.key==="Enter"||e.key===" "){e.preventDefault();openDetail(card.dataset.open,card.dataset.id)}});
  });
  $$("[data-close]").forEach(el=>el.addEventListener("click",closeDetail));
  $$("#modal-body a").forEach(a=>a.addEventListener("click",e=>e.stopPropagation()));
@@ -333,7 +334,7 @@ function bindSection(selector){
  const s=$(selector);if(!s)return;
  $$("[data-open]",s).forEach(x=>{
  x.onclick=()=>openDetail(x.dataset.open,x.dataset.id);
- x.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openDetail(x.dataset.open,x.dataset.id)}}});
+ x.onkeydown=e=>{if(e.target!==x)return;if(e.key==="Enter"||e.key===" "){e.preventDefault();openDetail(x.dataset.open,x.dataset.id)}}});
  $$(".filter",s).forEach(x=>x.onclick=()=>{filter=x.dataset.filter;projectLimit=4;const t=document.createElement("div");t.innerHTML=projects(DATA);s.replaceWith(t.firstElementChild);bindSection(selector);reveal()});
  $("#more-projects",s)?.addEventListener("click",()=>{projectLimit+=4;const t=document.createElement("div");t.innerHTML=projects(DATA);s.replaceWith(t.firstElementChild);bindSection(selector);reveal()});
 }
