@@ -1,56 +1,45 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!doctype html><html lang="en"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
-<meta name="theme-color" content="#102e32">
-<title>NT Studio — Private Academic Portfolio Editor</title>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#111a2b">
+<title>Studio / Nafis Tamim</title>
+<link rel="icon" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/studio.css">
-</head>
-<body>
-<div id="app">
-  <header class="studio-header">
-    <div class="header-left"><div class="studio-logo">NT<span class="dot">•</span></div><span class="header-brand">PORTFOLIO STUDIO <small>/ CONTENT SYSTEM</small></span></div>
-    <div class="header-right"><a class="head-link" href="/" target="_blank" rel="noopener noreferrer">VIEW PUBLIC SITE ↗</a><span class="header-private">PRIVATE EDITOR</span></div>
-  </header>
-  <section id="login" class="login-page">
-    <div class="login-aside"><span class="eyebrow">NAFIS / TAMIM</span><h1>A better portfolio deserves a better editor<span>.</span></h1><p>Manage every page, section, project, image, award, research record and color from one place. No database password is ever exposed in the browser.</p>
-    <div class="login-accent"><span>CONNECTED PUBLISHING</span><strong>GitHub Pages + GitHub API</strong><p>Secure changes through a GitHub repository-scoped personal access token.</p></div></div>
-    <div class="login-box">
-      <span class="step">STEP 01 / CONNECT</span><h2>Unlock your studio.</h2>
-      <p>Generate a <b>fine-grained GitHub token</b> restricted to the <code>nafis-tamim.github.io</code> repository. Give it only the <b>Contents: Read and write</b> permission.</p>
-      <a class="instruction-link" href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">CREATE A REPOSITORY-SCOPED TOKEN ↗</a>
-      <label>YOUR GITHUB TOKEN<input id="token" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="github_pat_..." /></label>
-      <button id="connect" class="button-primary" type="button">CONNECT & OPEN STUDIO <span>↗</span></button>
-      <div id="login-error" class="error-message" role="status"></div>
-      <p class="security"><span>◈</span> Your token stays in this browser tab's memory only. It is never written to the portfolio, saved in storage, or sent anywhere except GitHub's API.</p>
-    </div>
-  </section>
-  <section id="dashboard" hidden>
-    <div class="dash-top"><div><span class="eyebrow">ACADEMIC PORTFOLIO / CONTROL CENTER</span><h1>Make it yours<span>.</span></h1><p>Every visible story, section, image, color and link begins here.</p></div>
-      <div class="dash-actions">
-        <button type="button" id="download" class="button-outline">BACKUP JSON ↓</button>
-        <button type="button" id="publish" class="button-primary">PUBLISH CHANGES <span>↗</span></button>
-        <button type="button" id="disconnect" class="button-quiet">DISCONNECT</button>
-      </div>
-    </div>
-    <div id="status-banner" role="status"></div>
-    <div class="dashboard-grid">
-      <aside class="studio-sidebar">
-        <div class="sidebar-heading">YOUR WORKSPACE</div>
-        <nav id="sections-nav" aria-label="Studio sections"></nav>
-        <div class="sidebar-footer"><span id="dirty-label">ALL CHANGES SAVED</span><p>Publishing updates the public GitHub Pages content. Image uploads publish immediately to the media folder.</p></div>
-      </aside>
-      <main class="studio-panel"><div class="panel-head"><div><span id="panel-kicker" class="eyebrow">CONTENT MODULE</span><h2 id="panel-title">Overview</h2><p id="panel-description"></p></div><div id="panel-count" class="count-box"></div></div>
-        <div id="editor-area"></div>
-      </main>
-    </div>
-  </section>
-</div>
-<script src="/studio.js" defer></script>
-</body>
-</html>
+</head><body>
+<div class="admin-page">
+ <header class="admin-top">
+   <div class="admin-brand"><span class="studio-square">NT<span>◥</span></span><div><b>PORTFOLIO STUDIO</b><small>PRIVATE CONTENT CONTROL</small></div></div>
+   <div class="admin-head-right"><a href="/" target="_blank" rel="noopener noreferrer" class="view-site">OPEN WEBSITE ↗</a><button id="disconnect" type="button" class="logout" hidden>DISCONNECT</button></div>
+ </header>
+ <section id="login" class="login-layout">
+   <div class="login-graphic">
+     <div class="index-meta">V6 — WORKING INDEX / PRIVATE EDITOR</div>
+     <h1>Make the site<br><em>yours.</em></h1>
+     <p>Edit any section, add photos, reorder menus and share direct links to your research or certificates. Publish changes in one place.</p>
+     <div class="editor-motif" aria-hidden="true"><span>01 / IDEAS</span><span>02 / EVIDENCE</span><span>03 / WORK</span></div>
+   </div>
+   <div class="auth-panel">
+     <span class="small-cap">CONNECT TO GITHUB / 01</span>
+     <h2>Sign in to your editor.</h2>
+     <p>Use a <strong>fine-grained GitHub Personal Access Token</strong> created for this repository only. Your token is held in this tab's memory and is never saved on the website.</p>
+     <label class="form-field"><span>GITHUB TOKEN</span><input id="token" type="password" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="github_pat_..." /></label>
+     <button id="connect" type="button" class="main-action">CONNECT & CHECK PERMISSIONS <span>↗</span></button>
+     <div id="auth-message" role="status"></div>
+     <div class="help-permission"><strong>UPLOAD ERROR? CHECK ACCESS</strong><p><b>Fine-grained token → Repository access:</b> Only selected repositories → <code>nafis-tamim.github.io</code>. <b>Permissions → Contents:</b> Read and write. If a token is restricted to read-only, the editor can open content but cannot upload or publish.</p><a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener noreferrer">OPEN GITHUB TOKEN SETTINGS ↗</a></div>
+   </div>
+ </section>
+ <div id="workspace" hidden>
+  <div class="admin-intro"><div><span class="small-cap">CONTROL ROOM / NAFIS-TAMIM.GITHUB.IO</span><h1 id="screen-title">Your workspace<span>.</span></h1><p id="screen-note">Manage every part of your public portfolio.</p></div>
+   <div class="global-actions"><span id="draft-indicator" class="draft-indicator">ALL CHANGES SAVED</span><button type="button" id="backup" class="sub-action">DOWNLOAD BACKUP</button><button type="button" id="publish" class="main-action">PUBLISH TO WEBSITE <span>↗</span></button></div>
+  </div>
+  <div id="notice" class="notice" role="status"></div>
+  <div class="workspace-grid">
+   <aside class="admin-sidebar"><span class="side-label">EDIT YOUR WEBSITE</span><nav id="admin-nav" aria-label="Admin sections"></nav><div class="sidebar-help">Save changes with <b>Publish</b>. Uploaded files are stored in GitHub and linked to the selected card. Public site updates after GitHub Pages deploys.</div></aside>
+   <main class="editor-wrap" id="editor-main"><div id="editor"></div></main>
+  </div>
+ </div>
+</div><script src="/studio.js" defer></script>
+</body></html>
