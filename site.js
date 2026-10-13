@@ -201,14 +201,18 @@ function render(){
  if(!root)return;
  const d=data;setTheme(d);
  const builder={about,achievements:achievement,projects,research,creative,writing,academics:academic,contact};
+ let aboutShown=false;
  const contents=arr(d.navigation).filter(x=>x.visible!==false).map(n=>{
-   if(builder[n.id])return builder[n.id](d);
+   if(builder[n.id]){
+     const output=builder[n.id](d);
+     if(n.id==="about"){aboutShown=true;return output+spotlight(d)}
+     return output;
+   }
    const sec=arr(d.customSections).find(s=>s.id===n.id&&s.visible!==false);
    if(sec)return custom({...d,customSections:[sec]});
    return "";
  }).join("");
- root.innerHTML='<div class="portfolio-site">'+navigation(d)+hero(d)+marquee(d)+about(d)+spotlight(d)+contents.replace(/<section id="about"[\s\S]*?<\/section>/,"")+'</div>';
- /* About is placed before spotlight in the magazine layout; never duplicate it. */
+ root.innerHTML='<div class="portfolio-site">'+navigation(d)+hero(d)+marquee(d)+(aboutShown?"":spotlight(d))+contents+'</div>';
  initEvents();initScroll();initMotion();
 }
 function initEvents(){
@@ -270,8 +274,9 @@ function initMotion(){
  };
  const move=e=>{const r=canvas.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top};
  const visibility=()=>{if(document.hidden){active=false;cancelAnimationFrame(raf)}else{active=true;raf=requestAnimationFrame(draw)}};
- canvas.addEventListener("pointermove",move,{passive:true});
- canvas.addEventListener("pointerleave",()=>mouse={x:-1000,y:-1000},{passive:true});
+ const heroEl=$(".hero");
+ heroEl?.addEventListener("pointermove",move,{passive:true});
+ heroEl?.addEventListener("pointerleave",()=>mouse={x:-1000,y:-1000},{passive:true});
  document.addEventListener("visibilitychange",visibility);
  window.addEventListener("resize",resize,{passive:true});
  resize();raf=requestAnimationFrame(draw);

@@ -397,3 +397,10 @@ img{display:block;max-width:100%}
  .reveal-card{opacity:1!important;transform:none!important}
  #orbit-canvas{display:none}
 }
+
+/* Full type and logo display for supporting covers */
+.record-media .cover-image{object-position:center;background:#13233c}
+.category-logo{background:#fff}
+.research-content .research-status{letter-spacing:.03em}
+.portfolio-site .section-action:hover{text-decoration:underline;text-underline-offset:7px}
+@media(prefers-reduced-motion:reduce){.hero-pulse{animation:none}}

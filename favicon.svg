@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Nafis Tamim portfolio icon">
-<rect width="128" height="128" rx="26" fill="#102e32"/>
-<path d="M27 95V33h15l44 50V33h15v62H86L42 45v50Z" fill="#f7f5eb"/>
-<path d="M92 24h12v12H92z" fill="#bbf079"/>
-<circle cx="97.5" cy="96.5" r="5.5" fill="#bbf079"/>
-<path d="M21 108H107" stroke="#bbf079" stroke-width="2" opacity=".7"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+<rect width="128" height="128" rx="23" fill="#111A2B"/>
+<path d="M26 94V34h15l43 45V34h16v60H85L41 49v45Z" fill="#F7F8FC"/>
+<rect x="105" y="20" width="11" height="32" rx="2" fill="#5274FF"/>
+<rect x="105" y="56" width="11" height="15" rx="2" fill="#9BB0FF"/>
 </svg>
