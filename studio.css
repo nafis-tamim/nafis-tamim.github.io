@@ -186,3 +186,14 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
  .media-line button{grid-column:1/-1;justify-self:start}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+
+/* Gallery manager: useful controls without exposing raw JSON */
+.media-order-row{display:grid;grid-template-columns:95px minmax(0,1fr) auto;align-items:center;gap:12px;padding:11px;border-radius:6px}
+.media-order-row>img{width:95px;height:72px;object-fit:cover}
+.media-order-row .asset-name{overflow-wrap:anywhere;min-width:0;font:10px/1.65 var(--mono);color:#455878}
+.media-order-actions{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.media-order-actions button,.media-order-actions a{padding:8px 9px;border-radius:4px;white-space:nowrap;font:10px var(--mono)}
+.media-order-actions a{color:#3052A5;text-decoration:underline}
+.media-gallery-editor{border:1px solid #BFD1F1;background:#F7F9FF;border-radius:7px}
+.pdf-thumb{width:92px;height:70px;display:grid;place-items:center;background:#1D4ED8;color:#F8FAFC;font:15px var(--mono);border-radius:6px}
+@media(max-width:900px){.media-order-row{grid-template-columns:80px 1fr}.media-order-row>img{width:80px;height:64px}.media-order-actions{grid-column:1/-1}}

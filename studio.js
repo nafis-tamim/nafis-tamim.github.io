@@ -23,7 +23,6 @@ const modules=[
  ["projects","Projects","All categories, images, work and PDF links"],
  ["research","Research","Paper covers, manuscripts and sources"],
  ["creative","Design gallery","Brand work, packaging, posters and graphics"],
- ["writing","Writing","Essays, publications and long-form ideas"],
  ["academics","Education & activities","Your academic journey"],
  ["menu","Pages & menu","Custom links, new sections and navigation order"],
  ["look","Style, photos & SEO","Website theme, motion, favicon, search"],
@@ -175,33 +174,59 @@ function renderMediaControls(container,obj,key){
  }
 }
 function mediaGallery(container,obj,key){
- const x=make("div","inline-list");
- const head=make("div","inline-list-heading");head.append(make("h4","","Photo / PDF gallery"));
- const up=button("＋ UPLOAD",()=>picker.click());up.disabled=!writeOK;
- head.append(up);x.append(head);
- x.append(make("small","field-tip","Add as many photos, certificates and PDFs as needed. Each file will have a direct link on the public card."));
- a(obj[key]).forEach((path,i)=>{
-  const row=make("div","inline-preview");
-  if(/\.(png|jpe?g|gif|webp|svg)(?:[?#]|$)/i.test(path)){const pic=make("img");pic.src=path;pic.alt="Gallery media";row.append(pic)}
-  const short=make("span","asset-name",path);row.append(short);
-  const view=make("a","","OPEN ↗");view.href=path;view.target="_blank";view.rel="noopener noreferrer";row.append(view);
-  row.append(button("REMOVE",()=>{obj[key].splice(i,1);dirtyNow();render()},"danger-action"));
-  x.append(row);
+ const wrap=make("div","inline-list media-gallery-editor");
+ const head=make("div","inline-list-heading");
+ head.append(make("h4","","Photos, certificates & PDF gallery"));
+ const upload=button("↑ UPLOAD MULTIPLE",()=>picker.click(),"small-action");
+ upload.disabled=!writeOK;head.append(upload);wrap.append(head);
+ wrap.append(make("small","field-tip","Add as many images and PDFs as you need. Drag-free UP/DOWN ordering controls and Use as cover work without touching code. Gallery pictures are shown in a slideshow on the portfolio."));
+ const entries=a(obj[key]);
+ entries.forEach((path,index)=>{
+  const row=make("div","inline-preview media-order-row");
+  if(/\.(png|jpe?g|webp|gif|svg)(?:[?#]|$)/i.test(path)){
+   const img=make("img");img.src=path;img.alt="Image "+(index+1);row.append(img);
+  }else row.append(make("span","pdf-thumb","PDF"));
+  const meta=make("div","asset-name",String(index+1).padStart(2,"0")+" / "+path);
+  row.append(meta);
+  const btns=make("div","media-order-actions");
+  const up=button("↑",()=>{if(index<1)return;[obj[key][index],obj[key][index-1]]=[obj[key][index-1],obj[key][index]];dirtyNow();render()},"small-action");
+  up.disabled=index===0;up.title="Move earlier";
+  const down=button("↓",()=>{if(index===entries.length-1)return;[obj[key][index],obj[key][index+1]]=[obj[key][index+1],obj[key][index]];dirtyNow();render()},"small-action");
+  down.disabled=index===entries.length-1;down.title="Move later";
+  btns.append(up,down);
+  if(/\.(png|jpe?g|webp|gif|svg)(?:[?#]|$)/i.test(path)){
+   btns.append(button("COVER",()=>{
+    const old=obj.image;
+    obj.image=path;
+    if(old&&old!==path&&!obj[key].includes(old))obj[key].unshift(old);
+    obj[key]=obj[key].filter(x=>x!==path);
+    dirtyNow();render();notice("Cover image updated. Publish changes to update the site.");
+   },"small-action"));
+  }
+  const view=make("a","","OPEN ↗");view.href=path;view.target="_blank";view.rel="noopener noreferrer";btns.append(view);
+  btns.append(button("REMOVE",()=>{obj[key].splice(index,1);dirtyNow();render()},"danger-action"));
+  row.append(btns);wrap.append(row);
  });
- const actions=make("div","media-field-actions");
- actions.append(button("＋ ADD IMAGE/PDF URL",()=>{
-  const raw=prompt("Paste the HTTPS link to an image or PDF:");
+ const picker=make("input");picker.type="file";picker.multiple=true;picker.accept=".jpg,.jpeg,.png,.webp,.gif,.ico,.pdf";picker.style.display="none";
+ picker.onchange=async()=>{
+  const files=Array.from(picker.files||[]);if(!files.length)return;
+  upload.disabled=true;let count=0;
+  for(const f of files){
+   try{const path=await uploadFile(f);obj[key].push(path);count++;dirtyNow()}
+   catch(e){notice("Uploaded "+count+" of "+files.length+". "+errorMessage(e),"error");break}
+  }
+  upload.disabled=false;render();
+  if(count===files.length)notice(count+" gallery file(s) uploaded. Publish to show them on the live site.");
+ };
+ const tools=make("div","media-field-actions");
+ tools.append(picker);
+ tools.append(button("+ ADD IMAGE / PDF URL",()=>{
+  const raw=prompt("Paste a public HTTPS image/PDF URL:");
   if(!raw)return;
-  if(!/^https:\/\//i.test(raw)){notice("Please use a complete HTTPS link.","warning");return}
+  if(!/^https:\/\//i.test(raw)){notice("Enter a complete HTTPS URL.","warning");return}
   obj[key].push(raw.trim());dirtyNow();render();
  }));
- const picker=make("input");picker.type="file";picker.accept=".jpg,.jpeg,.png,.webp,.gif,.ico,.pdf";picker.style.display="none";
- picker.onchange=async()=>{
-  const f=picker.files?.[0];if(!f)return;up.disabled=true;
-  try{const path=await uploadFile(f);obj[key].push(path);dirtyNow();render();notice("Gallery image uploaded. Publish the draft when ready.")}
-  catch(e){notice(errorMessage(e),"error")}finally{up.disabled=false}
- };
- actions.append(picker);x.append(actions);container.append(x);
+ wrap.append(tools);container.append(wrap);
 }
 function linkEditor(container,obj,key){
  const wrap=make("div","inline-list"),head=make("div","inline-list-heading");
@@ -342,7 +367,6 @@ function dashboard(container){
  [a(data.projects.items).length,"Projects","projects"],
  [a(data.research.items).length,"Research","research"],
  [a(data.creative.items).length,"Design work","creative"],
- [a(data.writing.items).length,"Writing","writing"],
  [a(data.navigation).filter(x=>x.visible!==false).length,"Menu links","menu"]
  ];
  const stats=make("div","overview-grid");
@@ -372,7 +396,7 @@ function rootSections(container,defs){
 function recordPanel(container){
  const config=groupsByMode[mode];
  editorHeading(container,config.title,config.intro);
- if(["awards","projects","research","creative","writing","academics"].includes(mode)){
+ if(["awards","projects","research","creative","academics"].includes(mode)){
   const baseKey=mode==="awards"?"achievements":mode;
   const root=make("section","simple-section");
   root.append(make("h3","","Section heading & introductory text"));
