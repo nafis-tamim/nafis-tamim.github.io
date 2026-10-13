@@ -352,42 +352,147 @@ function initScroll(){
  const obs=new IntersectionObserver(records=>records.forEach(r=>{if(r.isIntersecting){r.target.classList.add("visible");obs.unobserve(r.target)}}),{threshold:.06,rootMargin:"0px 0px -30px 0px"});
  elems.forEach(el=>obs.observe(el));
 }
+function initProfileTilt(){
+ const stage=$("[data-profile-stage]");
+ if(!stage||data.appearance?.motion===false||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const frame=$(".profile-motion-frame",stage);if(!frame)return;
+ const move=e=>{
+  if(e.pointerType==="touch")return;
+  const r=stage.getBoundingClientRect();
+  const dx=(e.clientX-r.left)/r.width-.5,dy=(e.clientY-r.top)/r.height-.5;
+  frame.style.transform="perspective(1100px) rotateY("+(dx*9).toFixed(2)+"deg) rotateX("+(-dy*8).toFixed(2)+"deg)";
+ };
+ stage.addEventListener("pointermove",move,{passive:true});
+ stage.addEventListener("pointerleave",()=>frame.style.transform="perspective(1100px) rotateY(0deg) rotateX(0deg)");
+}
+/* A genuine standing-wave nodal contour field, rendered with marching squares. */
+function initResonance(){
+ const section=$("#resonance-lab"),canvas=$("#resonance-canvas"),plate=$("#resonance-plate");
+ if(!section||!canvas||!plate)return;
+ const ctx=canvas.getContext("2d");if(!ctx)return;
+ const N=58,S=640,pixel=S/N,EPS=.000001;
+ const dpr=Math.min(2,window.devicePixelRatio||1);canvas.width=S*dpr;canvas.height=S*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+ const progressBar=$("#resonance-progress-bar"),mode=$("#resonance-mode");
+ const prefersReduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches||data.appearance?.motion===false;
+ let frame=0,last=-1;
+ function draw(n,m){
+  ctx.clearRect(0,0,S,S);
+  const values=new Float32Array((N+1)*(N+1));
+  for(let iy=0;iy<=N;iy++)for(let ix=0;ix<=N;ix++){
+   const x=ix/N,y=iy/N;
+   values[iy*(N+1)+ix]=Math.cos(n*Math.PI*x)*Math.cos(m*Math.PI*y)-Math.cos(m*Math.PI*x)*Math.cos(n*Math.PI*y);
+  }
+  ctx.strokeStyle="#60A5FA";
+  ctx.lineWidth=1.7;ctx.lineCap="round";
+  ctx.shadowColor="rgba(96,165,250,.4)";ctx.shadowBlur=11;
+  ctx.beginPath();
+  for(let iy=0;iy<N;iy++)for(let ix=0;ix<N;ix++){
+   const x=ix*pixel,y=iy*pixel;
+   const tl=values[iy*(N+1)+ix],tr=values[iy*(N+1)+ix+1],br=values[(iy+1)*(N+1)+ix+1],bl=values[(iy+1)*(N+1)+ix];
+   const points=[];
+   function edge(ax,ay,av,bx,by,bv){
+    if((av>0)===(bv>0))return;
+    const t=av/(av-bv+EPS);
+    points.push([ax+(bx-ax)*t,ay+(by-ay)*t]);
+   }
+   edge(x,y,tl,x+pixel,y,tr);
+   edge(x+pixel,y,tr,x+pixel,y+pixel,br);
+   edge(x+pixel,y+pixel,br,x,y+pixel,bl);
+   edge(x,y+pixel,bl,x,y,tl);
+   for(let k=0;k+1<points.length;k+=2){ctx.moveTo(points[k][0],points[k][1]);ctx.lineTo(points[k+1][0],points[k+1][1])}
+  }
+  ctx.stroke();ctx.shadowBlur=0;
+  ctx.strokeStyle="rgba(96,165,250,.13)";ctx.lineWidth=1;
+  for(let i=1;i<=5;i++){ctx.strokeRect(18+i*15,18+i*15,S-36-i*30,S-36-i*30)}
+ }
+ function update(){
+  frame=0;
+  const max=Math.max(1,section.offsetHeight-window.innerHeight);
+  const rect=section.getBoundingClientRect();
+  const p=Math.max(0,Math.min(1,-rect.top/max));
+  if(Math.abs(p-last)<.008)return;last=p;
+  const n=2+p*3.3,m=3+p*2.5;
+  draw(n,m);
+  if(mode)mode.textContent=String(Math.round(n)).padStart(2,"0")+" : "+String(Math.round(m)).padStart(2,"0");
+  if(progressBar)progressBar.style.width=(p*100).toFixed(1)+"%";
+  if(!prefersReduce)plate.style.transform="perspective(1200px) rotateX("+(13-p*18).toFixed(2)+"deg) rotateY("+(-10+p*21).toFixed(2)+"deg) rotateZ("+(p*16-8).toFixed(2)+"deg) scale("+(0.89+p*.15).toFixed(3)+")";
+ }
+ const schedule=()=>{if(!frame)frame=requestAnimationFrame(update)};
+ draw(2,3);
+ if(prefersReduce)return;
+ window.addEventListener("scroll",schedule,{passive:true});
+ window.addEventListener("resize",schedule,{passive:true});
+ schedule();
+}
+/* Interactive 3D toroidal wireframe projected onto a 2D canvas, behind the portrait. */
 function initMotion(){
  if(canvasController)canvasController.stop();
- const canvas=$("#orbit-canvas");
- if(!canvas||data.appearance?.motion===false||data.appearance?.animation==="none"||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const canvas=$("#orbit-canvas"),hero=$(".hero");
+ if(!canvas||!hero||data.appearance?.motion===false||data.appearance?.animation==="none"||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
  const ctx=canvas.getContext("2d");if(!ctx)return;
- let W=0,H=0,raf,active=true;
- let dots=[],mouse={x:-1000,y:-1000};
+ let width=0,height=0,raf=0,active=true,visible=true,rotation=0;
+ let pointer={x:0,y:0};
  const resize=()=>{
-  const b=canvas.getBoundingClientRect();W=b.width;H=b.height;const dpi=Math.min(2,devicePixelRatio||1);
-  canvas.width=W*dpi;canvas.height=H*dpi;ctx.setTransform(dpi,0,0,dpi,0,0);
-  dots=Array.from({length:Math.min(48,Math.max(20,Math.round(W*H/30000)))},(_,i)=>{
-   const a=i*2.3999632,r=Math.sqrt((i+.4)/(Math.min(48,Math.max(20,Math.round(W*H/30000)))));
-   return {x:W*.79+Math.cos(a)*r*W*.45,y:H*.51+Math.sin(a)*r*H*.43,vx:Math.sin(i*2.9)*.06,vy:Math.cos(i*2.2)*.06};
-  });
+  const rect=hero.getBoundingClientRect();
+  width=rect.width;height=rect.height;
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  canvas.width=width*dpr;canvas.height=height*dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+ };
+ const point=(theta,phi)=>{
+  const R=145,r=77;
+  let x=(R+r*Math.cos(phi))*Math.cos(theta),y=(R+r*Math.cos(phi))*Math.sin(theta),z=r*Math.sin(phi);
+  const ya=rotation+pointer.x*.6,xa=.47+Math.sin(rotation*.6)*.2+pointer.y*.35;
+  const x1=x*Math.cos(ya)-z*Math.sin(ya),z1=x*Math.sin(ya)+z*Math.cos(ya);
+  const y1=y*Math.cos(xa)-z1*Math.sin(xa),z2=y*Math.sin(xa)+z1*Math.cos(xa);
+  const scale=650/(650-z2);
+  return [width*.77+x1*scale*1.2,height*.50+y1*scale*1.2,z2];
+ };
+ const strokeCurve=(list,opacity)=>{
+  ctx.beginPath();list.forEach(([x,y],i)=>{if(i)ctx.lineTo(x,y);else ctx.moveTo(x,y)});
+  ctx.strokeStyle="rgba(96,165,250,"+opacity+")";ctx.lineWidth=.85;ctx.stroke();
  };
  const draw=()=>{
-  if(!active)return;
-  ctx.clearRect(0,0,W,H);
-  dots.forEach(p=>{p.x+=p.vx;p.y+=p.vy;ctx.fillStyle="rgba(144,179,238,.55)";ctx.beginPath();ctx.arc(p.x,p.y,1.3,0,Math.PI*2);ctx.fill()});
-  dots.forEach((a,i)=>dots.slice(i+1).forEach(b=>{
-   const distance=Math.hypot(a.x-b.x,a.y-b.y);
-   if(distance<150){ctx.strokeStyle="rgba(144,179,238,"+(.15*(1-distance/150))+")";ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}
-  }));
-  for(const p of dots){let dist=Math.hypot(p.x-mouse.x,p.y-mouse.y);if(dist<110){ctx.strokeStyle="rgba(116,173,255,.24)";ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke()}}
-  raf=requestAnimationFrame(draw);
+  if(!active||!visible)return;
+  ctx.clearRect(0,0,width,height);
+  for(let j=0;j<13;j++){
+   const phi=j*2*Math.PI/13;
+   const path=[];for(let i=0;i<=100;i++)path.push(point(i*2*Math.PI/100,phi));
+   strokeCurve(path,j%3===0?.32:.14);
+  }
+  for(let j=0;j<20;j+=2){
+   const theta=j*2*Math.PI/20;
+   const path=[];for(let i=0;i<=70;i++)path.push(point(theta,i*2*Math.PI/70));
+   strokeCurve(path,.18);
+  }
+  for(let i=0;i<24;i++){
+   const p=point(i*2*Math.PI/24,Math.PI*1.6);
+   ctx.fillStyle="rgba(191,218,255,.6)";ctx.beginPath();ctx.arc(p[0],p[1],1.7,0,Math.PI*2);ctx.fill();
+  }
+  rotation+=.0023;raf=requestAnimationFrame(draw);
  };
- const move=e=>{const r=canvas.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top};
- const visibility=()=>{if(document.hidden){active=false;cancelAnimationFrame(raf)}else{active=true;raf=requestAnimationFrame(draw)}};
- const heroEl=$(".hero");
- heroEl?.addEventListener("pointermove",move,{passive:true});
- heroEl?.addEventListener("pointerleave",()=>mouse={x:-1000,y:-1000},{passive:true});
- document.addEventListener("visibilitychange",visibility);
+ const move=e=>{
+  if(e.pointerType==="touch")return;
+  const box=hero.getBoundingClientRect();
+  pointer={x:(e.clientX-box.left)/box.width-.5,y:(e.clientY-box.top)/box.height-.5};
+ };
+ const vis=()=>{const now=!document.hidden;if(now===active)return;active=now;if(now&&visible){cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)}else cancelAnimationFrame(raf)};
+ let observer=null;
+ if(window.IntersectionObserver){
+  observer=new IntersectionObserver(entries=>{
+   const shown=entries[0]?.isIntersecting!==false;
+   if(shown===visible)return;visible=shown;
+   if(shown&&active){cancelAnimationFrame(raf);raf=requestAnimationFrame(draw)}else cancelAnimationFrame(raf);
+  },{threshold:0});
+  observer.observe(hero);
+ }
+ hero.addEventListener("pointermove",move,{passive:true});
+ document.addEventListener("visibilitychange",vis);
  window.addEventListener("resize",resize,{passive:true});
  resize();raf=requestAnimationFrame(draw);
- canvasController={stop(){active=false;cancelAnimationFrame(raf);document.removeEventListener("visibilitychange",visibility);window.removeEventListener("resize",resize)}};
+ canvasController={stop(){active=false;cancelAnimationFrame(raf);observer?.disconnect();document.removeEventListener("visibilitychange",vis);window.removeEventListener("resize",resize)}};
 }
+
 async function load(){
  try{
   const r=await fetch("/content/site.json?revision="+Date.now(),{cache:"no-store"});
