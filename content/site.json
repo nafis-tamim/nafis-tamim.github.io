@@ -1,24 +1,24 @@
 {
-  "version": 6,
+  "version": 7,
   "seo": {
-    "title": "Nafis Tamim — Research, Design & Ideas",
-    "description": "The multidisciplinary academic portfolio of Nafis Tamim: international academic honours, research, creative design, software and writing, with project visuals and direct supporting links.",
-    "keywords": "Nafis Tamim, ICSC 2026 Most Participants Ambassador Award, ICSC Top 1 Ambassador, IYMC 2025 Silver Honour, IYMC 2026 organizer commendation, TruthLens IJISRT, academic research",
+    "title": "Nafis Tamim | Research, Technology & Creative Work",
+    "description": "Academic portfolio of Nafis Tamim — research, mathematics, technology, international recognition and visual design. Explore interactive scientific work, projects and supporting materials.",
+    "keywords": "Nafis Tamim academic portfolio, research, computer science, artificial intelligence, mathematics, IYMC, ICSC, TruthLens, graphic design",
     "canonical": "https://nafis-tamim.github.io/",
     "ogImage": "",
     "favicon": "/favicon.svg"
   },
   "appearance": {
-    "background": "#F2F3F4",
-    "paper": "#FFFFFF",
-    "ink": "#151C2B",
-    "inkSoft": "#5D687A",
-    "deep": "#111A2B",
-    "accent": "#5274FF",
-    "teal": "#1385A2",
-    "gold": "#D6BA93",
-    "border": "#D9DFE8",
-    "animation": "constellation",
+    "background": "#06070C",
+    "paper": "#10162A",
+    "ink": "#F8FAFC",
+    "inkSoft": "#B6C2DC",
+    "deep": "#06070C",
+    "accent": "#1D4ED8",
+    "teal": "#60A5FA",
+    "gold": "#60A5FA",
+    "border": "#293657",
+    "animation": "scientific-field",
     "motion": true,
     "hoverEffects": true,
     "sectionReveals": true,
@@ -27,11 +27,11 @@
   "identity": {
     "name": "Nafis Tamim",
     "initials": "NT",
-    "descriptor": "Student · Researcher · Designer · Builder",
+    "descriptor": "Research / Design / Engineering",
     "identityLine": "RESEARCH / MATHEMATICS / DESIGN / COMPUTING",
     "institution": "Dhaka City College",
     "location": "Dhaka, Bangladesh",
-    "availability": "Open to thoughtful projects, competitions and collaboration",
+    "availability": "",
     "portrait": "https://icscompetition.org/api/data/ambassadors/cropped_1776877938.6366_picture.png",
     "portraitAlt": "Nafis Tamim — ICSC ambassador portrait",
     "portraitCaption": "THE PERSON BEHIND THE WORK",
@@ -88,13 +88,6 @@
       "openNewTab": false
     },
     {
-      "id": "writing",
-      "label": "Writing",
-      "visible": true,
-      "href": "#writing",
-      "openNewTab": false
-    },
-    {
       "id": "academics",
       "label": "Academic path",
       "visible": true,
@@ -110,29 +103,30 @@
     }
   ],
   "hero": {
-    "overline": "NAFIS TAMIM — THE WORKING INDEX / 2026",
+    "overline": "",
     "firstLine": "Curiosity",
-    "secondLine": "is a serious craft.",
-    "intro": "Research, mathematics, design, software and writing. Different fields, the same approach: question everything, make something useful, and document what actually happened.",
+    "secondLine": "in motion.",
+    "intro": "I explore mathematics, AI, scientific research and visual design—building, questioning and turning ideas into tangible work.",
     "primaryLabel": "See the work",
     "primaryTarget": "projects",
     "secondaryLabel": "Academic records",
     "secondaryTarget": "achievements",
-    "portraitSideLabel": "ACADEMIC • CREATIVE • EXPERIMENTAL",
-    "stageLabel": "CURRENT EXPLORATIONS",
-    "stageText": "Ideas, evidence, iteration.",
-    "verifiedTag": "ICSC 2026 · TOP-RANKED AMBASSADOR",
+    "portraitSideLabel": "",
+    "stageLabel": "",
+    "stageText": "",
+    "verifiedTag": "",
     "verifiedUrl": "https://icscompetition.org/en/top-ambassadors",
-    "smallCaption": "Multidisciplinary by nature. Specific about the work.",
-    "featuredCategory": "Recognition",
-    "featureTitle": "#01",
-    "featureSubtitle": "ICSC 2026 Ambassador Leaderboard",
-    "featureUrl": "https://icscompetition.org/en/top-ambassadors"
+    "smallCaption": "",
+    "featuredCategory": "",
+    "featureTitle": "",
+    "featureSubtitle": "",
+    "featureUrl": "https://icscompetition.org/en/top-ambassadors",
+    "availability": ""
   },
   "about": {
     "eyebrow": "01 — PERSPECTIVE",
-    "heading": "One curiosity. Many mediums.",
-    "lead": "I don't treat software, research, mathematics, writing and visual design as separate identities. They are tools for asking better questions and making more thoughtful work.",
+    "heading": "Curiosity across disciplines.",
+    "lead": "Working at the intersection of mathematics, research, design and technology.",
     "body": "This portfolio is organized as an evidence-led catalogue: achievements carry results and links; projects show the work; research connects to its documents. My interests change and develop, so the site is intentionally editable.",
     "quote": "The most interesting answers often begin with a better question.",
     "principles": [
@@ -156,8 +150,8 @@
   },
   "achievements": {
     "eyebrow": "02 — RECOGNITION",
-    "heading": "The record speaks.",
-    "intro": "National, international and academic recognitions, organized by origin. Every entry has its own cover, evidence links and space for photographs or certificate PDFs.",
+    "heading": "Achievements",
+    "intro": "Academic milestones, competition honours and recognised work.",
     "cards": [
       {
         "id": "icsc-top-2026",
@@ -349,8 +343,8 @@
   },
   "projects": {
     "eyebrow": "03 — SELECTED PROJECTS",
-    "heading": "Built, designed, investigated.",
-    "intro": "A project may be a visual identity, digital prototype, research investigation, essay or something yet to be categorized. The format changes; the thinking matters.",
+    "heading": "Selected projects",
+    "intro": "Software, research experiments, branding, and design. Explore the visuals and source files directly.",
     "categories": [
       "All",
       "Software",
@@ -490,8 +484,8 @@
   },
   "research": {
     "eyebrow": "04 — RESEARCH & INQUIRY",
-    "heading": "Research & open questions.",
-    "intro": "Research notes, papers and study material. Each record links to its manuscript or supporting evidence and is clear about its publication status.",
+    "heading": "Research",
+    "intro": "Questions, methods, working models and evidence. Explore the concepts and open the source material directly.",
     "emptyTitle": "Research archive in preparation",
     "emptyBody": "Current research manuscripts and supporting documents will be added here. Research interests do not imply published papers.",
     "items": [
@@ -533,15 +527,16 @@
             "url": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models"
           }
         ],
-        "pdf": ""
+        "pdf": "",
+        "previewMode": "research-diagram"
       }
     ],
     "sectionLinks": []
   },
   "creative": {
     "eyebrow": "05 — BEYOND THE CODE",
-    "heading": "Visual thinking, made tangible.",
-    "intro": "Packaging, identity, poster systems and experiments that translate thought into something you can see.",
+    "heading": "Visual experiments",
+    "intro": "Brand systems, product concepts and design investigations.",
     "items": [
       {
         "id": "creative-1",
@@ -591,7 +586,8 @@
     "emptyTitle": "Selected writing coming soon",
     "emptyBody": "The first pieces and competition manuscripts are being prepared for the archive.",
     "items": [],
-    "sectionLinks": []
+    "sectionLinks": [],
+    "visible": false
   },
   "academics": {
     "eyebrow": "07 — THE PATH",
@@ -692,7 +688,7 @@
     "disciplines": "Leadership. Mathematics. Research.\nDesign. Writing. Technology.",
     "heroEvidenceOverline": "INDEPENDENTLY LISTED",
     "heroScroll": "SCROLL TO INVESTIGATE ↓",
-    "achievementsNote": "Links lead directly to certificates, official results or supporting material.",
+    "achievementsNote": "",
     "projectsMore": "SEE MORE WORK",
     "projectsDetails": "VIEW PROJECT",
     "sourceLabel": "OPEN DOCUMENT",
@@ -700,25 +696,30 @@
     "achievementsEvidence": "Official document",
     "achievementsPending": "",
     "highlightOverline": "THE SELECTED INDEX",
-    "highlightTitle": "Selected / notable.",
-    "highlightIntro": "A carefully chosen view of the work, across disciplines.",
+    "highlightTitle": "Selected work.",
+    "highlightIntro": "Research, achievement and creative experiments.",
     "highlightOpen": "EXPLORE DETAILS",
     "mobileContact": "LET'S TALK",
     "modalLink": "VIEW DOCUMENT / PROJECT",
     "modalVerification": "OPEN OFFICIAL SOURCE",
     "footerNote": "A living archive of evidence and imagination.",
     "achievementsEmail": "",
-    "supportingLinksTitle": "DOCUMENTS & LINKS",
-    "supportingLinksEmpty": "Photos and files can be added soon",
+    "supportingLinksTitle": "Files & links",
+    "supportingLinksEmpty": "",
     "achievementDetails": "OPEN SUPPORTING MATERIAL"
   },
   "design": {
-    "label": "V6 / INDEX OF IDEAS",
-    "creativeStatement": "Ideas have no single discipline.",
-    "stripLabel": "THE LABORATORY IS OPEN",
-    "motif": "ORBITAL DATA FIELD",
-    "footerMotif": "ALWAYS BUILDING, ALWAYS LEARNING",
+    "label": "",
+    "creativeStatement": "",
+    "stripLabel": "",
+    "motif": "",
+    "footerMotif": "",
     "layout": "editorial",
-    "showTicker": true
+    "showTicker": false,
+    "scrollLabTitle": "Scientific form, shaped by motion.",
+    "scrollLabIntro": "Scroll to change the resonance pattern. Each contour is computed from a two-dimensional standing-wave equation.",
+    "scrollLabCaption": "INTERACTIVE RESONANCE / CHLADNI-INSPIRED",
+    "scrollLabButton": "SCROLL TO EXPERIMENT",
+    "orbitalCaption": "ORBITAL INDEX"
   }
 }
