@@ -133,6 +133,7 @@ function achievements(d){
  if(all.some(x=>!known.has(x.groupId))){out.push({id:"uncategorized",eyebrow:"ADDITIONAL RECORDS",title:"Other Recognition",subtitle:"Additional achievements",description:"",logo:""})}
  return section("achievements",label(a.eyebrow,"02")+
  '<div class="section-split"><h2 class="section-heading reveal">'+esc(a.heading)+'</h2><p class="section-aside reveal">'+esc(a.intro)+'</p></div>'+
+ '<nav class="award-group-index" aria-label="Achievement categories">'+out.filter(g=>all.some(x=>known.has(x.groupId)?x.groupId===g.id:g.id==="uncategorized")).map(g=>'<a href="#awards-'+esc(safeId(g.id))+'"><span class="index-dot"></span>'+esc(g.title)+'<span aria-hidden="true">↗</span></a>').join("")+'</nav>'+
  '<div class="award-groups">'+out.map((g,i)=>{
   const items=all.filter(x=>known.has(x.groupId)?x.groupId===g.id:!known.has(x.groupId)&&g.id==="uncategorized");
   if(!items.length)return "";

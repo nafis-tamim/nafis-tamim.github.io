@@ -558,3 +558,11 @@ body{background:var(--bg)}
  .hero h1{font-size:clamp(48px,11vw,76px)}
  .spotlight-monogram{font-size:60px}
 }
+
+/* Award-category jump navigation */
+.award-group-index{display:flex;flex-wrap:wrap;gap:8px;margin:-12px 0 42px}
+.award-group-index a{display:inline-flex;gap:10px;align-items:center;padding:13px 16px;background:#F5F5F2;border:1px solid #C5CCCE;font:11px var(--sans);font-weight:750;color:#344B5A;transition:background .2s,border-color .2s}
+.award-group-index a:hover{border-color:#627E8C;background:#DEE6E7}
+.award-group-index a>span:last-child{font-size:15px}
+.index-dot{width:5px;height:5px;background:#607D8A;display:inline-block;border-radius:50%}
+@media(max-width:620px){.award-group-index a{font-size:10px;padding:11px 12px}}

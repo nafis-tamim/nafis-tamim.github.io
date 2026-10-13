@@ -44,3 +44,16 @@ A MongoDB Atlas cluster exists in the separate project \`Nafis Academic Portfoli
 ## Accessibility
 
 Responsive, keyboard-operable detail modals, visible focus states, alt text, reduced-motion support and low-key constellation animation with optional motion off in the Studio.
+
+
+## V5 Achievement categories, media and links
+
+The portfolio now separates **Bangladesh Government** competition recognition, **International Honours**, and **Academic Commendations** in the Awards section. These are organizer categories and **do not imply official government endorsement**.
+
+- Open **Achievements & photos** in the Studio to create an award, select its group, upload or replace a cover photo, add gallery images or PDFs, and add multiple Supporting Links. Supporting evidence links appear **directly on the public award cards**, not only in a popup.
+- Open **Government & international logos** to edit section titles and descriptions and upload/replace/remove each group's emblem. The international symbol is a neutral original globe illustration stored at \`assets/international-mark.svg\`.
+- The initial Bangladesh Government seal image is loaded from a Wikimedia Commons source entry. The public site links to its source for attribution; replace or remove it in the Studio if desired. The source file's re-use conditions are documented at https://commons.wikimedia.org/wiki/File:Seal_of_the_Government_of_Bangladesh.svg.
+- To remove any image from the live site, choose **Remove from website** for a cover/logo or **Remove** for a gallery item, then **Publish changes**. This unlinks media but does not delete shared repository assets or external media.
+- To permanently remove unused files uploaded to \`media/\`, visit **Media library & delete** after publishing. Deletion is disabled if the file is still referenced by the current content or the site has unpublished changes; the editor re-checks the published content before deletion. History may retain old versions of a committed file.
+
+Media storage limits remain those of GitHub. The editor accepts JPG/PNG/WebP/GIF/ICO/PDF under 8 MB per upload. SVG uploads are intentionally unsupported.
