@@ -86,6 +86,66 @@ function cardImg(x,cls){
  let main=arr(x.gallery).find(v=>/\.(png|jpe?g|webp|gif)(?:[?#]|$)/i.test(v))||x.image;
  return '<a class="media-anchor" href="'+E(linkUrl(main))+'" target="_blank" rel="noopener noreferrer" aria-label="View image for '+E(x.title)+'">'+visual({...x,image:main},cls)+'</a>';
 }
+
+/* Interactive media galleries: cover + any number of award/project/research photos. */
+function gallerySources(item){
+ const sources=[],seen=new Set();
+ function add(src){
+  const v=str(src).trim();if(!v||seen.has(v)||linkUrl(v)==="#")return;
+  seen.add(v);sources.push({src:v,pdf:/\.pdf(?:[?#]|$)/i.test(v)});
+ }
+ add(item.image);
+ arr(item.gallery).forEach(add);
+ return sources;
+}
+function galleryMarkup(item,variant=""){
+ const sources=gallerySources(item);
+ if(!sources.length)return '<div class="media-gallery '+E(variant)+'"><div class="gallery-no-image">'+E(item.title||"Visual archive")+'</div></div>';
+ const images=sources.map((slide,i)=>{
+  const focus=i===0?'0':'-1';
+  const inner=slide.pdf?
+   '<a href="'+E(linkUrl(slide.src))+'" target="_blank" rel="noopener noreferrer" class="gallery-pdf" tabindex="'+focus+'"><strong>PDF</strong><span>'+E(item.title||"Document")+'</span><small>OPEN DOCUMENT ↗</small></a>':
+   '<a href="'+E(linkUrl(slide.src))+'" target="_blank" rel="noopener noreferrer" class="gallery-photo" tabindex="'+focus+'" aria-label="Open image '+(i+1)+' of '+E(item.title)+'">'+asset(slide.src,item.imageAlt||item.title,"gallery-image")+'</a>';
+  return '<div data-slide="'+i+'" class="gallery-slide'+(i===0?" is-active":"")+'" aria-hidden="'+(i===0?"false":"true")+'">'+inner+'</div>';
+ }).join("");
+ const controls=sources.length>1?'<div class="gallery-controls"><button type="button" data-gallery-step="-1" aria-label="Previous image">←</button><span class="gallery-count"><b data-gallery-position>01</b> / '+String(sources.length).padStart(2,"0")+'</span><button type="button" data-gallery-step="1" aria-label="Next image">→</button></div>'+
+ '<div class="gallery-dots">'+sources.map((_,i)=>'<button type="button" data-gallery-index="'+i+'" class="'+(i===0?"active":"")+'" aria-label="Show image '+(i+1)+'" aria-pressed="'+(i===0?"true":"false")+'"></button>').join("")+'</div>':"";
+ return '<div class="media-gallery '+E(variant)+'" data-gallery data-active="0">'+images+controls+'</div>';
+}
+function initGalleries(scope=document){
+ $all("[data-gallery]",scope).forEach(gallery=>{
+  const slides=$all("[data-slide]",gallery),dots=$all("[data-gallery-index]",gallery);
+  if(!slides.length)return;
+  const change=i=>{
+   const current=(i+slides.length)%slides.length;gallery.dataset.active=String(current);
+   slides.forEach((slide,j)=>{
+    const chosen=j===current;slide.classList.toggle("is-active",chosen);slide.setAttribute("aria-hidden",String(!chosen));
+    const link=slide.querySelector("a");if(link)link.tabIndex=chosen?0:-1;
+   });
+   dots.forEach((dot,j)=>{dot.classList.toggle("active",j===current);dot.setAttribute("aria-pressed",String(j===current))});
+   const label=$("[data-gallery-position]",gallery);if(label)label.textContent=String(current+1).padStart(2,"0");
+  };
+  $all("[data-gallery-step]",gallery).forEach(b=>b.onclick=()=>change(Number(gallery.dataset.active||0)+Number(b.dataset.galleryStep)));
+  dots.forEach(b=>b.onclick=()=>change(Number(b.dataset.galleryIndex)));
+ });
+}
+function initOrbits(){
+ $all("[data-award-orbit]").forEach(group=>{
+  const buttons=$all("[data-orbit-index]",group),panels=$all("[data-orbit-panel]",group),wheel=$("[data-orbit-wheel]",group);
+  if(!buttons.length)return;
+  const activate=i=>{
+   const current=(i+buttons.length)%buttons.length;
+   group.dataset.active=String(current);
+   buttons.forEach((btn,index)=>{const active=index===current;btn.classList.toggle("is-active",active);btn.setAttribute("aria-pressed",String(active))});
+   panels.forEach((panel,index)=>{const active=index===current;panel.hidden=!active;panel.classList.toggle("is-active",active);panel.setAttribute("aria-hidden",String(!active))});
+   if(wheel)wheel.style.setProperty("--active-angle",String(current*360/buttons.length)+"deg");
+  };
+  buttons.forEach((btn,i)=>btn.onclick=()=>activate(i));
+  $all("[data-orbit-step]",group).forEach(btn=>btn.onclick=()=>activate(Number(group.dataset.active||0)+Number(btn.dataset.orbitStep)));
+  activate(0);
+ });
+}
+
 function achievement(d){
  const a=d.achievements||{},items=arr(a.cards),groups=arr(a.groups).filter(g=>g.visible!==false);
  const groupIds=new Set(groups.map(g=>g.id));
@@ -110,7 +170,7 @@ function achievement(d){
 }
 function projectCard(x,i){
  return '<article class="work-card reveal-card" style="--delay:'+((i%3)*70)+'ms">'+
- '<div class="work-media">'+cardImg(x,"work-image")+'<span class="work-index">P / '+String(i+1).padStart(2,"0")+'</span></div>'+
+ '<div class="work-media">'+galleryMarkup(x,"project-gallery")+'</div>'+
  '<div class="work-body"><div class="work-line"><span>'+E(x.category||"PROJECT")+'</span><span>'+E(x.year||"")+'</span></div>'+
  '<h3>'+E(x.title)+'</h3><p class="work-summary">'+E(x.summary)+'</p>'+
  (x.outcome?'<p class="work-outcome">'+E(x.outcome)+'</p>':"")+
@@ -140,7 +200,7 @@ function creative(d){
  const c=d.creative||{};
  return block("creative","block-creative",heading(c.eyebrow,c.heading,c.intro,sectionLinks(c))+
  '<div class="creative-grid">'+arr(c.items).map((x,i)=>
- '<article class="creative-item reveal-card"><div class="creative-image-frame">'+cardImg(x,"creative-image")+'<span>FIG. '+String(i+1).padStart(2,"0")+'</span></div>'+
+ '<article class="creative-item reveal-card"><div class="creative-image-frame">'+galleryMarkup(x,"creative-gallery")+'</div>'+
  '<div class="creative-item-body"><span class="item-kicker">'+E(x.category)+'</span><h3>'+E(x.title)+'</h3><p>'+E(x.description)+'</p>'+linkRow(x)+'</div></article>'
  ).join("")+'</div>');
 }
@@ -214,7 +274,7 @@ function render(){
    return "";
  }).join("");
  root.innerHTML='<div class="portfolio-site">'+navigation(d)+hero(d)+marquee(d)+(aboutShown?"":spotlight(d))+contents+'</div>';
- initEvents();initScroll();initMotion();
+ initEvents();initScroll();initGalleries();initOrbits();initMotion();
 }
 function initEvents(){
  const buttonEl=$("#menu-button"),panel=$("#menu-panel");
@@ -227,7 +287,7 @@ function initEvents(){
    const section=$("#projects"),template=document.createElement("div");
    template.innerHTML=projects(data);
    section?.replaceWith(template.firstElementChild);
-   initProjectFilters();initScroll();
+   initProjectFilters();initGalleries();initScroll();
  });
 }
 function initProjectFilters(){
@@ -235,7 +295,7 @@ function initProjectFilters(){
   category=btn.dataset.filter;
   const temp=document.createElement("div");temp.innerHTML=projects(data);
   $("#projects")?.replaceWith(temp.firstElementChild);
-  initProjectFilters();initScroll();
+  initProjectFilters();initGalleries();initScroll();
  });
 }
 function initScroll(){
