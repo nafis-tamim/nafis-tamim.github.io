@@ -34,20 +34,19 @@ function navigation(d){
  '</div><nav class="menu-panel" id="menu-panel" aria-label="Full site menu">'+list.map((n,i)=>'<a href="'+E(navHref(n))+'" '+externalAttrs(n)+'><span>'+String(i+1).padStart(2,"0")+'</span>'+E(n.label)+'<span>↗</span></a>').join("")+'</nav></header>'
 }
 function hero(d){
- const x=d.hero||{},i=d.identity||{};
- return '<section class="hero" id="top"><div class="hero-grid-bg" aria-hidden="true"></div><canvas id="orbit-canvas" aria-hidden="true"></canvas><div class="container">'+
- '<div class="hero-meta"><span class="red-dot"></span><span>'+E(x.overline)+'</span><span class="hero-meta-right">'+E(i.location||"Bangladesh")+' / '+E(d.design?.label||"2026")+'</span></div>'+
- '<div class="hero-layout"><div class="hero-copy"><div class="hero-overline">'+E(i.identityLine)+'</div><h1><span>'+E(x.firstLine||"Ideas")+'</span><em>'+E(x.secondLine||"take shape.")+'</em></h1>'+
- '<p class="hero-summary">'+E(x.intro||"")+'</p><div class="hero-ctas">'+
- button(x.primaryLabel||"Explore", "#"+safeId(x.primaryTarget||"projects"),"solid-button")+
- button(x.secondaryLabel||"Achievements","#"+safeId(x.secondaryTarget||"achievements"),"ghost-button")+'</div>'+
- '<div class="hero-stats"><span class="hero-pulse">●</span>'+E(i.availability||"Available for ideas")+'</div></div>'+
- '<div class="hero-image-wrap"><div class="hero-image-frame"><div class="portrait-backdrop"></div>'+
- (i.portrait?asset(i.portrait,i.portraitAlt||"Nafis Tamim","hero-portrait"):'<div class="hero-portrait-fallback">NT</div>')+
- '<div class="image-crosshair image-crosshair-one">+</div><div class="image-crosshair image-crosshair-two">+</div>'+
- '</div><div class="hero-image-bottom"><span>FIG. 001 / PERSONAL INDEX</span><span>'+E(i.descriptor||"Student · Maker")+'</span></div>'+
- '<div class="hero-satellite"><span class="satellite-index">© / 06</span><strong>'+E(x.stageLabel||"CURRENTLY EXPLORING")+'</strong><p>'+E(x.stageText||"")+'</p></div></div></div>'+
- '<div class="hero-footer"><span>'+E(d.design?.creativeStatement||"Ideas have no single discipline.")+'</span><span>SCROLL TO EXPLORE <b>↓</b></span></div></div></section>';
+ const h=d.hero||{},i=d.identity||{};
+ return '<section class="hero" id="top"><canvas id="orbit-canvas" aria-hidden="true"></canvas>'+
+ '<div class="container hero-contents"><div class="hero-layout">'+
+ '<div class="hero-copy"><span class="hero-disciplinary">'+E(i.identityLine||"MATHEMATICS / RESEARCH / DESIGN")+'</span>'+
+ '<h1><span>'+E(h.firstLine||"Curiosity")+'</span><em>'+E(h.secondLine||"in motion.")+'</em></h1>'+
+ '<p class="hero-summary">'+E(h.intro||"")+'</p>'+
+ '<div class="hero-ctas">'+button(h.primaryLabel||"Projects","#"+safeId(h.primaryTarget||"projects"),"solid-button")+
+ button(h.secondaryLabel||"Achievements","#"+safeId(h.secondaryTarget||"achievements"),"ghost-button")+'</div>'+
+ '</div><div class="profile-stage" data-profile-stage>'+
+ '<div class="profile-motion-frame"><div class="profile-orbit profile-orbit-a"></div><div class="profile-orbit profile-orbit-b"></div>'+
+ '<div class="profile-glass"><div class="profile-photo">'+(i.portrait?asset(i.portrait,i.portraitAlt||"Nafis Tamim","hero-portrait"):'<span class="profile-initials">'+E(i.initials||"NT")+'</span>')+'</div></div>'+
+ '</div><div class="profile-caption"><strong>'+E(i.name||"Nafis Tamim")+'</strong><span>'+E(i.descriptor||"Research / Design / Engineering")+'</span></div>'+
+ '</div></div></div></section>';
 }
 function marquee(d){
  const awards=arr(d.achievements?.cards).length,pro=arr(d.projects?.items).length,res=arr(d.research?.items).length;
@@ -201,16 +200,45 @@ function projects(d){
  '<div class="work-grid">'+shown.map(projectCard).join("")+'</div>'+
  (!shown.length?'<p class="empty-archive">There are no projects in this category yet.</p>':""));
 }
+function researchDiagram(item){
+ const steps=arr(item.diagramStages).length?arr(item.diagramStages).slice(0,5):["Question","Evidence","Verification","Analysis","Explanation"];
+ return '<div class="research-diagram" aria-label="Conceptual research workflow">'+
+ '<div class="diagram-core"><span>RESEARCH</span><strong>'+E(item.paperId||"MODEL")+'</strong></div>'+
+ '<svg class="diagram-connectors" viewBox="0 0 680 420" preserveAspectRatio="none" aria-hidden="true">'+
+ '<path d="M340 210L135 90 M340 210L545 90 M340 210L108 315 M340 210L565 315 M340 210L340 35" fill="none" stroke="#60A5FA" stroke-opacity=".4" stroke-width="1.6" stroke-dasharray="7 9"/>'+
+ '<circle cx="340" cy="210" r="145" fill="none" stroke="#60A5FA" stroke-opacity=".26" stroke-width="1.6"/>'+
+ '<circle cx="340" cy="210" r="185" fill="none" stroke="#1D4ED8" stroke-opacity=".22" stroke-width="1"/>'+
+ '</svg>'+
+ steps.map((label,i)=>'<div class="diagram-stage diagram-stage-'+i+'"><span>'+String(i+1).padStart(2,"0")+'</span><strong>'+E(label)+'</strong></div>').join("")+
+ '</div>';
+}
 function research(d){
  const r=d.research||{},items=arr(r.items);
- const cards=items.map((x,i)=>'<article class="research-card reveal-card"><div class="research-visual">'+cardImg(x,"research-image")+'<span class="research-stamp">PAPER / '+String(i+1).padStart(3,"0")+'</span></div>'+
- '<div class="research-content"><div class="research-tags"><span>'+E(x.field||"RESEARCH")+'</span><span>'+E(x.year||"")+'</span></div>'+
- (x.status?'<span class="research-status">'+E(x.status)+'</span>':"")+
- '<h3>'+E(x.title)+'</h3><p class="research-intro">'+E(x.abstract||x.summary)+'</p>'+
- (x.question?'<div class="research-brief"><span>THE QUESTION</span><p>'+E(x.question)+'</p></div>':"")+
- '<div class="research-links">'+linkRow(x)+'</div></div></article>').join("");
+ const cards=items.map((item,i)=>'<article class="research-card reveal-card">'+
+ '<div class="research-visual"><div class="research-model">'+researchDiagram(item)+'</div>'+
+ '<div class="research-media-preview">'+galleryMarkup(item,"research-gallery")+'</div></div>'+
+ '<div class="research-content"><div class="research-tags"><span>'+E(item.field||"RESEARCH")+'</span><span>'+E(item.year||"")+'</span></div>'+
+ (item.status?'<span class="research-status">'+E(item.status)+'</span>':"")+
+ '<h3>'+E(item.title)+'</h3>'+
+ '<div class="paper-excerpt"><span class="paper-excerpt-label">RESEARCH PREVIEW</span>'+
+ '<p>'+E(item.abstract||item.summary||"")+'</p></div>'+
+ (item.question?'<div class="research-brief"><span>RESEARCH QUESTION</span><p>'+E(item.question)+'</p></div>':"")+
+ '<div class="research-links">'+linkRow(item)+'</div></div></article>').join("");
  return block("research","block-research",heading(r.eyebrow,r.heading,r.intro,sectionLinks(r))+
- (items.length?'<div class="research-collection">'+cards+'</div>':'<div class="empty-paper"><span>R / 000</span><h3>'+E(r.emptyTitle)+'</h3><p>'+E(r.emptyBody)+'</p></div>'));
+ (items.length?'<div class="research-collection">'+cards+'</div>':'<p class="empty-archive">New research material can be added through the private editor.</p>'));
+}
+function resonance(d){
+ const m=d.design||{};
+ return '<section class="resonance-section" id="resonance-lab"><div class="resonance-sticky"><div class="container resonance-layout">'+
+ '<div class="resonance-copy"><span class="resonance-kicker">'+E(m.scrollLabCaption||"INTERACTIVE RESONANCE")+'</span>'+
+ '<h2>'+E(m.scrollLabTitle||"Scientific patterns, shaped by motion.")+'</h2>'+
+ '<p>'+E(m.scrollLabIntro||"Scroll to change the pattern.")+'</p>'+
+ '<div class="resonance-equation"><span>STANDING WAVE INTERFERENCE</span><code>f(x,y) = cos(nπx)cos(mπy) − cos(mπx)cos(nπy)</code></div>'+
+ '<div class="resonance-progress"><span>01</span><div><div id="resonance-progress-bar"></div></div><span>03</span></div>'+
+ '</div><div class="resonance-visual"><div class="resonance-plate" id="resonance-plate"><div class="resonance-layer"></div>'+
+ '<canvas id="resonance-canvas" width="640" height="640" role="img" aria-label="Animated Chladni-inspired resonance contour pattern that changes with scrolling"></canvas>'+
+ '</div><div class="resonance-data"><span>MODE <b id="resonance-mode">02 : 03</b></span><span>SCROLL TO MORPH</span></div></div>'+
+ '</div></div></section>';
 }
 function creative(d){
  const c=d.creative||{};
@@ -277,12 +305,13 @@ function setTheme(d){
 function render(){
  if(!root)return;
  const d=data;setTheme(d);
- const builder={about,achievements:achievement,projects,research,creative,writing,academics:academic,contact};
+ const builder={about,achievements:achievement,projects,research,creative,academics:academic,contact};
  let aboutShown=false;
  const contents=arr(d.navigation).filter(x=>x.visible!==false).map(n=>{
    if(builder[n.id]){
      const output=builder[n.id](d);
      if(n.id==="about"){aboutShown=true;return output+spotlight(d)}
+     if(n.id==="research")return resonance(d)+output;
      return output;
    }
    const sec=arr(d.customSections).find(s=>s.id===n.id&&s.visible!==false);
@@ -290,7 +319,7 @@ function render(){
    return "";
  }).join("");
  root.innerHTML='<div class="portfolio-site">'+navigation(d)+hero(d)+marquee(d)+(aboutShown?"":spotlight(d))+contents+'</div>';
- initEvents();initScroll();initGalleries();initOrbits();initMotion();
+ initEvents();initScroll();initGalleries();initOrbits();initMotion();initResonance();initProfileTilt();
 }
 function initEvents(){
  const buttonEl=$("#menu-button"),panel=$("#menu-panel");

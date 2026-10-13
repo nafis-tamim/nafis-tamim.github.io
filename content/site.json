@@ -528,7 +528,14 @@
           }
         ],
         "pdf": "",
-        "previewMode": "research-diagram"
+        "previewMode": "research-diagram",
+        "diagramStages": [
+          "Claim extraction",
+          "Evidence retrieval",
+          "Verification",
+          "Hallucination check",
+          "Explanation"
+        ]
       }
     ],
     "sectionLinks": []
