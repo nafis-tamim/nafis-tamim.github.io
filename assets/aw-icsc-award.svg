@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="ICSC / AWARD illustration">
+<defs><linearGradient id="gr" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#16243a"/><stop offset="1" stop-color="#070A14"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" stroke="#fff" stroke-opacity=".055" fill="none"/></pattern></defs>
+<rect width="1200" height="700" fill="url(#gr)"/><rect width="1200" height="700" fill="url(#grid)"/>
+<g><g stroke="#D5BB92" stroke-width="2" fill="none"><path d="M520 500Q600 60 1020 180M530 130Q805 665 1050 250M530 330L1020 330" opacity=".6"/></g><g fill="#eaf3ff"><circle cx="639" cy="265" r="10"/><circle cx="907" cy="328" r="13"/><circle cx="770" cy="430" r="8"/></g></g><rect x="55" y="51" width="44" height="44" rx="7" stroke="#eaf3ff" stroke-opacity=".55" fill="none"/>
+<text x="77" y="81" font-family="Arial,sans-serif" font-size="18" text-anchor="middle" fill="#eaf3ff" font-weight="700">NT</text>
+<text x="55" y="594" font-family="Arial,sans-serif" font-weight="800" font-size="62" letter-spacing="-1.4" fill="#eaf3ff">ICSC / AWARD</text>
+<text x="58" y="640" font-family="Arial,sans-serif" font-size="17" letter-spacing="3" fill="#fff" opacity=".67">MOST PARTICIPANTS / 2026</text>
+<text x="1110" y="80" font-family="Arial,monospace" font-size="20" text-anchor="end" fill="#eaf3ff" opacity=".9">ICS.02</text>
+</svg>
