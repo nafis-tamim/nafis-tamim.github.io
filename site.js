@@ -147,26 +147,42 @@ function initOrbits(){
 }
 
 function achievement(d){
- const a=d.achievements||{},items=arr(a.cards),groups=arr(a.groups).filter(g=>g.visible!==false);
- const groupIds=new Set(groups.map(g=>g.id));
- const all=[...groups];
- if(items.some(x=>!groupIds.has(x.groupId)))all.push({id:"other",title:"Other Recognition",subtitle:"Further academic records",eyebrow:"EXTRA"});
- const contents=all.map((g,gidx)=>{
-  const records=items.filter(x=>groupIds.has(x.groupId)?x.groupId===g.id:g.id==="other");
+ const achievements=d.achievements||{},items=arr(achievements.cards),groups=arr(achievements.groups).filter(g=>g.visible!==false);
+ const ids=new Set(groups.map(g=>g.id)),all=[...groups];
+ if(items.some(x=>!ids.has(x.groupId)))all.push({id:"other",title:"Other recognition",subtitle:"Additional records"});
+ const content=all.map(group=>{
+  const records=items.filter(x=>ids.has(x.groupId)?x.groupId===group.id:group.id==="other");
   if(!records.length)return "";
-  return '<div class="award-category" id="awards-'+E(safeId(g.id))+'"><div class="category-head"><div class="category-logo">'+(g.logo?asset(g.logo,g.logoAlt||g.title,"group-logo"):'<div class="category-monogram">◎</div>')+'</div>'+
-  '<div><span class="category-label">'+E(g.eyebrow||"ACADEMIC GROUP")+'</span><h3>'+E(g.title)+'</h3><p>'+E(g.subtitle||g.description)+'</p></div><div class="category-count">'+String(records.length).padStart(2,"0")+'<small>ENTRIES</small></div></div>'+
-  '<div class="achievement-grid">'+records.map((x,i)=>
-    '<article class="record-card reveal-card" style="--delay:'+((i%3)*75)+'ms"><div class="record-media">'+cardImg(x,"achievement-image")+
-    '<span class="record-nr">'+String(i+1).padStart(2,"0")+' / '+E(x.year||"RECORD")+'</span></div>'+
-    '<div class="record-info"><span class="item-kicker">'+E(x.institution||g.title)+'</span><h4>'+E(x.title)+'</h4><p>'+E(x.summary||x.result)+'</p>'+
-    (x.result?'<div class="record-result">'+E(x.result)+'</div>':"")+
-    '<div class="card-direct-title">'+E(data.ui?.supportingLinksTitle||"SOURCE & MEDIA")+'</div>'+linkRow(x)+'</div></article>').join("")+'</div>'+
-  (g.id==="government"&&g.description?'<div class="category-note">'+E(g.description)+'</div>':"")+'</div>'
+  const n=records.length;
+  const wheel=records.map((record,index)=>{
+   const thumb=gallerySources(record).find(x=>!x.pdf);
+   return '<button type="button" class="orbit-node'+(index===0?" is-active":"")+'" data-orbit-index="'+index+'" style="--angle:'+(index*360/n)+'deg" aria-pressed="'+(index===0?"true":"false")+'" aria-label="Show '+E(record.title)+'">'+
+    (thumb?asset(thumb.src,record.title,"orbit-node-image"):'<span class="orbit-initial">◎</span>')+
+    '<span class="orbit-node-id">'+String(index+1).padStart(2,"0")+'</span></button>';
+  }).join("");
+  const detail=records.map((record,index)=>
+   '<article class="orbit-panel'+(index===0?" is-active":"")+'" data-orbit-panel="'+index+'"'+(index===0?"":' hidden')+' aria-hidden="'+(index===0?"false":"true")+'">'+
+   '<div class="orbit-panel-media">'+galleryMarkup(record,"award-gallery")+'</div>'+
+   '<div class="orbit-panel-info"><div class="orbit-panel-meta"><span>'+E(record.institution||group.title)+'</span><span>'+E(record.year||"")+'</span></div>'+
+   '<h4>'+E(record.title)+'</h4><p>'+E(record.summary||record.details||"")+'</p>'+
+   (record.result?'<strong class="orbit-result">'+E(record.result)+'</strong>':"")+
+   '<div class="orbit-evidence">'+linkRow(record)+'</div></div></article>'
+  ).join("");
+  return '<section class="award-orbit-group" data-award-orbit data-active="0" id="awards-'+E(safeId(group.id))+'">'+
+   '<div class="orbit-category"><div class="orbit-category-head">'+
+   (group.logo?asset(group.logo,group.logoAlt||group.title,"orbit-category-logo"):"")+
+   '<div><span class="orbit-category-overline">'+E(group.eyebrow||"RECOGNITION")+'</span><h3>'+E(group.title)+'</h3><p>'+E(group.subtitle||"")+'</p></div></div>'+
+   '<div class="orbit-pager"><button type="button" data-orbit-step="-1" aria-label="Previous achievement">←</button><span>'+String(n).padStart(2,"0")+' RECORDS</span><button type="button" data-orbit-step="1" aria-label="Next achievement">→</button></div></div>'+
+   '<div class="orbit-content"><div class="award-wheel-wrap"><div class="award-wheel" data-orbit-wheel style="--active-angle:0deg">'+
+   '<div class="wheel-center"><div class="wheel-center-inner"></div><span>NT</span></div>'+wheel+'</div>'+
+   '<div class="wheel-caption">SELECT AN ACHIEVEMENT</div></div>'+
+   '<div class="orbit-panels">'+detail+'</div></div>'+
+   (group.id==="government"&&group.description?'<p class="category-note">'+E(group.description)+'</p>':"")+'</section>';
  }).join("");
- return block("achievements","block-achievement",heading(a.eyebrow,a.heading,a.intro,sectionLinks(a))+
- '<div class="category-tabs">'+all.filter(g=>items.some(x=>g.id==="other"?!groupIds.has(x.groupId):x.groupId===g.id)).map(x=>'<a href="#awards-'+E(safeId(x.id))+'">'+E(x.title)+' <span>↘</span></a>').join("")+'</div>'+
- contents+'<p class="section-note">'+E(d.ui?.achievementsNote||"Explore the evidence for each entry.")+'</p>');
+ const nav=all.filter(g=>items.some(x=>g.id==="other"?!ids.has(x.groupId):x.groupId===g.id)).map(g=>
+  '<a href="#awards-'+E(safeId(g.id))+'">'+E(g.title)+' <span aria-hidden="true">↗</span></a>').join("");
+ return block("achievements","block-achievement",heading(achievements.eyebrow,achievements.heading,achievements.intro,sectionLinks(achievements))+
+ '<nav class="orbit-category-jump" aria-label="Achievement categories">'+nav+'</nav>'+content);
 }
 function projectCard(x,i){
  return '<article class="work-card reveal-card" style="--delay:'+((i%3)*70)+'ms">'+
