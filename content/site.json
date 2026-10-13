@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 5,
   "seo": {
     "title": "Nafis Tamim — Academic Portfolio | Research, Design & Achievement",
     "description": "Nafis Tamim — ICSC 2026 Top Ambassador and Most Participants Award recipient, IYMC Silver Honour (top 5%), IJISRT-accepted TruthLens research, mathematics and creative work.",
@@ -9,15 +9,15 @@
     "favicon": "/favicon.svg"
   },
   "appearance": {
-    "background": "#f6f5f0",
-    "paper": "#ffffff",
-    "ink": "#162b32",
-    "inkSoft": "#5b6e73",
-    "deep": "#102e32",
-    "accent": "#bbf079",
-    "teal": "#116d65",
-    "gold": "#bd9267",
-    "border": "#d9dfd9",
+    "background": "#E8E9E7",
+    "paper": "#F5F5F2",
+    "ink": "#202833",
+    "inkSoft": "#61707C",
+    "deep": "#131E2A",
+    "accent": "#D5B78A",
+    "teal": "#4A677A",
+    "gold": "#AC906D",
+    "border": "#CCD2D2",
     "animation": "constellation",
     "motion": true,
     "hoverEffects": true,
@@ -139,8 +139,8 @@
   },
   "achievements": {
     "eyebrow": "02 — RECOGNITION",
-    "heading": "A record of doing, not just dreaming.",
-    "intro": "Selected honours and academic milestones. Open each card to examine its context and supporting evidence.",
+    "heading": "Distinction, with the evidence.",
+    "intro": "National recognition, international honours and meaningful academic commendations—clearly separated and supported by source links.",
     "cards": [
       {
         "id": "icsc-top-2026",
@@ -160,7 +160,14 @@
           "Leadership",
           "International"
         ],
-        "featured": true
+        "featured": true,
+        "groupId": "international",
+        "supportingLinks": [
+          {
+            "label": "Official Results",
+            "url": "https://icscompetition.org/en/top-ambassadors"
+          }
+        ]
       },
       {
         "id": "icsc-award-2026",
@@ -186,7 +193,18 @@
         "featured": true,
         "documentUrl": "https://icscompetition.org/c/SpecialCertificate-2026-33050a37b0128ae.pdf",
         "evidenceStatus": "Award in official ICSC results; organizer email supplied; direct certificate link provided",
-        "certificateLinkSource": "Organizer email supplied by award recipient"
+        "certificateLinkSource": "Organizer email supplied by award recipient",
+        "groupId": "international",
+        "supportingLinks": [
+          {
+            "label": "Official Results",
+            "url": "https://icscompetition.org/en/announcement2026"
+          },
+          {
+            "label": "Award Certificate (PDF)",
+            "url": "https://icscompetition.org/c/SpecialCertificate-2026-33050a37b0128ae.pdf"
+          }
+        ]
       },
       {
         "id": "iymc-silver",
@@ -210,7 +228,9 @@
         "featured": true,
         "certificateReviewed": true,
         "certificateDate": "23 February 2026",
-        "evidenceStatus": "Personal certificate reviewed; public PDF upload pending"
+        "evidenceStatus": "Personal certificate reviewed; public PDF upload pending",
+        "groupId": "international",
+        "supportingLinks": []
       },
       {
         "id": "iymc-2026-exceptional-submission",
@@ -234,7 +254,9 @@
           "Academic Writing",
           "LaTeX / TeX"
         ],
-        "featured": false
+        "featured": false,
+        "groupId": "academic",
+        "supportingLinks": []
       },
       {
         "id": "imli-national-first",
@@ -256,7 +278,49 @@
           "Language"
         ],
         "featured": true,
-        "evidenceStatus": "Official government results notice linked; individual rank pending independent matching"
+        "evidenceStatus": "Official government results notice linked; individual rank pending independent matching",
+        "groupId": "government",
+        "supportingLinks": [
+          {
+            "label": "Government Result Notice",
+            "url": "https://imli.portal.gov.bd/pages/notices/%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7-%E0%A6%B0%E0%A6%9A%E0%A6%A8%E0%A6%BE-%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%AF%E0%A7%8B%E0%A6%97%E0%A6%BF%E0%A6%A4%E0%A6%BE%E0%A6%B0-%E0%A6%AB%E0%A6%B2%E0%A6%BE%E0%A6%AB%E0%A6%B2-eps7ir-6a870fe09ab15f916080e4d4"
+          }
+        ]
+      }
+    ],
+    "groups": [
+      {
+        "id": "government",
+        "eyebrow": "01 / NATIONAL",
+        "title": "Bangladesh Government",
+        "subtitle": "Recognition from government-organized academic competitions",
+        "description": "Awards and competition results issued by public institutions in Bangladesh. The institutional emblem describes the organizer, not government endorsement of this website.",
+        "logo": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Seal_of_the_Government_of_Bangladesh.svg/500px-Seal_of_the_Government_of_Bangladesh.svg.png",
+        "logoAlt": "Seal of the Government of Bangladesh",
+        "logoSource": "https://commons.wikimedia.org/wiki/File:Seal_of_the_Government_of_Bangladesh.svg",
+        "visible": true
+      },
+      {
+        "id": "international",
+        "eyebrow": "02 / GLOBAL",
+        "title": "International Honours",
+        "subtitle": "Competition achievements and international recognition",
+        "description": "Competition distinctions, ambassador recognitions and global academic milestones. Each entry links to the available evidence.",
+        "logo": "/assets/international-mark.svg",
+        "logoAlt": "Globe symbol representing international achievement",
+        "logoSource": "",
+        "visible": true
+      },
+      {
+        "id": "academic",
+        "eyebrow": "03 / ACADEMIC NOTES",
+        "title": "Academic Commendations",
+        "subtitle": "Meaningful feedback and notable work",
+        "description": "Individual commendations and academic correspondence, described accurately without treating them as formal prizes.",
+        "logo": "",
+        "logoAlt": "",
+        "logoSource": "",
+        "visible": true
       }
     ]
   },
@@ -532,7 +596,7 @@
     "disciplines": "Leadership. Mathematics. Research.\nDesign. Writing. Technology.",
     "heroEvidenceOverline": "INDEPENDENTLY LISTED",
     "heroScroll": "SCROLL TO INVESTIGATE ↓",
-    "achievementsNote": "Official-source badges identify independently documented recognition. Other entries can be supported by uploaded certificates.",
+    "achievementsNote": "Use the supporting links on each card to inspect official records. A government organizer does not imply endorsement of this portfolio.",
     "projectsMore": "VIEW MORE PROJECTS",
     "projectsDetails": "VIEW MORE",
     "sourceLabel": "VIEW DETAILS",
@@ -547,6 +611,9 @@
     "modalLink": "VIEW DOCUMENT / PROJECT",
     "modalVerification": "OPEN OFFICIAL SOURCE",
     "footerNote": "A living archive of evidence and imagination.",
-    "achievementsEmail": "Personal organizer email reviewed"
+    "achievementsEmail": "Personal organizer email reviewed",
+    "supportingLinksTitle": "SUPPORTING LINKS",
+    "supportingLinksEmpty": "Documentation can be provided on request",
+    "achievementDetails": "VIEW THE RECORD"
   }
 }

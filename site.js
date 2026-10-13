@@ -96,21 +96,56 @@ function about(d){
    '<div class="principles">'+arr(a.principles).map(p=>'<article class="principle reveal"><span class="micro">'+esc(p.number)+'</span><h3>'+esc(p.title)+'</h3><p>'+esc(p.body)+'</p></article>').join("")+'</div>',
    "on-paper");
 }
+
+function evidenceLinks(item){
+ const evidence=[],seen=new Set();
+ const add=(label,uri)=>{
+  if(!uri)return;
+  const href=url(uri);
+  if(href==="#"||seen.has(href))return;
+  seen.add(href);evidence.push({label:label||"Supporting evidence",href});
+ };
+ arr(item.supportingLinks).forEach(x=>add(x.label,x.url));
+ if(item.kind==="achievement"||!item.kind){
+  add(item.groupId==="government"?"Government results notice":"Official result",item.verification);
+  add(/\.pdf(?:[?#]|$)/i.test(item.documentUrl||"")?"Certificate PDF":"Document",item.documentUrl);
+ }
+ return evidence;
+}
 function achievementCard(x,index,featured=false){
- const hasImage=!!x.image;
- return '<article class="award-card reveal '+(featured?"featured ":"")+'" tabindex="0" role="button" data-open="achievement" data-id="'+esc(x.id)+'" aria-label="Details about '+esc(x.title)+'">'+
-  '<div class="award-art '+(hasImage?"has-img":"")+'">'+(hasImage?image(x.image,x.title,"award-img"):'<div class="award-glyph" aria-hidden="true">'+(x.id?.includes("icsc")?"✳":x.id?.includes("iymc")?"∑":"✎")+'</div>')+
-  '<div class="award-art-top"><span>'+esc(x.year||"HONOUR")+'</span><span>'+esc(x.category)+'</span></div>'+
-  '<div class="award-art-index">'+String(index+1).padStart(2,"0")+'</div></div>'+
-  '<div class="award-content"><span class="micro">'+esc(x.institution)+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.summary)+'</p><div class="award-bottom">'+verifyBadge(x)+'<span class="card-open">'+esc(DATA?.ui?.sourceLabel||"VIEW DETAILS")+' ↗</span></div></div>'+
- '</article>'
+ const fallback=x.id?.includes("iymc")?"∑":x.id?.includes("icsc")?"01":x.groupId==="government"?"✎":"✧";
+ const evidence=evidenceLinks(x);
+ return '<article class="award-card reveal '+(featured?"featured ":"")+'" tabindex="0" role="button" data-open="achievement" data-id="'+esc(x.id)+'" aria-label="Open details about '+esc(x.title)+'">'+
+ '<div class="award-art '+(x.image?"has-img":"")+'">'+(x.image?image(x.image,x.title,"award-img"):'<div class="award-glyph" aria-hidden="true">'+fallback+'</div>')+
+ '<div class="award-art-top"><span>'+esc(x.year||"RECOGNITION")+'</span><span>'+esc(x.category)+'</span></div>'+
+ '<div class="award-art-index">'+String(index+1).padStart(2,"0")+'</div></div>'+
+ '<div class="award-content"><span class="micro">'+esc(x.institution)+'</span><h3>'+esc(x.title)+'</h3><p>'+esc(x.summary)+'</p><div class="award-bottom">'+verifyBadge(x)+'<span class="card-open">'+esc(DATA?.ui?.achievementDetails||"VIEW THE RECORD")+' ↗</span></div>'+
+ '<div class="award-source-list"><strong>'+esc(DATA?.ui?.supportingLinksTitle||"SUPPORTING LINKS")+'</strong><div class="award-source-chips">'+
+ (evidence.length?evidence.map(l=>'<a href="'+esc(l.href)+'" target="_blank" rel="noopener noreferrer" aria-label="'+esc(l.label)+' for '+esc(x.title)+'">'+esc(l.label)+' <span>↗</span></a>').join(""):'<span class="award-source-empty">'+esc(DATA?.ui?.supportingLinksEmpty||"Documentation can be provided on request")+'</span>')+
+ '</div></div></div></article>';
 }
 function achievements(d){
- const a=d.achievements||{},items=arr(a.cards);
+ const a=d.achievements||{},all=arr(a.cards);
+ const groups=arr(a.groups).filter(g=>g.visible!==false);
+ const known=new Set(groups.map(g=>g.id));
+ const out=[...groups];
+ if(all.some(x=>!known.has(x.groupId))){out.push({id:"uncategorized",eyebrow:"ADDITIONAL RECORDS",title:"Other Recognition",subtitle:"Additional achievements",description:"",logo:""})}
  return section("achievements",label(a.eyebrow,"02")+
  '<div class="section-split"><h2 class="section-heading reveal">'+esc(a.heading)+'</h2><p class="section-aside reveal">'+esc(a.intro)+'</p></div>'+
- '<div class="award-grid">'+items.map((x,i)=>achievementCard(x,i,i===0)).join("")+'</div>'+
- '<div class="section-footnote"><span>↗</span> '+esc(d.ui?.achievementsNote||"Official-source badges identify evidence links; other entries can be supported by uploaded certificates.")+'</div>');
+ '<div class="award-groups">'+out.map((g,i)=>{
+  const items=all.filter(x=>known.has(x.groupId)?x.groupId===g.id:!known.has(x.groupId)&&g.id==="uncategorized");
+  if(!items.length)return "";
+  return '<div class="award-group reveal" id="awards-'+esc(safeId(g.id))+'">'+
+   '<div class="award-group-heading"><div class="award-group-logo">'+
+   (g.logo?image(g.logo,g.logoAlt||g.title,"award-group-logo-image"):'<span class="award-group-symbol" aria-hidden="true">'+(g.id==="international"?"◎":g.id==="government"?"BD":"✦")+'</span>')+
+   '</div><div class="award-group-text"><span class="micro">'+esc(g.eyebrow||"RECOGNITION")+'</span><h3>'+esc(g.title)+'</h3><p>'+esc(g.subtitle||g.description)+'</p></div>'+
+   '<div class="award-group-count"><b>'+String(items.length).padStart(2,"0")+'</b><span>RECORDS</span></div></div>'+
+   '<div class="award-grid">'+items.map((x,j)=>achievementCard(x,j,j===0)).join("")+'</div>'+
+   (g.id==="government"?'<p class="award-group-disclaimer">'+esc(g.description)+'</p>':"")+
+   (g.logoSource?'<a class="award-logo-credit" href="'+esc(url(g.logoSource))+'" target="_blank" rel="noopener noreferrer">Emblem source ↗</a>':"")+
+   '</div>';
+ }).join("")+'</div>'+
+ '<div class="section-footnote"><span>↗</span> '+esc(d.ui?.achievementsNote||"Sources are available alongside each record.")+'</div>');
 }
 function projectCard(p,i){
  return '<article class="project-card reveal" tabindex="0" role="button" data-open="project" data-id="'+esc(p.id)+'" aria-label="Open '+esc(p.title)+' project details">'+
@@ -232,6 +267,8 @@ function modalContent(item){
  ].filter(x=>x[1]);
  const direct=item.url||item.link||item.documentUrl;
  const verify=item.verification;
+ const support=evidenceLinks(item);
+
  const title=item.title||"Project details";
  return '<div class="modal-kicker">'+esc((item.category||item.field||item.kind||"PORTFOLIO ENTRY").toUpperCase())+' / '+esc(item.year||"ARCHIVE")+'</div>'+
  '<h2 id="modal-title">'+esc(title)+'</h2>'+
@@ -241,6 +278,7 @@ function modalContent(item){
  tags(item.tags)+
  '<div class="modal-actions">'+(verify?btnLink(item.kind==="research"?"OPEN RESEARCHGATE RECORD":(DATA?.ui?.modalVerification||"OPEN OFFICIAL SOURCE"),verify,"btn dark",'target="_blank" rel="noopener noreferrer"'):"")+
  (direct?btnLink(DATA?.ui?.modalLink||"VIEW PROJECT / DOCUMENT",direct,"btn outline",'target="_blank" rel="noopener noreferrer"'):"")+
+ (item.kind==="achievement"?support.map(l=>btnLink(l.label,l.href,"btn outline",'target="_blank" rel="noopener noreferrer"')).join(""):"")+
  '</div>'+
  ((item.verified&&verify)?'<p class="modal-proof">✓ Recognition linked to an independently accessible official source.</p>':
  (item.certificateReviewed?'<p class="modal-proof">✓ A named personal certificate has been reviewed. Public certificate preview can be added through the Portfolio Studio.</p>':
