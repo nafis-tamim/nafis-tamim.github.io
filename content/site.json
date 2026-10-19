@@ -270,8 +270,10 @@
         "emailDate": "12 October 2026",
         "evidenceStatus": "Named coordinator email supplied; no public featured listing confirmed",
         "verification": "",
-        "image": "/assets/aw-notes.svg",
-        "gallery": [],
+        "image": "/uploads/1792435361788-d1797f4e-e61c2680-3faa-4038-8ac4-37aa7e153afe.png",
+        "gallery": [
+          "https://iymc.info/c/Certificate-QR-2026-103851B6E715-868f18be9154049a9708ce3e59a6da1f.pdf"
+        ],
         "tags": [
           "IYMC 2026",
           "Mathematics",
