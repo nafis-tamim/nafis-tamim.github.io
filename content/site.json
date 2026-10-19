@@ -514,7 +514,7 @@
         "details": "TruthLens addresses hallucination detection in large language models through explainable, evidence-based multi-agent verification. The provided IJISRT four-page reviewer report describes supported, contradicted and unverifiable claim classification, confidence assessments and human-readable explanations. It notes limitations including computational latency, dependence on external evidence, threshold sensitivity, and multilingual challenges. The editor decision on page 4 is to accept the paper; the email states that publication follows completion of registration. Acceptance is distinct from confirmation of final journal publication.",
         "verification": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models",
         "documentUrl": "https://www.researchgate.net/publication/415518376_TruthLens_An_Explainable_Multi-Agent_Framework_for_Hallucination_Detection_through_Evidence-Based_Verification_in_Large_Language_Models",
-        "image": "/assets/re-truthlens.svg",
+        "image": "/uploads/1792436150485-b7fcfcfa-be28864d-608e-44a5-8fdf-18cc447ac2bd.png",
         "gallery": [],
         "tags": [
           "IJISRT Acceptance",
