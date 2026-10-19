@@ -296,7 +296,8 @@ function hydrate(d){
  finish(d);
 }
 fetch("/content/site.json?v=8",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error("Portfolio data unavailable");return r.json()}).then(hydrate).catch(err=>{
- console.warn(err);document.body.classList.add("nt-loaded");document.body.style.removeProperty("visibility");
- const anim=document.createElement("script");anim.src="/tandem-original-effects.js?v=1";document.body.appendChild(anim);
+ console.warn(err);
+ const main=document.querySelector("main");if(main){main.innerHTML='<section class="sheet" style="min-height:75vh;padding-top:160px"><div class="grid"><div style="grid-column:1/-1"><p style="color:#3366ff;font-size:12px">NAFIS TAMIM / STUDENT PORTFOLIO</p><h1 style="font:300 clamp(48px,8vw,115px)/.95 var(--f-display);letter-spacing:-.06em">Curiosity in motion.</h1><p style="max-width:45ch;margin:30px 0">The portfolio content could not load. You can still view my public projects and academic links.</p><a class="btn" href="https://github.com/nafis-tamim">Explore GitHub ↗</a></div></div></section>';}
+ document.body.classList.add("nt-loaded");document.body.style.removeProperty("visibility");
 });
 })();
