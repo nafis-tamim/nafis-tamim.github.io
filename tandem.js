@@ -18,7 +18,7 @@ const small=x=>'<span class="eyebrow">'+esc(x)+'</span>';
 const sectionStart=(id,cl="")=>'<section class="sheet '+cl+'" id="'+esc(safeId(id))+'">';
 const heading=(tag,title,description)=>'<div class="section-top"><div>'+small(tag)+'<h2>'+esc(title)+'</h2></div><p>'+esc(description)+'</p></div>';
 const sectionLinks=s=>list(s?.sectionLinks).map(x=>href(x.label,x.url)).join(" &nbsp; ");
-const media=(src,alt,cl)=>'<div class="'+cl+'">'+(src?img(src,alt):'<div class="empty-note">VISUAL ARCHIVE / NAFIS TAMIM</div>')+'</div>';
+const media=(src,alt,cl)=>'<div class="'+cl+'">'+(src?img(src,alt):'<div class="empty-note">'+esc(seeText("emptyVisual","VISUAL ARCHIVE / NAFIS TAMIM"))+'</div>')+'</div>';
 const socialLinks=d=>list(d?.identity?.socials).filter(x=>x.url).map(x=>href(x.label,x.url)).join("");
 const seeText=(key,fallback)=>val(CONTENT?.ui?.[key])||fallback;
 const btn=(label,link,outline=false)=>'<a href="'+esc(url(link))+'" class="btn'+(outline?' outline':'')+'">'+esc(label)+' <span aria-hidden="true">↗</span></a>';
@@ -92,7 +92,7 @@ function custom(d){
 }
 function contact(d){
  const c=d.contact||{},mail=d.identity?.email||"";
- return sectionStart("contact","contact")+small(c.eyebrow||"08 / CONTACT")+'<h2 style="margin-top:20px">'+esc(c.heading||"Let’s talk.")+'</h2><p>'+esc(c.intro||"")+'</p>'+btn(c.emailLabel||"Write to me","mailto:"+mail)+'<div class="social-grid">'+socialLinks(d)+href(c.githubLabel||"GitHub",c.githubUrl)+'</div><div class="foot-word">Nafis.</div><div class="foot-bottom"><span>© '+new Date().getFullYear()+' '+esc(c.copyrightName||"Nafis Tamim")+'</span><span>'+esc(c.footerLine||"A living portfolio.")+'</span><a href="#top">BACK TO TOP ↑</a></div></section>'
+ return sectionStart("contact","contact")+small(c.eyebrow||"08 / CONTACT")+'<h2 style="margin-top:20px">'+esc(c.heading||"Let’s talk.")+'</h2><p>'+esc(c.intro||"")+'</p>'+btn(c.emailLabel||"Write to me","mailto:"+mail)+'<div class="social-grid">'+socialLinks(d)+href(c.githubLabel||"GitHub",c.githubUrl)+'</div><div class="foot-word">'+esc((d.identity?.name||"Nafis Tamim").split(" ")[0])+'.</div><div class="foot-bottom"><span>© '+new Date().getFullYear()+' '+esc(c.copyrightName||"Nafis Tamim")+'</span><span>'+esc(c.footerLine||"A living portfolio.")+'</span><a href="#top">'+esc(seeText("backToTop","BACK TO TOP ↑"))+'</a></div></section>'
 }
 function layout(d){
  awards=list(d.achievements?.cards);
