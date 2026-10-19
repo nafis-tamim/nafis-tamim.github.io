@@ -6,7 +6,7 @@
     "keywords": "Nafis Tamim academic portfolio, research, computer science, artificial intelligence, mathematics, IYMC, ICSC, TruthLens, graphic design",
     "canonical": "https://nafis-tamim.github.io/",
     "ogImage": "",
-    "favicon": "/favicon.svg"
+    "favicon": "/uploads/1792423433364-6f12b977-Young-Man-in-Glasses-Navy-Suit.png"
   },
   "appearance": {
     "background": "#06070C",
@@ -22,7 +22,7 @@
     "motion": true,
     "hoverEffects": true,
     "sectionReveals": true,
-    "showLiveDate": false
+    "showLiveDate": true
   },
   "identity": {
     "name": "Nafis Tamim",
