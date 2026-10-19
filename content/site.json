@@ -896,6 +896,22 @@
         "title": "Can I get in touch about collaboration?",
         "answer": "Yes. The contact section links to email, GitHub and professional profiles."
       }
-    ]
+    ],
+    "sections": {
+      "hero": true,
+      "about": true,
+      "achievements": true,
+      "principles": true,
+      "academics": true,
+      "projects": true,
+      "research": true,
+      "creative": true,
+      "interests": true,
+      "learning": true,
+      "focus": true,
+      "faq": true,
+      "journal": true,
+      "contact": true
+    }
   }
 }
