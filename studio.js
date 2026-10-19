@@ -26,7 +26,7 @@ const modules=[
  ["academics","Education & activities","Your academic journey"],
  ["menu","Menus & sections","Add, move, hide or delete pages and custom links"],
  ["look","Favicon & appearance","Upload a tab icon, adjust colors and Google search"],
- ["labels","Small website text","Edit buttons, captions and editorial labels"],
+ ["labels","All website text","Edit headings, questions, labels and special sections"],
  ["files","Media library","Remove unused uploads after publishing"],
  ["advanced","Advanced (optional)","Only for changes not available in the simple forms"]
 ];
@@ -291,7 +291,7 @@ function schema(type){
   academics:{...base,title:"New activity",organization:"",type:"Academic activity",year:String(new Date().getFullYear()),description:"",link:""},
   groups:{id:freshId("group"),title:"New category",eyebrow:"CATEGORY / INDEX",subtitle:"",description:"",logo:"",logoAlt:"",logoSource:"",visible:true},
   menu:{id:freshId("custom"),label:"New menu link",href:"https://",openNewTab:true,visible:true},
-  custom:{id:freshId("section"),label:"New custom section",eyebrow:"EXPERIMENT / INDEX",heading:"New section",intro:"Introduce the work here.",visible:true,sectionLinks:[],items:[]}
+  custom:{id:freshId("section"),label:"New custom section",eyebrow:"EXPERIMENT / INDEX",heading:"New section",intro:"Introduce the work here.",body:"",image:"",visible:true,sectionLinks:[],items:[]}
  };
  return clone(map[type]||base);
 }
