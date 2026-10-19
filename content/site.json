@@ -469,9 +469,9 @@
         "tools": "HTML, CSS, JavaScript, GitHub Pages",
         "image": "/assets/pr-web.svg",
         "gallery": [],
-        "url": "https://github.com/nafis-tamim/nafis-tamim.github.io",
+        "url": "https://nafis-tamim.github.io",
         "verification": "",
-        "featured": false,
+        "featured": true,
         "tags": [
           "Web",
           "Documentation",
@@ -481,7 +481,7 @@
         "links": [
           {
             "label": "Open project",
-            "url": "https://github.com/nafis-tamim/nafis-tamim.github.io"
+            "url": "https://nafis-tamim.github.io"
           }
         ],
         "pdf": ""
