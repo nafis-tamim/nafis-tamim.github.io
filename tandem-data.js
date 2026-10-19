@@ -68,19 +68,47 @@ function about(d){
  facts.forEach((e,i)=>{put(".fact-num",stat[i][0],e);put(".fact-label",stat[i][1],e)});
 }
 let awardData=[];
+const categoryLogo=g=>{
+ const title=txt(g?.title||"Academic recognition");
+ const fallback=esc(title.trim().slice(0,1).toUpperCase()||"✦");
+ const src=txt(g?.logo||"").trim();
+ return '<span class="nt-category-mark"><span class="nt-category-placeholder" aria-hidden="true">'+fallback+'</span>'+
+   (src?image(src,txt(g?.logoAlt||title+" category logo")):"")+'</span>';
+};
 function achievements(d){
  const a=d.achievements||{}; awardData=items(a.cards);
  put(".services .svc-head h2",a.heading||"Achievements");
  put(".services .svc-head p",a.intro||"Certificates, award evidence and official results — kept in context.");
- const list=$(".svc-list");if(!list)return;
+ const section=$("#achievements"),list=$(".svc-list",section);if(!list)return;
  const groups=items(a.groups);
+ // The live category strip uses the exact group logos, titles and order edited in Portfolio Studio.
+ $(".nt-award-groups",section)?.remove();
+ const activeGroups=groups.filter(g=>g.visible!==false);
+ if(activeGroups.length){
+  const strip=document.createElement("div");
+  strip.className="nt-award-groups";
+  strip.setAttribute("aria-label","Award categories");
+  strip.innerHTML=activeGroups.map(g=>
+   '<div class="nt-award-category" data-group="'+esc(g.id||"")+'" title="'+esc(g.description||g.title||"")+'">'+
+   categoryLogo(g)+'<div class="nt-category-copy"><span class="nt-category-eyebrow">'+esc(g.eyebrow||"RECOGNITION")+'</span>'+
+   '<h3 class="nt-category-title">'+esc(g.title||"Recognition")+'</h3>'+
+   (g.subtitle?'<p class="nt-category-subtitle">'+esc(g.subtitle)+'</p>':"")+'</div></div>'
+  ).join("");
+  const body=$(".svc-body",section);if(body)section.insertBefore(strip,body);
+ }
  list.innerHTML=awardData.map((w,i)=>{
   const g=groups.find(x=>x.id===w.groupId),group=g?.title||w.category||"Recognition";
+  const category='<div class="nt-award-group-label">'+categoryLogo(g||{title:group})+
+   '<span>'+esc(group)+'</span></div>';
   return '<li class="svc" data-award-item="'+i+'"><figure class="svc-media frame">'+image(w.image||"/assets/aw-icsc.svg",w.imageAlt||"Illustration representing "+w.title)+'</figure>'+
-  '<h3>'+esc(w.title)+'</h3><p class="svc-text">'+esc(w.summary||"")+'</p>'+
+  category+'<h3>'+esc(w.title)+'</h3><p class="svc-text">'+esc(w.summary||"")+'</p>'+
   '<ul class="svc-points"><li>'+esc(w.year||"")+'</li><li>'+esc(group)+'</li></ul>'+
   '<div class="nt-award-action"><button class="btn nt-view" data-award="'+i+'" type="button"><span>'+esc(d.ui?.achievementDetails||"View more")+'</span><span aria-hidden="true">↗</span></button></div></li>';
  }).join("");
+ // Keep the text placeholder visible if an uploaded/external category logo cannot be loaded.
+ $$(".nt-category-mark img",section).forEach(img=>{
+  img.addEventListener("error",()=>{img.hidden=true},{once:true});
+ });
 }
 function principles(d){
  const a=d.about||{},arr=items(a.principles); put(".pr-head h2",d.tandemContent?.labels?.principlesTitle||"What I work by");put(".pr-head p",a.lead||"Principles behind the projects and study.");
