@@ -377,9 +377,9 @@
         "process": "Experimenting with brand language, composition, repeatable elements and online presentation.",
         "outcome": "A publicly accessible creative project and source repository.",
         "tools": "Brand design, web presentation, visual communication",
-        "image": "/assets/pr-graphlair.svg",
+        "image": "/uploads/1792435240434-a2c374e5-graphlair-logo.png",
         "gallery": [],
-        "url": "https://github.com/nafis-tamim/GRAPHLAIR",
+        "url": "https://graphlair.github.io",
         "verification": "",
         "featured": true,
         "tags": [
@@ -391,7 +391,7 @@
         "links": [
           {
             "label": "Open project",
-            "url": "https://github.com/nafis-tamim/GRAPHLAIR"
+            "url": "https://graphlair.github.io"
           }
         ],
         "pdf": ""
