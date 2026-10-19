@@ -291,6 +291,7 @@ function hydrate(d){
  try{
   navigation(d);hero(d);about(d);achievements(d);principles(d);academic(d);projects(d);
   research(d);gallery(d);interests(d);learning(d);focus(d);faqs(d);journal(d);contact(d);custom(d);footer(d);activateModal();
+  for(const [id,visible] of Object.entries(d.tandemContent?.sections||{})){if(visible===false){const sec=document.getElementById(id);if(sec&&sec.tagName==="SECTION")sec.remove()}}
  }catch(err){console.error("Portfolio rendering error",err)}
  finish(d);
 }
