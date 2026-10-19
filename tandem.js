@@ -26,11 +26,11 @@ const getYear=(x)=>val(x.year)||"2026";
 function header(d){
  const items=list(d.navigation).filter(n=>n.visible!==false);
  const anchors=items.map(n=>'<a href="'+esc(url(n.href||n.target||("#"+safeId(n.id))))+'"'+(n.openNewTab?' target="_blank" rel="noopener noreferrer"':'')+'>'+esc(n.label)+'</a>').join("");
- return '<a class="skip" href="#main">Skip to content</a><header class="top"><div class="top-inner"><a class="brand" href="#top" aria-label="Nafis Tamim, home"><span class="brand-symbol">'+esc(d.identity?.initials||"NT")+'</span><span>'+esc(d.identity?.name||"Nafis Tamim")+'<small>STUDENT / RESEARCH / DESIGN</small></span></a><nav class="nav-links" aria-label="Primary navigation">'+anchors+'</nav><div class="header-end"><a class="header-cta" href="#contact">'+esc(d.contact?.emailLabel||"Contact")+' <span aria-hidden="true">↗</span></a><button id="menu-toggle" class="menu-toggle" aria-label="Open navigation" aria-controls="mob-menu" aria-expanded="false">☰</button></div></div></header><nav id="mob-menu" class="mob-menu" aria-label="Mobile navigation">'+anchors+'</nav>'
+ return '<a class="skip" href="#main">Skip to content</a><header class="top"><div class="top-inner"><a class="brand" href="#top" aria-label="Nafis Tamim, home"><span class="brand-symbol">'+esc(d.identity?.initials||"NT")+'</span><span>'+esc(d.identity?.name||"Nafis Tamim")+'<small>"+esc(seeText("headerTagline","STUDENT / RESEARCH / DESIGN"))+"</small></span></a><nav class="nav-links" aria-label="Primary navigation">'+anchors+'</nav><div class="header-end"><a class="header-cta" href="#contact">'+esc(d.contact?.emailLabel||"Contact")+' <span aria-hidden="true">↗</span></a><button id="menu-toggle" class="menu-toggle" aria-label="Open navigation" aria-controls="mob-menu" aria-expanded="false">☰</button></div></div></header><nav id="mob-menu" class="mob-menu" aria-label="Mobile navigation">'+anchors+'</nav>'
 }
 function hero(d){
  const identity=d.identity||{},h=d.hero||{};
- return sectionStart("top","hero")+'<div class="hero-upper"><div class="hero-heading"><span>Nafis</span><span>Tamim.</span></div><div class="hero-side"><div>'+small(identity.identityLine||identity.descriptor||"STUDENT / CREATIVE TECHNOLOGY")+'<p class="rule-top" style="margin-top:16px;font-size:13px">'+esc(identity.institution||"")+"<br>"+esc(identity.location||"Dhaka, Bangladesh")+'</p></div><div>'+media(identity.portrait,identity.portraitAlt||"Portrait of Nafis Tamim","hero-image-wrap").replace('class="hero-image-wrap"','class="hero-image-wrap"')+'</div></div></div><div class="hero-bottom"><div class="hero-intro"><p class="prose">'+esc(h.intro||"Learning through research, mathematics and creative technology.")+'</p><div class="hero-actions">'+btn(h.primaryLabel||"Explore my work","#"+safeId(h.primaryTarget||"projects"))+href(h.secondaryLabel||"Achievements","#"+safeId(h.secondaryTarget||"achievements"))+'</div></div><div class="hero-fact"><span>'+esc(identity.descriptor||"Research / Design / Engineering")+'</span>'+esc(h.firstLine||"Curiosity")+' '+esc(h.secondLine||"in motion.")+'</div><div class="hero-fact"><span>BASED IN</span>'+esc(identity.location||"Bangladesh")+'</div></div><div class="hero-stage"></div></section>'
+ return sectionStart("top","hero")+'<div class="hero-upper"><div class="hero-heading"><span>Nafis</span><span>Tamim.</span></div><div class="hero-side"><div>'+small(identity.identityLine||identity.descriptor||"STUDENT / CREATIVE TECHNOLOGY")+'<p class="rule-top" style="margin-top:16px;font-size:13px">'+esc(identity.institution||"")+"<br>"+esc(identity.location||"Dhaka, Bangladesh")+'</p></div><div>'+media(identity.portrait,identity.portraitAlt||"Portrait of Nafis Tamim","hero-image-wrap").replace('class="hero-image-wrap"','class="hero-image-wrap"')+'</div></div></div><div class="hero-bottom"><div class="hero-intro"><p class="prose">'+esc(h.intro||"Learning through research, mathematics and creative technology.")+'</p><div class="hero-actions">'+btn(h.primaryLabel||"Explore my work","#"+safeId(h.primaryTarget||"projects"))+href(h.secondaryLabel||"Achievements","#"+safeId(h.secondaryTarget||"achievements"))+'</div></div><div class="hero-fact"><span>'+esc(identity.descriptor||"Research / Design / Engineering")+'</span>'+esc(h.firstLine||"Curiosity")+' '+esc(h.secondLine||"in motion.")+'</div><div class="hero-fact"><span>"+esc(seeText("heroLocationLabel","BASED IN"))+"</span>'+esc(identity.location||"Bangladesh")+'</div></div><div class="hero-stage"></div></section>'
 }
 function about(d){
  const a=d.about||{};
@@ -39,12 +39,12 @@ function about(d){
 }
 function categories(d){
  const gs=list(d.achievements?.groups).filter(g=>g.visible!==false);
- return [{id:"all",title:"All work"}].concat(gs.map(g=>({id:g.id,title:g.title})));
+ return [{id:"all",title:seeText("allAchievementsLabel","All achievements")}].concat(gs.map(g=>({id:g.id,title:g.title})));
 }
 function awardCards(d){
  const data=list(d.achievements?.cards);
  const shown=data.filter(c=>activeFilter==="all"||val(c.groupId)===activeFilter);
- if(!shown.length)return '<div class="empty-note">No entries in this category yet.</div>';
+ if(!shown.length)return '<div class="empty-note">"+esc(seeText("noAchievements","No entries in this category yet."))+"</div>';
  return shown.map((c)=>{const idx=awards.findIndex(x=>x===c);
  const group=list(d.achievements?.groups).find(x=>x.id===c.groupId);
  return '<article class="award reveal"><div class="award-visual">'+img(c.image,c.imageAlt||c.title)+'</div><div class="award-info"><h3>'+esc(c.title)+'</h3><p>'+esc(c.summary||c.institution||"")+'</p></div><div class="award-meta">'+small(c.year||"")+'<span class="pill">'+esc(group?.title||c.category||"Recognition")+'</span></div><button class="award-more" data-award="'+idx+'" aria-label="View more about '+esc(c.title)+'">'+esc(seeText("achievementDetails","View more"))+' <span aria-hidden="true">↗</span></button></article>'
@@ -69,11 +69,11 @@ function research(d){
  if(c.documentUrl&&!links.some(x=>x.url===c.documentUrl))links.push({label:"Open research",url:c.documentUrl});
  return '<article class="research-entry reveal"><div>'+media(c.image,c.imageAlt||c.title,"research-media")+'</div><div>'+small(c.field||"Independent research")+'<h3 style="margin-top:15px">'+esc(c.title)+'</h3><p>'+esc(c.abstract||c.details||"")+'</p><div class="research-tags"><span>'+esc(c.year||"")+'</span><span>'+esc(c.status||"Research work")+'</span>'+list(c.tags).slice(0,3).map(t=>'<span>'+esc(t)+'</span>').join("")+'</div>'+links.slice(0,5).map(x=>href(x.label,x.url)).join("")+(c.pdf?href("PDF",c.pdf):"")+'</div></article>'}).join("");
  if(!entries)entries='<div class="empty-note">'+esc(r.emptyBody||"Research work will appear here.")+'</div>';
- return sectionStart("research","research")+heading(r.eyebrow||"04 / RESEARCH",r.heading||"Research",r.intro||"")+'<p class="research-statement reveal">'+esc(seeText("researchJournal","An evolving archive of research, methods and inquiry."))+'</p><div class="research-list">'+entries+'</div>'+sectionLinks(r)+'</section>'
+ return sectionStart("research","research")+heading(r.eyebrow||"04 / RESEARCH",r.heading||"Research",r.intro||"")+'<p class="research-statement reveal">'+esc(seeText("researchStatement","Research begins with asking a question worth investigating."))+'</p><div class="research-list">'+entries+'</div>'+sectionLinks(r)+'</section>'
 }
 function values(d){
  const principles=list(d.about?.principles);
- return sectionStart("principles","blue-sheet")+heading("APPROACH / 05","What shapes the work.","The principles behind each project, experiment and academic pursuit.")+principles.map((v,i)=>'<div class="blue-stack reveal"><span>'+small(v.number||String(i+1).padStart(2,"0"))+'</span></span><div><h3>'+esc(v.title)+'</h3><p>'+esc(v.body)+'</p></div></div>').join("")+'</section>'
+ return sectionStart("principles","blue-sheet")+heading(seeText("principlesEyebrow","APPROACH / 05"),seeText("principlesHeading","What shapes the work."),seeText("principlesIntro","The principles behind each project, experiment and academic pursuit."))+principles.map((v,i)=>'<div class="blue-stack reveal"><span>'+small(v.number||String(i+1).padStart(2,"0"))+'</span><div><h3>'+esc(v.title)+'</h3><p>'+esc(v.body)+'</p></div></div>').join("")+'</section>'
 }
 function creative(d){
  const c=d.creative||{};
