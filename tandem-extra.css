@@ -44,3 +44,65 @@ body.nt-loaded{visibility:visible}
 @media(max-width:1024px){.svc .nt-award-action{grid-column:1}.nt-custom-detail{grid-template-columns:1fr}}
 @media(max-width:760px){.nt-modal h2{font-size:36px}.nt-gallery{grid-template-columns:repeat(auto-fit,minmax(145px,1fr))}.nt-media-card img,.nt-pdf{height:180px}.nt-custom-detail{grid-template-columns:1fr}.hero-window img{object-position:center 20%}}
 @media(prefers-reduced-motion:reduce){.nt-modal{scroll-behavior:auto}}
+
+
+/* Editable achievement categories: editorial identity strip + per-award insignia.
+   These are scoped to the Achievements section; original Tandem effects remain intact. */
+#achievements .nt-award-groups{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;
+ margin:0 0 clamp(38px,5vw,74px);border-top:1px solid var(--rule);padding-top:22px;
+}
+#achievements .nt-award-category{
+ display:flex;align-items:flex-start;gap:16px;min-width:0;
+ padding:clamp(16px,2vw,25px);background:var(--paper);border:1px solid var(--rule);
+}
+#achievements .nt-category-mark{
+ position:relative;display:grid;place-items:center;flex:0 0 58px;
+ width:58px;height:58px;overflow:hidden;background:var(--bg);
+ border:1px solid var(--rule);border-radius:3px;
+}
+#achievements .nt-category-placeholder{
+ font:400 23px/1 var(--f-display);color:var(--accent);
+}
+#achievements .nt-category-mark img{
+ position:absolute;inset:0;width:100%;height:100%;padding:7px;
+ object-fit:contain;background:var(--bg);
+}
+#achievements .nt-category-mark img[hidden]{display:none}
+#achievements .nt-category-copy{min-width:0}
+#achievements .nt-category-eyebrow{
+ display:block;font:500 10px/1.4 var(--f-text);
+ letter-spacing:.11em;text-transform:uppercase;color:var(--accent);
+ margin-bottom:9px;
+}
+#achievements .nt-category-title{
+ font:500 clamp(17px,1.45vw,21px)/1.18 var(--f-display);
+ letter-spacing:-.025em;overflow-wrap:anywhere;margin:0 0 7px;
+}
+#achievements .nt-category-subtitle{
+ color:var(--muted);font-size:12px;line-height:1.45;
+ max-width:32ch;overflow-wrap:anywhere;
+}
+#achievements .svc .nt-award-group-label{
+ grid-column:3/5;display:flex;align-items:center;gap:10px;
+ font:500 11px/1.4 var(--f-text);letter-spacing:.06em;
+ text-transform:uppercase;color:var(--accent);
+}
+#achievements .svc .nt-award-group-label .nt-category-mark{
+ flex-basis:36px;width:36px;height:36px;background:var(--paper);
+}
+#achievements .svc .nt-award-group-label .nt-category-placeholder{font-size:16px}
+#achievements .svc .nt-award-group-label .nt-category-mark img{padding:4px}
+@media(min-width:1025px){
+ #achievements.services.has-stage .svc .nt-award-group-label{grid-column:1}
+}
+@media(max-width:1024px){
+ #achievements .nt-award-groups{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #achievements .svc .nt-award-group-label{grid-column:1}
+}
+@media(max-width:640px){
+ #achievements .nt-award-groups{grid-template-columns:minmax(0,1fr);gap:8px;padding-top:12px}
+ #achievements .nt-award-category{padding:14px;gap:12px}
+ #achievements .nt-category-mark{flex-basis:50px;width:50px;height:50px}
+ #achievements .nt-category-title{font-size:18px}
+}
