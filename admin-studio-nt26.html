@@ -11,12 +11,12 @@
 </head><body>
 <div class="admin-page">
  <header class="admin-top">
-   <div class="admin-brand"><span class="studio-square">NT<span>◥</span></span><div><b>PORTFOLIO STUDIO</b><small>PRIVATE CONTENT CONTROL</small></div></div>
+   <div class="admin-brand"><span class="studio-square">NT<span>◥</span></span><div><b>PORTFOLIO STUDIO</b><small>GITHUB CONTENT MANAGER</small></div></div>
    <div class="admin-head-right"><a href="/" target="_blank" rel="noopener noreferrer" class="view-site">OPEN WEBSITE ↗</a><button id="disconnect" type="button" class="logout" hidden>DISCONNECT</button></div>
  </header>
  <section id="login" class="login-layout">
    <div class="login-graphic">
-     <div class="index-meta">V6 — WORKING INDEX / PRIVATE EDITOR</div>
+     <div class="index-meta">V9 — STUDENT PORTFOLIO / EDITOR</div>
      <h1>Make the site<br><em>yours.</em></h1>
      <p>Edit any section, add photos, reorder menus and share direct links to your research or certificates. Publish changes in one place.</p>
      <div class="editor-motif" aria-hidden="true"><span>01 / IDEAS</span><span>02 / EVIDENCE</span><span>03 / WORK</span></div>
@@ -24,7 +24,7 @@
    <div class="auth-panel">
      <span class="small-cap">CONNECT TO GITHUB / 01</span>
      <h2>Sign in to your editor.</h2>
-     <p>Use a <strong>fine-grained GitHub Personal Access Token</strong> created for this repository only. Your token is held in this tab's memory and is never saved on the website.</p>
+     <p>Use a <strong>fine-grained GitHub Personal Access Token</strong> for this repository with <strong>Contents: Read and write</strong>. The upload button becomes available after sign-in, and GitHub checks write access during actual upload.</p>
      <label class="form-field"><span>GITHUB TOKEN</span><input id="token" type="password" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="github_pat_..." /></label>
      <button id="connect" type="button" class="main-action">CONNECT & CHECK PERMISSIONS <span>↗</span></button>
      <div id="auth-message" role="status"></div>
@@ -41,5 +41,5 @@
    <main class="editor-wrap" id="editor-main"><div id="editor"></div></main>
   </div>
  </div>
-</div><script src="/studio.js" defer></script>
+</div><script src="/studio.js?v=10" defer></script>
 </body></html>
