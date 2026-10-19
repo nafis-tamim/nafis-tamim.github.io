@@ -1,3 +1,27 @@
+# Nafis Tamim — Student Portfolio (Original Tandem Effects / V9)
+
+**Live website:** https://nafis-tamim.github.io/
+
+**Hidden admin editor:** https://nafis-tamim.github.io/admin-studio-nt26.html
+
+## Original animation fidelity
+
+The supplied 8B Tandem HTML/CSS is the live `index.html` base. The exact original JavaScript animation engine is preserved, without rewriting its effects, in `tandem-original-effects.js`. Its GSAP, ScrollTrigger, SplitText and Lenis dependencies remain as in the source. The original 14 section structures and their animation selectors remain: pinned hero image-strip transition, sticky achievements image swapping, scroll-pinned geometric principles, academic journey progress, project shutter images, research marquee, parallax image collage, animated interest titles, scroll-driven learning bars, focus toggle animations, FAQs, journal reveal and contact/footer transitions.
+
+## Content and administration
+
+- **Student content source**: `content/site.json`. No credentials are placed in source code.
+- **Original template hydration**: `tandem-data.js` reads the content before loading the untouched original animation engine, so current content is already present when GSAP measures page layout.
+- **Certificate View more**: achievement cards open a full-screen accessible panel with gallery images, PDF file links, evidence details and source URLs. Unlimited gallery items are administered in Studio.
+- **Home photo**: editable in Studio → Home & photo → Your identity & portrait; displayed in both the original hero photo and about photo.
+- **Other fields**: Projects, Research, Design, Academic journey, navigation, SEO, favicon, custom sections, and all template text are editable via Studio. Use **Small website text / Original animated template text** for Interest titles, Learning steps, Focus cards and FAQ questions. The sections object has switches to show/hide built-in areas.
+- **Add images or PDFs**: select a record, click **Upload / Replace** or **Upload multiple**, and **Publish**. Remove from the live site before deleting uploaded files in Media library.
+- **Admin authorization**: fine-grained GitHub Personal Access Token restricted to this one repository, with Contents read/write. Token stays in the active tab's memory. The admin URL being absent from public menus is not security by itself; actual writes are restricted by GitHub permissions.
+- **GitHub Pages**: static hosting with GitHub JSON as live content. MongoDB Atlas `academic_portfolio.site_content` is an updated snapshot only, not live sync. Do **not** expose MongoDB credentials in a browser.
+- **Backup before this redesign**: branch `backup/pre-tandem-student-20261019`.
+
+---
+
 # Nafis Tamim — Interactive Research and Creative Portfolio (V7)
 
 
