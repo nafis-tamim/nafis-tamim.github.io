@@ -399,10 +399,10 @@
         "pdf": ""
       },
       {
-        "id": "monerbondhu",
-        "title": "MonerBondhu AI",
-        "subtitle": "An AI product exploration",
-        "category": "Software",
+        "id": "alifashion",
+        "title": "Ali Fashion",
+        "subtitle": "A E-commerce website",
+        "category": "Website",
         "year": "2026",
         "status": "Exploration",
         "summary": "A publicly accessible repository exploring ideas in AI-assisted digital products.",
@@ -410,9 +410,9 @@
         "process": "Exploring product questions, experiments, and iterative interface decisions.",
         "outcome": "Public project repository; claims of deployment or user impact are not yet made.",
         "tools": "AI concepts, product thinking",
-        "image": "/assets/pr-ai.svg",
+        "image": "/uploads/1792436396431-dba69c22-WhatsApp-Image-2025-10-09-at-17-50-38_327265.jpg",
         "gallery": [],
-        "url": "https://github.com/nafis-tamim/MonerBondhu-AI",
+        "url": "https://alifashion.github.io/",
         "verification": "",
         "featured": true,
         "tags": [
@@ -424,7 +424,7 @@
         "links": [
           {
             "label": "Open project",
-            "url": "https://github.com/nafis-tamim/MonerBondhu-AI"
+            "url": "https://alifashion.github.io/"
           }
         ],
         "pdf": ""
@@ -467,7 +467,7 @@
         "process": "Evidence-led structure, responsive design, accessible interaction and a content administration workflow.",
         "outcome": "Public website and inspectable repository.",
         "tools": "HTML, CSS, JavaScript, GitHub Pages",
-        "image": "/assets/pr-web.svg",
+        "image": "/uploads/1792436313033-a97806cd-397985c4-5573-43e7-b895-81b3602e15d0.png",
         "gallery": [],
         "url": "https://nafis-tamim.github.io",
         "verification": "",
