@@ -1,8 +1,8 @@
 {
   "version": 7,
   "seo": {
-    "title": "Nafis Tamim | Research, Technology & Creative Work",
-    "description": "Academic portfolio of Nafis Tamim — research, mathematics, technology, international recognition and visual design. Explore interactive scientific work, projects and supporting materials.",
+    "title": "Nafis Tamim | Student Portfolio — Research, Projects & Achievements",
+    "description": "Nafis Tamim's student portfolio: academic achievements with certificates and official sources, independent research, selected projects and creative work.",
     "keywords": "Nafis Tamim academic portfolio, research, computer science, artificial intelligence, mathematics, IYMC, ICSC, TruthLens, graphic design",
     "canonical": "https://nafis-tamim.github.io/",
     "ogImage": "",
@@ -48,6 +48,14 @@
       {
         "label": "Graphlair",
         "url": "https://github.com/nafis-tamim/GRAPHLAIR"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/nafistamim/"
+      },
+      {
+        "label": "ResearchGate",
+        "url": "https://www.researchgate.net/profile/Nafis-Tamim-2"
       }
     ]
   },
@@ -713,7 +721,17 @@
     "achievementsEmail": "",
     "supportingLinksTitle": "Files & links",
     "supportingLinksEmpty": "",
-    "achievementDetails": "OPEN SUPPORTING MATERIAL"
+    "achievementDetails": "View more",
+    "allAchievementsLabel": "All achievements",
+    "noAchievements": "No entries in this category yet.",
+    "headerTagline": "STUDENT / RESEARCH / DESIGN",
+    "heroLocationLabel": "BASED IN",
+    "emptyVisual": "VISUAL ARCHIVE / NAFIS TAMIM",
+    "researchStatement": "Research begins with asking a question worth investigating.",
+    "principlesEyebrow": "APPROACH / 05",
+    "principlesHeading": "What shapes the work.",
+    "principlesIntro": "The principles behind each project, experiment and academic pursuit.",
+    "backToTop": "BACK TO TOP ↑"
   },
   "design": {
     "label": "",
