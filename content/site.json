@@ -746,5 +746,156 @@
     "scrollLabCaption": "INTERACTIVE RESONANCE / CHLADNI-INSPIRED",
     "scrollLabButton": "SCROLL TO EXPERIMENT",
     "orbitalCaption": "ORBITAL INDEX"
+  },
+  "tandemContent": {
+    "labels": {
+      "interestsTitle": "Fields of inquiry",
+      "interestsIntro": "Where academic interests meet creative practice.",
+      "learningTitle": "Learning, documented",
+      "learningIntro": "An open-ended cycle of investigation, making and reflection.",
+      "focusTitle": "Areas of focus",
+      "switchA": "Disciplines",
+      "switchB": "Methods",
+      "faqTitle": "Questions & context",
+      "journalTitle": "The working index",
+      "creativeTitle": "Visual work",
+      "principlesTitle": "What I work by",
+      "messageLabel": "Your message",
+      "composeLabel": "Compose email"
+    },
+    "interests": [
+      {
+        "title": "Mathematics",
+        "note": "Competition work, problem solving and mathematical writing"
+      },
+      {
+        "title": "Engineering",
+        "note": "Structural systems, design questions and theoretical exploration"
+      },
+      {
+        "title": "Research",
+        "note": "Hypotheses, methods and documentation"
+      },
+      {
+        "title": "Technology",
+        "note": "Computing, prototypes and digital tools"
+      },
+      {
+        "title": "Design",
+        "note": "Branding, visual communication and thoughtful layouts"
+      },
+      {
+        "title": "Leadership",
+        "note": "Student outreach, collaboration and communication"
+      }
+    ],
+    "learning": [
+      {
+        "title": "Questions",
+        "events": [
+          {
+            "number": "01",
+            "text": "Formulate the problem"
+          },
+          {
+            "number": "02",
+            "text": "Review existing work"
+          }
+        ]
+      },
+      {
+        "title": "Models",
+        "events": [
+          {
+            "number": "01",
+            "text": "Explore possible methods"
+          },
+          {
+            "number": "02",
+            "text": "Sketch initial frameworks"
+          }
+        ]
+      },
+      {
+        "title": "Practice",
+        "events": [
+          {
+            "number": "01",
+            "text": "Build and test ideas"
+          },
+          {
+            "number": "02",
+            "text": "Refine through feedback"
+          }
+        ]
+      },
+      {
+        "title": "Evidence",
+        "events": [
+          {
+            "number": "01",
+            "text": "Document results and limits"
+          },
+          {
+            "number": "02",
+            "text": "Present with supporting sources"
+          }
+        ]
+      }
+    ],
+    "focus": [
+      {
+        "title": "Academic inquiry",
+        "for": "Learning with rigor",
+        "features": [
+          "Mathematics",
+          "Competition experience",
+          "Critical problem solving",
+          "Scientific writing"
+        ]
+      },
+      {
+        "title": "Research practice",
+        "for": "Research with evidence",
+        "features": [
+          "Framework development",
+          "Source analysis",
+          "Clear documentation",
+          "Open questions"
+        ]
+      },
+      {
+        "title": "Creative work",
+        "for": "Making with intent",
+        "features": [
+          "Visual identity",
+          "Product concepts",
+          "Graphic systems",
+          "Digital design"
+        ]
+      }
+    ],
+    "faq": [
+      {
+        "title": "What is this website?",
+        "answer": "A student portfolio documenting education, academic recognition, research interests, projects and visual work."
+      },
+      {
+        "title": "Are the results independently verified?",
+        "answer": "Each achievement includes its available official sources, certificates or contextual status. A report or award is described according to its evidence."
+      },
+      {
+        "title": "Can I view an achievement certificate?",
+        "answer": "Select View more under an achievement. When a certificate image, PDF or result link has been uploaded it appears in that panel."
+      },
+      {
+        "title": "Is every research idea a published paper?",
+        "answer": "No. Research entries distinguish exploratory manuscripts, editorial acceptance and confirmed publication. Any missing publication or DOI confirmation is clearly stated."
+      },
+      {
+        "title": "Can I get in touch about collaboration?",
+        "answer": "Yes. The contact section links to email, GitHub and professional profiles."
+      }
+    ]
   }
 }
