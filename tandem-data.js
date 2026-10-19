@@ -79,11 +79,11 @@ function achievements(d){
   return '<li class="svc" data-award-item="'+i+'"><figure class="svc-media frame">'+image(w.image||"/assets/aw-icsc.svg",w.imageAlt||"Illustration representing "+w.title)+'</figure>'+
   '<h3>'+esc(w.title)+'</h3><p class="svc-text">'+esc(w.summary||"")+'</p>'+
   '<ul class="svc-points"><li>'+esc(w.year||"")+'</li><li>'+esc(group)+'</li></ul>'+
-  '<div class="nt-award-action"><button class="btn nt-view" data-award="'+i+'" type="button"><span>View more</span><span aria-hidden="true">↗</span></button></div></li>';
+  '<div class="nt-award-action"><button class="btn nt-view" data-award="'+i+'" type="button"><span>'+esc(d.ui?.achievementDetails||"View more")+'</span><span aria-hidden="true">↗</span></button></div></li>';
  }).join("");
 }
 function principles(d){
- const a=d.about||{},arr=items(a.principles); put(".pr-head h2","What I work by");put(".pr-head p",a.lead||"Principles behind the projects and study.");
+ const a=d.about||{},arr=items(a.principles); put(".pr-head h2",d.tandemContent?.labels?.principlesTitle||"What I work by");put(".pr-head p",a.lead||"Principles behind the projects and study.");
  const list=$(".pr-list");
  if(list&&arr.length)list.innerHTML=arr.map(p=>'<li class="principle"><h3>'+esc(p.title)+'</h3><p>'+esc(p.body)+'</p></li>').join("");
 }
@@ -118,7 +118,7 @@ function research(d){
  const track=$(".vc-track");if(track)track.innerHTML=cards.map(x=>'<li class="vc-card"><p>'+esc(x.quote||"")+'</p><p class="vc-by"><strong>'+esc(x.by||"")+'</strong><span>'+esc(x.kind||"")+'</span></p></li>').join("");
 }
 function gallery(d){
- put(".gl-head h2",d.creative?.heading||"Visual work");
+ put(".gl-head h2",d.creative?.heading||d.tandemContent?.labels?.creativeTitle||"Visual work");
  put(".gl-head p",d.creative?.intro||"Design concepts, selected artwork and projects.");
  const sources=[...items(d.creative?.items),...items(d.projects?.items),...items(d.achievements?.cards)].filter(x=>x.image);
  $$(".collage .gl img").forEach((node,i)=>{
@@ -127,9 +127,9 @@ function gallery(d){
  });
 }
 function interests(d){
- put(".sc-head h2","Fields of inquiry");
- put(".sc-head p","Where my academic interests meet creative practice.");
- const records=[
+ put(".sc-head h2",d.tandemContent?.labels?.interestsTitle||"Fields of inquiry");
+ put(".sc-head p",d.tandemContent?.labels?.interestsIntro||"Where my academic interests meet creative practice.");
+ const records=items(d.tandemContent?.interests).length?d.tandemContent.interests.map(v=>[v.title,v.note]):[
   ["Mathematics","Competition work, problem solving and mathematical writing"],
   ["Engineering","Structural systems, design questions and theoretical exploration"],
   ["Research","Hypotheses, frameworks, methods and documentation"],
@@ -140,9 +140,9 @@ function interests(d){
  const el=$(".sc-list");if(el)el.innerHTML=records.map(v=>'<li class="sector" data-drift><h3 class="sector-name">'+esc(v[0])+'</h3><p class="sector-note">'+esc(v[1])+'</p></li>').join("");
 }
 function learning(d){
- put(".cl-head h2","Learning, documented");
- put(".cl-head p","An open-ended cycle of investigation, making and reflection.");
- const modes=[
+ put(".cl-head h2",d.tandemContent?.labels?.learningTitle||"Learning, documented");
+ put(".cl-head p",d.tandemContent?.labels?.learningIntro||"An open-ended cycle of investigation, making and reflection.");
+ const modes=items(d.tandemContent?.learning).length?d.tandemContent.learning.map(v=>[v.title,...items(v.events).map(e=>[e.number,e.text])]):[
   ["Questions",["01","Formulate the problem"],["02","Review existing work"]],
   ["Models",["01","Explore possible methods"],["02","Sketch initial frameworks"]],
   ["Practice",["01","Build and test ideas"],["02","Refine through feedback"]],
@@ -152,9 +152,9 @@ function learning(d){
  '<div class="month"><span class="month-bar"></span><h3 class="month-name">'+esc(v[0])+'</h3><ul class="month-dates">'+v.slice(1).map(row=>'<li><strong>'+esc(row[0])+'</strong><span>'+esc(row[1])+'</span></li>').join("")+'</ul></div>').join("");
 }
 function focus(d){
- put(".fe-head h2","Areas of focus");
- const switches=$$(".fe-toggle [data-period]");switches.forEach((b,i)=>{b.textContent=i?"Methods":"Disciplines";b.setAttribute("aria-pressed",String(i===0))});
- const focusItems=[
+ put(".fe-head h2",d.tandemContent?.labels?.focusTitle||"Areas of focus");
+ const switches=$$(".fe-toggle [data-period]");switches.forEach((b,i)=>{b.textContent=i?(d.tandemContent?.labels?.switchB||"Methods"):(d.tandemContent?.labels?.switchA||"Disciplines");b.setAttribute("aria-pressed",String(i===0))});
+ const focusItems=items(d.tandemContent?.focus).length?d.tandemContent.focus:[
  {title:"Academic inquiry",for:"Learning with rigor",features:["Mathematics","Competition experience","Critical problem solving","Scientific writing"]},
  {title:"Research practice",for:"Research with evidence",features:["Framework development","Source analysis","Clear documentation","Open questions"]},
  {title:"Creative work",for:"Making with intent",features:["Visual identity","Product concepts","Graphic systems","Digital design"]}
@@ -165,9 +165,9 @@ function focus(d){
  '<ul class="plan-list">'+f.features.map(t=>'<li>'+esc(t)+'</li>').join("")+'</ul><a class="btn '+(i===1?'':'btn-line')+'" href="'+["#academics","#research","#creative"][i]+'"><span>Explore this area</span></a></li>').join("");
 }
 function faqs(d){
- put(".fq-head h2","Questions & context");
+ put(".fq-head h2",d.tandemContent?.labels?.faqTitle||"Questions & context");
  const intro=$(".fq-head p");if(intro)intro.innerHTML='Looking for more context? <a class="link" href="#contact">Contact me directly</a>';
- const fa=[
+ const fa=items(d.tandemContent?.faq).length?d.tandemContent.faq.map(x=>[x.title,x.answer]):[
  ["What is this website?","A student portfolio documenting education, academic recognition, research interests, projects and visual work."],
  ["Are the results independently verified?","Each achievement includes its available official sources, certificates or contextual status. A report or award is described according to its evidence."],
  ["Can I view an achievement certificate?","Select View more under an achievement. When a certificate image, PDF or result link has been uploaded it appears in that panel."],
@@ -177,7 +177,7 @@ function faqs(d){
  const faqlist=$(".fq-list");if(faqlist)faqlist.innerHTML=fa.map(v=>'<details class="fq"><summary><span>'+esc(v[0])+'</span><i class="fq-icon" aria-hidden="true"></i></summary><div class="fq-a"><p>'+esc(v[1])+'</p></div></details>').join("");
 }
 function journal(d){
- put(".jr-head h2","The working index");
+ put(".jr-head h2",d.tandemContent?.labels?.journalTitle||"The working index");
  setLink(".jr-head .link","#research","Explore research");
  const entries=[
  ...items(d.research?.items).map(x=>({name:x.title,label:x.field||"Research",year:x.year,image:x.image,url:x.documentUrl||x.links?.[0]?.url||"#research"})),
@@ -201,8 +201,8 @@ function contact(d){
  const fields=$$(".field",form);
  if(fields[2]){put("span","Subject",fields[2]);const input=$("input",fields[2]);if(input){input.name="subject";input.removeAttribute("autocomplete")}}
  if(fields[3])fields[3].style.display="none";
- put(".field-wide span","Your message",form);
- put(".ct-send .btn span","Compose email",form);
+ put(".field-wide span",d.tandemContent?.labels?.messageLabel||"Your message",form);
+ put(".ct-send .btn span",d.tandemContent?.labels?.composeLabel||"Compose email",form);
  put(".ct-note","Opens your email application; no message is sent automatically.",form);
  form.addEventListener("submit",e=>{
   e.preventDefault();e.stopImmediatePropagation();
