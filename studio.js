@@ -17,18 +17,18 @@ const isLong=k=>/(description|body|summary|detail|abstract|intro|challenge|proce
 const freshId=prefix=>prefix+"-"+uuid().replace(/[^a-z0-9-]/gi,"").slice(0,14);
 const modules=[
  ["start","Dashboard","See your website at a glance"],
- ["home","Home & profile","Profile, landing text, about and contact"],
- ["awards","Achievements","Images, certificates, awards and sources"],
- ["groups","Award categories & logos","Government, international and custom groups"],
+ ["home","Home & photo","Change your picture, biography and landing page"],
+ ["awards","Achievements","Add awards, certificate PDFs, photos and links"],
+ ["groups","Achievement categories","Government, international and custom logos"],
  ["projects","Projects","All categories, images, work and PDF links"],
  ["research","Research","Paper covers, manuscripts and sources"],
  ["creative","Design gallery","Brand work, packaging, posters and graphics"],
  ["academics","Education & activities","Your academic journey"],
- ["menu","Pages & menu","Custom links, new sections and navigation order"],
- ["look","Style, photos & SEO","Website theme, motion, favicon, search"],
- ["labels","All site text","Headings, small labels and editorial copy"],
+ ["menu","Menus & sections","Add, move, hide or delete pages and custom links"],
+ ["look","Favicon & appearance","Upload a tab icon, adjust colors and Google search"],
+ ["labels","Small website text","Edit buttons, captions and editorial labels"],
  ["files","Media library","Remove unused uploads after publishing"],
- ["advanced","Advanced editor","Full content document as JSON"]
+ ["advanced","Advanced (optional)","Only for changes not available in the simple forms"]
 ];
 let token="",data=null,sha="",writeOK=false,dirty=false,mode="start",chosen={},busy=false;
 let previewBlobUrls=[];
@@ -350,7 +350,7 @@ function collection(parent,type){
   list.splice(position,1);chosen[key]=Math.max(0,position-1);dirtyNow();render();
  },"danger-action"));
  form.append(actions);
- if(type==="awards")form.append(make("div","record-card-intro","Choose a category, upload its cover image and add supporting links. Every link appears directly on the public award card. No separate View more popup."));
+ if(type==="awards")form.append(make("div","record-card-intro","Choose a category, upload its cover image and add supporting links. Visitors click View more to see your images, certificate PDFs, evidence and supporting links."));
  if(type==="menu")form.append(make("div","record-card-intro","For an existing section, use a link like #research or #projects. For custom external navigation use a full https:// URL and enable Open new tab."));
  editorFields(form,item);
  layout.append(aside,form);parent.append(layout);
@@ -361,7 +361,7 @@ function editorHeading(container,title,detail,number){
  container.append(top);
 }
 function dashboard(container){
- editorHeading(container,"Your website, without the code.","Pick an area to edit. No technical database setup is needed for the public content.");
+ editorHeading(container,"Your website, without the code.","Click a card below. Update text, images, certificate PDFs, menus or favicon, then press Publish at the top.");
  const list=[
  [a(data.achievements.cards).length,"Achievements","awards"],
  [a(data.projects.items).length,"Projects","projects"],
