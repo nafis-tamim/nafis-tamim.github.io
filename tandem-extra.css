@@ -1,0 +1,46 @@
+/* Small additions only. ALL original Tandem CSS and GSAP remain unchanged. */
+:root{--nt-shadow:0 28px 90px rgba(0,0,0,.29)}
+html{scroll-padding-top:var(--hdr)}
+body.nt-loaded{visibility:visible}
+.hero-window img,.hero-stage img{object-position:center 24%}
+.about-photo img{object-position:center 24%;filter:grayscale(1) contrast(1.02)}
+.person-photo img{object-fit:cover}
+.svc .nt-award-action{grid-column:3/5;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.services.has-stage .svc .nt-award-action{grid-column:1}
+.svc-points li{font-size:.78rem}
+.nt-view{font-size:.85rem;padding:12px 16px;line-height:1.25;white-space:normal}
+.nt-view span:last-child{margin-left:12px}
+.nt-project-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.nt-project-links a{font-size:.78rem;color:inherit;text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
+.nt-link{display:inline-flex;align-items:center;gap:.4em;font-size:.9rem;font-weight:500;text-decoration:underline;text-underline-offset:.3em}
+.nt-link:hover{color:var(--accent)}
+.nt-custom-detail{display:grid;gap:26px;grid-template-columns:1fr 1fr;padding:0 var(--cell)}
+.nt-custom-detail>p{max-width:58ch;font-size:clamp(17px,2vw,25px)}
+.nt-custom-detail figure{max-height:420px;overflow:hidden}
+.nt-custom-detail figure img{width:100%;height:100%;object-fit:cover}
+.nt-custom-detail .nt-link{grid-column:1/-1}
+.ftr-col .nt-link{color:inherit}
+.nt-modal-open{overflow:hidden}
+.nt-modal-backdrop[hidden]{display:none}
+.nt-modal-backdrop{position:fixed;inset:0;background:rgba(1,8,18,.75);backdrop-filter:blur(12px);z-index:999;display:grid;place-items:center;padding:clamp(12px,4vw,40px)}
+.nt-modal{position:relative;width:min(100%,1060px);max-height:min(92vh,980px);overflow-y:auto;background:white;color:#081423;padding:clamp(24px,5vw,64px);box-shadow:var(--nt-shadow);overscroll-behavior:contain}
+.nt-close{position:sticky;float:right;top:0;border:0;background:#081423;color:#fff;width:45px;height:45px;display:grid;place-items:center;font:26px sans-serif;z-index:2;cursor:pointer}
+.nt-overline{text-transform:uppercase;font-size:11px;letter-spacing:.15em;font-weight:600;color:var(--accent);margin-bottom:16px}
+.nt-modal h2{font:300 clamp(35px,5vw,72px)/1.04 var(--f-display);letter-spacing:-.05em;max-width:18ch;margin:0 0 26px}
+.nt-summary{font-size:clamp(17px,1.5vw,23px);max-width:70ch;line-height:1.5}
+.nt-detail{font-size:15px;line-height:1.65;max-width:74ch;white-space:pre-line;margin-top:27px}
+.nt-status{font-size:12px;color:#566174;border-top:1px solid #e2e5e8;margin-top:28px;padding-top:15px}
+.nt-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px;margin:36px 0 23px}
+.nt-media-card{display:flex;flex-direction:column;gap:13px;min-width:0;background:#f0f2f6;padding:12px}
+.nt-media-card img{width:100%;height:230px;object-fit:contain;background:#e3e6ee}
+.nt-pdf{height:230px;display:grid;place-items:center;background:#dbe3ff;color:#15277f;font:300 75px var(--f-display);letter-spacing:-.09em}
+.nt-media-card .nt-link{font-size:12px;margin:5px}
+.nt-links{display:flex;flex-wrap:wrap;gap:13px;margin-top:28px}
+.nt-links .nt-link{padding:13px 18px;border:1px solid #d9dce3;text-decoration:none}
+.nt-links .nt-link:hover{background:#081423;color:white}
+.contact .ct-note{max-width:34ch}
+.contact .ct-details dd{overflow-wrap:anywhere}
+.hero h1{letter-spacing:-.07em}
+@media(max-width:1024px){.svc .nt-award-action{grid-column:1}.nt-custom-detail{grid-template-columns:1fr}}
+@media(max-width:760px){.nt-modal h2{font-size:36px}.nt-gallery{grid-template-columns:repeat(auto-fit,minmax(145px,1fr))}.nt-media-card img,.nt-pdf{height:180px}.nt-custom-detail{grid-template-columns:1fr}.hero-window img{object-position:center 20%}}
+@media(prefers-reduced-motion:reduce){.nt-modal{scroll-behavior:auto}}
