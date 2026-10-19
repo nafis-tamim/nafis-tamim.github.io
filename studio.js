@@ -35,10 +35,12 @@ let previewBlobUrls=[];
 function dropPreviews(){previewBlobUrls.forEach(u=>URL.revokeObjectURL(u));previewBlobUrls=[]}
 function errorMessage(e){
  const msg=s(e?.message||e);
- if(/Resource not accessible by personal access token|403|permission.*denied|Write access|requires.*write/i.test(msg))return "GitHub rejected this token for writing. Open GitHub Settings → Developer settings → Personal access tokens → Fine-grained tokens. Select nafis-tamim.github.io and set Repository permissions → Contents → Read and write. Generate/update a token and reconnect. Never paste tokens in chat.";
+ if(/rate limit|abuse detection/i.test(msg))return "GitHub API rate limit reached. Wait, then try again.";
+ if(/Resource not accessible by personal access token|403|permission.*denied|Write access|requires.*write/i.test(msg))return "GitHub denied the upload (403). In GitHub Settings → Developer settings → Personal access tokens → Fine-grained tokens, select only nafis-tamim.github.io and grant Repository permissions → Contents: Read and write. Reconnect with the updated token. Never share your token. GitHub error: "+msg;
+ if(/401|bad credentials/i.test(msg))return "GitHub rejected this token (401). Reconnect with a valid fine-grained token.";
+ if(/failed to fetch|networkerror|network request failed/i.test(msg))return "Could not contact the GitHub API. Check your connection or browser extensions and retry.";
  if(/404|not found/i.test(msg))return "Repository/file not found for this token. Make sure Repository access includes nafis-tamim.github.io and you are signed into the right account.";
  if(/409|conflict/i.test(msg))return "GitHub detected a conflict. Reload the editor to get the newest repository version.";
- if(/rate limit/i.test(msg))return "GitHub API rate limit reached. Try again shortly.";
  return msg;
 }
 async function request(method,endpoint,body){
@@ -149,7 +151,7 @@ function editorFields(parent,obj,{omit=[],title="",desc=""}={}){
 }
 function renderMediaControls(container,obj,key){
  const tools=make("div","media-field-actions");
- const file=make("input");file.type="file";file.accept=".jpg,.jpeg,.png,.webp,.gif,.ico,.pdf";file.style.display="none";
+ const file=make("input");file.type="file";file.accept=".jpg,.jpeg,.png,.webp,.avif,.gif,.ico,.pdf";file.style.display="none";
  const upload=button("↑ UPLOAD / REPLACE",()=>file.click());
  if(!writeOK)upload.disabled=true;
  tools.append(upload,file);
@@ -168,7 +170,7 @@ function renderMediaControls(container,obj,key){
    notice("File uploaded and linked in your draft. Click Publish to update the public website.");
   }catch(e){notice(errorMessage(e),"error")}finally{upload.disabled=false}
  };
- if(obj[key]&&/\.(png|jpe?g|webp|gif|ico|svg)(?:[?#]|$)/i.test(obj[key])){
+ if(obj[key]&&/\.(png|jpe?g|webp|avif|gif|ico|svg)(?:[?#]|$)/i.test(obj[key])){
   const view=make("img","media-preview");view.src=obj[key];view.alt="Current image preview";view.onerror=()=>view.remove();
   container.append(view);
  }
@@ -183,7 +185,7 @@ function mediaGallery(container,obj,key){
  const entries=a(obj[key]);
  entries.forEach((path,index)=>{
   const row=make("div","inline-preview media-order-row");
-  if(/\.(png|jpe?g|webp|gif|svg)(?:[?#]|$)/i.test(path)){
+  if(/\.(png|jpe?g|webp|avif|gif|svg)(?:[?#]|$)/i.test(path)){
    const img=make("img");img.src=path;img.alt="Image "+(index+1);row.append(img);
   }else row.append(make("span","pdf-thumb","PDF"));
   const meta=make("div","asset-name",String(index+1).padStart(2,"0")+" / "+path);
@@ -194,7 +196,7 @@ function mediaGallery(container,obj,key){
   const down=button("↓",()=>{if(index===entries.length-1)return;[obj[key][index],obj[key][index+1]]=[obj[key][index+1],obj[key][index]];dirtyNow();render()},"small-action");
   down.disabled=index===entries.length-1;down.title="Move later";
   btns.append(up,down);
-  if(/\.(png|jpe?g|webp|gif|svg)(?:[?#]|$)/i.test(path)){
+  if(/\.(png|jpe?g|webp|avif|gif|svg)(?:[?#]|$)/i.test(path)){
    btns.append(button("COVER",()=>{
     const old=obj.image;
     obj.image=path;
@@ -207,7 +209,7 @@ function mediaGallery(container,obj,key){
   btns.append(button("REMOVE",()=>{obj[key].splice(index,1);dirtyNow();render()},"danger-action"));
   row.append(btns);wrap.append(row);
  });
- const picker=make("input");picker.type="file";picker.multiple=true;picker.accept=".jpg,.jpeg,.png,.webp,.gif,.ico,.pdf";picker.style.display="none";
+ const picker=make("input");picker.type="file";picker.multiple=true;picker.accept=".jpg,.jpeg,.png,.webp,.avif,.gif,.ico,.pdf";picker.style.display="none";
  picker.onchange=async()=>{
   const files=Array.from(picker.files||[]);if(!files.length)return;
   upload.disabled=true;let count=0;
@@ -467,7 +469,7 @@ function mediaPanel(container){
    if(!records.length)list.append(make("div","record-empty","No uploads yet. Upload an image from an Achievement or Project."));
    for(const entry of records){
     const row=make("div","media-line");
-    if(/\.(png|jpe?g|webp|gif|ico)$/i.test(entry.name)){const pic=make("img");pic.src="/"+entry.path;pic.alt=entry.name;row.append(pic)}
+    if(/\.(png|jpe?g|webp|avif|gif|ico)$/i.test(entry.name)){const pic=make("img");pic.src="/"+entry.path;pic.alt=entry.name;row.append(pic)}
     else row.append(make("span","record-icon","PDF"));
     const name=make("div","filename",entry.name),path="/"+entry.path;
     const used=JSON.stringify(data).includes(path);name.append(make("small","",used?"Linked in your current draft":"Not linked in the current draft"));
@@ -528,10 +530,11 @@ function render(){
 async function uploadFile(file){
  if(!writeOK)throw Error("Write access required. This token cannot upload files.");
  if(!file)throw Error("Select a file.");
- const allowed=["image/png","image/jpeg","image/webp","image/gif","application/pdf","image/x-icon","image/vnd.microsoft.icon"];
+ const allowedExtensions=new Set(["png","jpg","jpeg","webp","avif","gif","ico","pdf"]);
+ const allowedTypes=new Set(["image/png","image/jpeg","image/webp","image/avif","image/gif","application/pdf","image/x-icon","image/vnd.microsoft.icon","image/ico","application/octet-stream",""]);
  const extension=s(file.name.split(".").pop()).toLowerCase();
- if(!allowed.includes(file.type)&&extension!=="ico")throw Error("Use PNG, JPEG, WebP, GIF, ICO or PDF. SVG upload is disabled for security.");
- if(file.size<=0||file.size>8*1024*1024)throw Error("Choose a non-empty image or PDF smaller than 8 MB.");
+ if(!allowedExtensions.has(extension)||!allowedTypes.has(file.type))throw Error("Use PNG, JPG, JPEG, WebP, AVIF, GIF, ICO or PDF. SVG is blocked for security.");
+ if(file.size<=0||file.size>15*1024*1024)throw Error("Choose a non-empty image or PDF smaller than 15 MB.");
  const basename=s(file.name).replace(/\.[^.]+$/,"").replace(/[^a-z0-9_-]+/gi,"-").slice(0,44)||"media";
  const final="uploads/"+Date.now()+"-"+uuid().slice(0,8)+"-"+basename+"."+extension;
  const buf=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(s(reader.result).split(",")[1]);reader.onerror=()=>reject(Error("Could not read file"));reader.readAsDataURL(file)});
@@ -579,16 +582,13 @@ async function login(){
  try{
   const file=await request("GET","/contents/"+CONTENT);
   data=JSON.parse(decode(file.content));sha=file.sha;
-  try{
-   /* An unreferenced Git blob is a safe write-permission test; no file or commit is added to main. */
-   await request("POST","/git/blobs",{content:"NT Studio permission check",encoding:"utf-8"});
-   writeOK=true;
-  }catch(e){writeOK=false;auth.textContent=errorMessage(e)}
+  /* Git Blobs preflight isn't the upload route and may incorrectly block
+     file uploads. Real file PUTs enforce GitHub Contents: write access. */
+  writeOK=true;
   input.value="";
   $("#login").hidden=true;$("#workspace").hidden=false;$("#disconnect").hidden=false;
   cleanNow();render();
-  if(writeOK)notice("Connected. Upload and Publish access are available. Your token remains only in this tab.");
-  else notice("Read-only connection. Upload and Publish are disabled until you reconnect with Contents: Read and write permission. "+auth.textContent,"warning");
+  notice("Connected. You can choose photos, PDFs and favicons. GitHub will confirm your token has Contents: Read and write on the actual Upload or Publish request. A 403 requires fixing token permissions.", "success");
  }catch(e){
   auth.textContent=errorMessage(e);token="";data=null;
  }finally{b.disabled=false;b.textContent="CONNECT & CHECK PERMISSIONS ↗"}
