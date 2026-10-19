@@ -441,8 +441,9 @@ function labelsPanel(container){
  editorHeading(container,"All little words & labels","Change even small text such as link headings, chips, captions and featured intro.");
  const box=section(container,"Website microcopy","Text here is displayed throughout the portfolio.");
  editorFields(box,data.ui||{});
+ if(data.tandemContent){const editor=section(container,"Original animated template text","Edit Interests, Learning, Focus, FAQs and labels without writing code.");editorFields(editor,data.tandemContent);}
  const path=section(container,"Academic section introduction","Other headings and labels also live in Home, Achievements, Projects, Research, Design, Writing and Education.");
- path.append(make("div","help-box","For a field not yet in the visual form, the Advanced editor allows changing the entire content object. No code changes are required."));
+ path.append(make("div","help-box","Use the editors above to update all content. Your changes go live only after you press Publish."));
 }
 function mediaPanel(container){
  editorHeading(container,"Media library & deletion","Uploaded images and PDFs stored in your GitHub repository.");
