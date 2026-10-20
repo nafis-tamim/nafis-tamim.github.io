@@ -2,7 +2,7 @@
   "version": 7,
   "seo": {
     "title": "Nafis Tamim | Student Portfolio, Research & Achievements",
-    "description": "Official student portfolio of Nafis Tamim, a Bangladesh-based student exploring research, mathematics, engineering, computing and creative technology. Discover academic achievements, certificates and projects.",
+    "description": "Nafis Tamim is a student at Dhaka City College, Bangladesh. Explore his research, mathematics projects, academic achievements and visual design work.",
     "keywords": "Nafis Tamim, Nafis Tamim portfolio, Nafis Tamim researcher, Nafis Tamim academic portfolio, Graphlair, engineering research, ICSC ambassador",
     "canonical": "https://nafis-tamim.github.io/",
     "ogImage": "https://nafis-tamim.github.io/uploads/1792423174227-9711e400-397985c4-5573-43e7-b895-81b3602e15d0.png",
@@ -114,7 +114,7 @@
     "overline": "",
     "firstLine": "Curiosity",
     "secondLine": "in motion.",
-    "intro": "I explore mathematics, AI, scientific research and visual design—building, questioning and turning ideas into tangible work.",
+    "intro": "I'm Nafis Tamim, a student based in Dhaka, Bangladesh. Alongside my studies, I work on mathematical problems, independent research and design projects. This portfolio brings together my work, academic achievements and the ideas I'm still developing.",
     "primaryLabel": "See the work",
     "primaryTarget": "projects",
     "secondaryLabel": "Academic records",
@@ -133,9 +133,9 @@
   },
   "about": {
     "eyebrow": "01 — PERSPECTIVE",
-    "heading": "Curiosity across disciplines.",
-    "lead": "Working at the intersection of mathematics, research, design and technology.",
-    "body": "This portfolio is organized as an evidence-led catalogue: achievements carry results and links; projects show the work; research connects to its documents. My interests change and develop, so the site is intentionally editable.",
+    "heading": "Outside the classroom.",
+    "lead": "Independent work in mathematics, engineering ideas and visual design.",
+    "body": "I study science at Dhaka City College. Outside class, I work through mathematical problems, explore engineering concepts and develop design projects. This website is a record of that work, along with academic results and supporting material where available.",
     "quote": "The most interesting answers often begin with a better question.",
     "principles": [
       {
