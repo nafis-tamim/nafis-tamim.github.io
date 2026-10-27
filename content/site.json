@@ -103,6 +103,13 @@
       "openNewTab": false
     },
     {
+      "id": "certifications",
+      "label": "Certificates",
+      "href": "#certifications",
+      "openNewTab": false,
+      "visible": true
+    },
+    {
       "id": "contact",
       "label": "Contact",
       "visible": true,
@@ -630,6 +637,17 @@
         ]
       },
       {
+        "id": "ssc-2024-grade",
+        "year": "2024",
+        "type": "Academic result",
+        "title": "Secondary School Certificate (SSC) — GPA 5.00",
+        "organization": "Board of Intermediate and Secondary Education, Barishal",
+        "description": "Science group; GPA 5.00 in the 2024 SSC examination. Supporting academic transcript is kept private.",
+        "link": "",
+        "image": "/assets/aw-notes.svg",
+        "links": []
+      },
+      {
         "id": "edu2",
         "year": "2026",
         "type": "Leadership",
@@ -917,5 +935,155 @@
       "journal": true,
       "contact": true
     }
+  },
+  "certifications": {
+    "eyebrow": "COURSES / 2025—2026",
+    "heading": "Courses & certificates",
+    "intro": "Selected short courses and learning assessments, with supporting documents. These are completion records—not academic degrees or competition prizes.",
+    "items": [
+      {
+        "id": "unesco-open-hardware-2025",
+        "title": "Cookbook for Open Hardware Sensors for Water Resources Management",
+        "issuer": "UNESCO — International Hydrological Programme",
+        "date": "03 December 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Science & environment",
+        "description": "Completed a course of study on open hardware sensors for water resources management, offered through UNESCO.",
+        "documentUrl": "/certificates/unesco-open-hardware-water.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "iaea-critical-appraisal",
+        "title": "Applied Sciences of Oncology — Critical Appraisal",
+        "issuer": "IAEA Learning Management System",
+        "date": "",
+        "year": "2025",
+        "kind": "Module completion",
+        "category": "Scientific literacy",
+        "description": "Completed the Critical Appraisal online module in the Applied Sciences of Oncology programme. An educational module, not a professional medical qualification.",
+        "documentUrl": "/certificates/iaea-critical-appraisal.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "unescap-frontier-icts",
+        "title": "Frontier ICTs for Sustainable Development — Overview",
+        "issuer": "UN ESCAP / APCICT",
+        "date": "10 January 2026",
+        "year": "2026",
+        "kind": "Course completion",
+        "category": "Technology",
+        "description": "Completed the Digital Leaders overview e-learning module on frontier information and communication technologies for sustainable development.",
+        "documentUrl": "/certificates/escap-frontier-icts.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "unitar-climate-champion",
+        "title": "Becoming a Climate Champion",
+        "issuer": "UNITAR / UN Climate Change — Youth4Capacity",
+        "date": "13 December 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Climate & sustainability",
+        "description": "Completed the e-course covering climate action, project management, resource mobilization, leadership and communication.",
+        "documentUrl": "/certificates/unitar-climate-champion.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "fao-forestry-modules",
+        "title": "Operationalising the Forestry Modules",
+        "issuer": "Food and Agriculture Organization of the United Nations (FAO)",
+        "date": "04 December 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Environment",
+        "description": "Passed the final test for the FAO e-learning course on operationalising forestry modules.",
+        "documentUrl": "/certificates/fao-forestry-modules.pdf",
+        "verification": "https://elearning.fao.org/admin/tool/certificate/index.php?code=7754889770NT",
+        "visible": true
+      },
+      {
+        "id": "imo-energy-efficient-ships",
+        "title": "An Introduction to Energy Efficient Ship Operation",
+        "issuer": "International Maritime Organization (IMO) / GreenVoyage2050",
+        "date": "19 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Engineering & sustainability",
+        "description": "Completed the introductory online course on energy-efficient ship operations.",
+        "documentUrl": "/certificates/imo-energy-efficient-ship-operation.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "cybersecurity-healthcare",
+        "title": "Cybersecurity in Healthcare",
+        "issuer": "Simplilearn SkillUp",
+        "date": "01 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Cybersecurity",
+        "description": "Completed the SkillUp online course on cybersecurity in healthcare.",
+        "documentUrl": "/certificates/cybersecurity-healthcare.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "blue-ocean-student-entrepreneurs",
+        "title": "Blue Ocean Student Entrepreneurs — Mini-Course",
+        "issuer": "Blue Ocean Student Entrepreneurs Competition",
+        "date": "06 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Entrepreneurship",
+        "description": "Completed a mini-course introducing Blue Ocean Strategy and the development of a competition pitch. Course completion, not a competition award.",
+        "documentUrl": "/certificates/blue-ocean-entrepreneurs.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "hp-life-professional-networking",
+        "title": "Professional Networking for Career Growth",
+        "issuer": "HP LIFE / HP Foundation",
+        "date": "13 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Professional skills",
+        "description": "Completed training in professional networking, personal branding and the use of digital tools to build professional connections.",
+        "documentUrl": "/certificates/hp-life-professional-networking.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "uniathena-engineering-management",
+        "title": "Basics of Engineering Management",
+        "issuer": "UniAthena / Cambridge International Qualifications",
+        "date": "15 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Engineering & management",
+        "description": "Completed the Basics of Engineering Management course offered by UniAthena in partnership with Cambridge International Qualifications. Original PDF link is pending.",
+        "documentUrl": "",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "uniathena-digital-marketing-assessment",
+        "title": "Basics of Digital Marketing — Quiz Result (90%)",
+        "issuer": "UniAthena",
+        "date": "",
+        "year": "2025",
+        "kind": "Assessment result",
+        "category": "Digital marketing",
+        "description": "Scored 90% on the introductory digital marketing quiz. This is an assessment report, not a course completion certificate.",
+        "documentUrl": "/certificates/digital-marketing-quiz-90.pdf",
+        "verification": "",
+        "visible": true
+      }
+    ]
   }
 }
