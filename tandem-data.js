@@ -122,6 +122,28 @@ function academic(d){
  setLink(".pc-head .btn","#achievements","Explore achievements");
  const steps=$(".steps");if(steps&&arr.length)steps.innerHTML=arr.map(v=>'<li class="step"><p class="step-when">'+esc(v.year||v.type||"")+'</p><h3>'+esc(v.title)+'</h3><p>'+esc((v.organization?v.organization+". ":"")+(v.description||""))+'</p></li>').join("");
 }
+
+function certifications(d){
+ const c=d.certifications||{},records=items(c.items).filter(x=>x.visible!==false);
+ const root=$("#certifications");if(!root)return;
+ put(".nt-cert-eyebrow",c.eyebrow||"COURSES / CERTIFICATES",root);
+ put(".nt-cert-intro h2",c.heading||"Courses & certificates",root);
+ put(".nt-cert-intro > p:last-child",c.intro||"Supporting evidence of completed short courses.",root);
+ const list=$(".nt-cert-list",root);if(!list)return;
+ list.innerHTML=records.map(x=>
+  '<article class="nt-cert" data-cert-id="'+esc(x.id||"")+'">'+
+  '<div class="nt-cert-meta"><span class="nt-cert-issuer">'+esc(x.issuer||"Course provider")+'</span><span class="nt-cert-year">'+esc(x.year||"")+'</span></div>'+
+  '<h3>'+esc(x.title||"Course record")+'</h3>'+
+  '<p class="nt-cert-desc">'+esc(x.description||"")+'</p>'+
+  '<div class="nt-cert-footer"><span class="nt-cert-kind">'+esc(x.kind||"Course completion")+
+    (x.date?" · "+esc(x.date):"")+'</span>'+
+  '<div class="nt-cert-links">'+
+   (x.documentUrl?'<a class="nt-cert-link" href="'+esc(uri(x.documentUrl))+'" target="_blank" rel="noopener noreferrer">View original PDF ↗</a>':'<span class="nt-cert-pending">PDF not published</span>')+
+   (x.verification?'<a class="nt-cert-link" href="'+esc(uri(x.verification))+'" target="_blank" rel="noopener noreferrer">Verify source ↗</a>':"")+
+  '</div></div></article>'
+ ).join("");
+}
+
 function projects(d){
  const p=d.projects||{},arr=items(p.items);
  put(".tm-head h2",p.heading||"Selected projects");
@@ -317,7 +339,7 @@ function finish(d){
 }
 function hydrate(d){
  try{
-  navigation(d);hero(d);about(d);achievements(d);principles(d);academic(d);projects(d);
+  navigation(d);hero(d);about(d);achievements(d);principles(d);academic(d);certifications(d);projects(d);
   research(d);gallery(d);interests(d);learning(d);focus(d);faqs(d);journal(d);contact(d);custom(d);footer(d);activateModal();
   for(const [id,visible] of Object.entries(d.tandemContent?.sections||{})){if(visible===false){const sec=document.getElementById(id);if(sec&&sec.tagName==="SECTION")sec.remove()}}
  }catch(err){console.error("Portfolio rendering error",err)}
