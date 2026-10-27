@@ -24,6 +24,7 @@ const modules=[
  ["research","Research","Paper covers, manuscripts and sources"],
  ["creative","Design gallery","Brand work, packaging, posters and graphics"],
  ["academics","Education & activities","Your academic journey"],
+ ["certifications","Courses & certificates","Upload and edit original course evidence"],
  ["menu","Menus & sections","Add, move, hide or delete pages and custom links"],
  ["look","Favicon & appearance","Upload a tab icon, adjust colors and Google search"],
  ["labels","All website text","Edit headings, questions, labels and special sections"],
@@ -291,6 +292,7 @@ function schema(type){
   creative:{...base,title:"New creative work",category:"Graphic design",description:"",link:"",featured:false},
   writing:{...base,title:"New essay or article",category:"Writing",year:String(new Date().getFullYear()),summary:"",body:"",documentUrl:"",featured:false},
   academics:{...base,title:"New activity",organization:"",type:"Academic activity",year:String(new Date().getFullYear()),description:"",link:""},
+  certifications:{id:freshId("certificate"),title:"New course or certificate",issuer:"",date:"",year:String(new Date().getFullYear()),kind:"Course completion",category:"Learning",description:"",documentUrl:"",verification:"",visible:true},
   groups:{id:freshId("group"),title:"New category",eyebrow:"CATEGORY / INDEX",subtitle:"",description:"",logo:"",logoAlt:"",logoSource:"",visible:true},
   menu:{id:freshId("custom"),label:"New menu link",href:"https://",openNewTab:true,visible:true},
   custom:{id:freshId("section"),label:"New custom section",eyebrow:"EXPERIMENT / INDEX",heading:"New section",intro:"Introduce the work here.",body:"",image:"",visible:true,sectionLinks:[],items:[]}
@@ -305,6 +307,7 @@ const groupsByMode={
  creative:{path:"creative.items",title:"Design gallery",singular:"Design record",intro:"Add visual work, covers, supporting images and project links."},
  writing:{path:"writing.items",title:"Writing",singular:"Writing entry",intro:"A visual archive for essays and publications with file links."},
  academics:{path:"academics.items",title:"Education & activities",singular:"Timeline entry",intro:"Study, student leadership and academic milestones with direct links."},
+ certifications:{path:"certifications.items",title:"Courses & certificates",singular:"Course record",intro:"Separate short-course completion and quiz results from competition prizes; upload an original PDF for each document."},
  menu:{path:"navigation",title:"Pages & menu",singular:"Menu link",intro:"Create internal section links (#research) or external links (https://...). Reorder freely; custom sections are below."},
  custom:{path:"customSections",title:"Custom sections",singular:"Section",intro:"Create unlimited new website sections with their own images, cards and links."}
 };
@@ -368,6 +371,7 @@ function dashboard(container){
  [a(data.achievements.cards).length,"Achievements","awards"],
  [a(data.projects.items).length,"Projects","projects"],
  [a(data.research.items).length,"Research","research"],
+ [a(data.certifications?.items).length,"Course certificates","certifications"],
  [a(data.creative.items).length,"Design work","creative"],
  [a(data.navigation).filter(x=>x.visible!==false).length,"Menu links","menu"]
  ];
@@ -398,7 +402,7 @@ function rootSections(container,defs){
 function recordPanel(container){
  const config=groupsByMode[mode];
  editorHeading(container,config.title,config.intro);
- if(["awards","projects","research","creative","academics"].includes(mode)){
+ if(["awards","projects","research","creative","academics","certifications"].includes(mode)){
   const baseKey=mode==="awards"?"achievements":mode;
   const root=make("section","simple-section");
   root.append(make("h3","","Section heading & introductory text"));
