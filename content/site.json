@@ -68,13 +68,6 @@
       "openNewTab": false
     },
     {
-      "id": "achievements",
-      "label": "Achievements",
-      "visible": true,
-      "href": "#achievements",
-      "openNewTab": false
-    },
-    {
       "id": "projects",
       "label": "Projects",
       "visible": true,
@@ -93,6 +86,13 @@
       "label": "Academic path",
       "visible": true,
       "href": "#academics",
+      "openNewTab": false
+    },
+    {
+      "id": "achievements",
+      "label": "Awards",
+      "visible": true,
+      "href": "#achievements",
       "openNewTab": false
     },
     {
@@ -157,9 +157,9 @@
     "sectionLinks": []
   },
   "achievements": {
-    "eyebrow": "02 — RECOGNITION",
-    "heading": "Achievements",
-    "intro": "Academic milestones, competition honours and recognised work.",
+    "eyebrow": "AWARDS & RECOGNITION",
+    "heading": "Awards",
+    "intro": "Competition honours, academic distinctions and commendations, with original certificates and official sources where available.",
     "cards": [
       {
         "id": "icsc-top-2026",
