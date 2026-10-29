@@ -920,10 +920,10 @@
       "academics": true,
       "projects": true,
       "research": true,
-      "creative": false,
+      "creative": true,
       "interests": true,
-      "learning": false,
-      "focus": false,
+      "learning": true,
+      "focus": true,
       "faq": true,
       "contact": true
     }
