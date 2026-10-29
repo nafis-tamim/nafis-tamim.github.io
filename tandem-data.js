@@ -274,7 +274,7 @@ function footer(d){
  put(".ftr-lead .btn span","Get in touch");
  const navs=$$(".ftr-grid nav.ftr-col");
  if(navs[0])navs[0].innerHTML='<p class="ftr-h">Portfolio</p>'+
- [['About',"#about"],['Achievements',"#achievements"],['Research',"#research"],['Projects',"#projects"]].map(x=>'<a class="link" href="'+x[1]+'">'+x[0]+'</a>').join("");
+ [['About',"#about"],['Awards',"#achievements"],['Research',"#research"],['Projects',"#projects"]].map(x=>'<a class="link" href="'+x[1]+'">'+x[0]+'</a>').join("");
  if(navs[1])navs[1].innerHTML='<p class="ftr-h">Explore</p>'+
  [['Academic path',"#academics"],['Certificates',"#certifications"],['Research',"#research"],['Contact',"#contact"]].map(x=>'<a class="link" href="'+x[1]+'">'+x[0]+'</a>').join("");
  const follow=$(".ftr-grid .ftr-col:last-child");
