@@ -153,7 +153,7 @@ function projects(d){
  '<h3 class="person-name">'+esc(x.title)+'</h3><p class="person-role soft">'+esc(x.subtitle||x.category||"Project")+'</p>'+
  '<div class="nt-project-links">'+evidenceLink("Open project",x.url||x.links?.[0]?.url)+'</div></li>').join("");
  put(".tm-foot p","Independent projects and evidence-based case studies, updated as the work develops.");
- setLink(".tm-foot .link","#creative","Browse creative work");
+ setLink(".tm-foot .link","#research","Explore research");
 }
 function research(d){
  const r=d.research||{},entries=items(r.items),first=entries[0];
@@ -227,7 +227,7 @@ function faqs(d){
  const faqlist=$(".fq-list");if(faqlist)faqlist.innerHTML=fa.map(v=>'<details class="fq"><summary><span>'+esc(v[0])+'</span><i class="fq-icon" aria-hidden="true"></i></summary><div class="fq-a"><p>'+esc(v[1])+'</p></div></details>').join("");
 }
 function journal(d){
- put(".jr-head h2",d.tandemContent?.labels?.journalTitle||"The working index");
+ put(".jr-head h2",d.tandemContent?.labels?.journalTitle||"Research");
  setLink(".jr-head .link","#research","Explore research");
  const entries=[
  ...items(d.research?.items).map(x=>({name:x.title,label:x.field||"Research",year:x.year,image:x.image,url:x.documentUrl||x.links?.[0]?.url||"#research"})),
