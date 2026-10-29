@@ -228,7 +228,7 @@ function faqs(d){
 }
 function journal(d){
  put(".jr-head h2",d.tandemContent?.labels?.journalTitle||"Research");
- setLink(".jr-head .link","#research","Explore research");
+ setLink(".jr-head .link","https://www.researchgate.net/profile/Nafis-Tamim-2","ResearchGate profile");
  const entries=[
  ...items(d.research?.items).map(x=>({name:x.title,label:x.field||"Research",year:x.year,image:x.image,url:x.documentUrl||x.links?.[0]?.url||"#research"})),
  ...items(d.achievements?.cards).slice(0,2).map(x=>({name:x.title,label:x.category||"Recognition",year:x.year,image:x.image,url:x.verification||"#achievements"}))
@@ -270,7 +270,7 @@ function footer(d){
  if(navs[0])navs[0].innerHTML='<p class="ftr-h">Portfolio</p>'+
  [['About',"#about"],['Achievements',"#achievements"],['Research',"#research"],['Projects',"#projects"]].map(x=>'<a class="link" href="'+x[1]+'">'+x[0]+'</a>').join("");
  if(navs[1])navs[1].innerHTML='<p class="ftr-h">Explore</p>'+
- [['Academic journey',"#academics"],['Creative work',"#creative"],['Learning process',"#learning"],['Journal',"#journal"]].map(x=>'<a class="link" href="'+x[1]+'">'+x[0]+'</a>').join("");
+ [['Academic path',"#academics"],['Certificates',"#certifications"],['Research',"#research"],['Contact',"#contact"]].map(x=>'<a class="link" href="'+x[1]+'">'+x[0]+'</a>').join("");
  const follow=$(".ftr-grid .ftr-col:last-child");
  if(follow)follow.innerHTML='<p class="ftr-h">Follow</p>'+socialLinks(d).map(x=>evidenceLink(x.label,x.url).replace('class="nt-link"','class="link"')).join("")+'<a class="ibtn ftr-top" href="#hero" aria-label="Back to the top">↑</a>';
  const name=d.identity?.name||"Nafis Tamim";put(".ftr-name",name.split(" ")[0]);const word=$(".ftr-word");if(word)word.style.setProperty("--len",String(name.split(" ")[0].length));
@@ -340,7 +340,7 @@ function finish(d){
 function hydrate(d){
  try{
   navigation(d);hero(d);about(d);achievements(d);principles(d);academic(d);certifications(d);projects(d);
-  research(d);gallery(d);interests(d);learning(d);focus(d);faqs(d);journal(d);contact(d);custom(d);footer(d);activateModal();
+  interests(d);faqs(d);journal(d);contact(d);custom(d);footer(d);activateModal();
   for(const [id,visible] of Object.entries(d.tandemContent?.sections||{})){if(visible===false){const sec=document.getElementById(id);if(sec&&sec.tagName==="SECTION")sec.remove()}}
  }catch(err){console.error("Portfolio rendering error",err)}
  finish(d);
