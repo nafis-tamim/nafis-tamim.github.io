@@ -89,13 +89,6 @@
       "openNewTab": false
     },
     {
-      "id": "creative",
-      "label": "Creative work",
-      "visible": true,
-      "href": "#creative",
-      "openNewTab": false
-    },
-    {
       "id": "academics",
       "label": "Academic path",
       "visible": true,
@@ -298,8 +291,8 @@
         "institution": "International Mother Language Institute (IMLI), Bangladesh",
         "category": "National essay competition",
         "year": "2026",
-        "summary": "National first-place result in the International Mother Language Institute's 2026 essay-writing competition, reported by Nafis Tamim; official results notice linked.",
-        "details": "The International Mother Language Institute published an official essay competition results notice dated 20 August 2026. Nafis Tamim reports finishing first nationally. The government results notice is linked; the individual name and ranking could not yet be independently checked against its attached result sheet.",
+        "summary": "National first-place result in the International Mother Language Institute's 2026 essay-writing competition. Official results notice linked.",
+        "details": "The International Mother Language Institute published an official essay competition results notice dated 20 August 2026. The individual name and ranking have not yet been independently checked against the notice's attached results sheet.",
         "result": "First place nationally (student-reported; individual notice entry unconfirmed)",
         "verified": false,
         "verification": "https://imli.portal.gov.bd/pages/notices/%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%AC%E0%A6%A8%E0%A7%8D%E0%A6%A7-%E0%A6%B0%E0%A6%9A%E0%A6%A8%E0%A6%BE-%E0%A6%AA%E0%A7%8D%E0%A6%B0%E0%A6%A4%E0%A6%BF%E0%A6%AF%E0%A7%8B%E0%A6%97%E0%A6%BF%E0%A6%A4%E0%A6%BE%E0%A6%B0-%E0%A6%AB%E0%A6%B2%E0%A6%BE%E0%A6%AB%E0%A6%B2-eps7ir-6a870fe09ab15f916080e4d4",
@@ -779,7 +772,7 @@
       "switchA": "Disciplines",
       "switchB": "Methods",
       "faqTitle": "Questions & context",
-      "journalTitle": "The working index",
+      "journalTitle": "Research",
       "creativeTitle": "Visual work",
       "principlesTitle": "What I work by",
       "messageLabel": "Your message",
@@ -927,10 +920,10 @@
       "academics": true,
       "projects": true,
       "research": true,
-      "creative": true,
+      "creative": false,
       "interests": true,
-      "learning": true,
-      "focus": true,
+      "learning": false,
+      "focus": false,
       "faq": true,
       "journal": true,
       "contact": true
