@@ -2,33 +2,26 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <meta name="theme-color" content="#111a2b">
-<title>Studio / Nafis Tamim</title>
+<title>Administration | Nafis Tamim</title>
 <link rel="icon" href="/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/studio.css">
+<link rel="stylesheet" href="/studio.css?v=2">
 </head><body>
 <div class="admin-page">
  <header class="admin-top">
-   <div class="admin-brand"><span class="studio-square">NT<span>◥</span></span><div><b>PORTFOLIO STUDIO</b><small>GITHUB CONTENT MANAGER</small></div></div>
-   <div class="admin-head-right"><a href="/" target="_blank" rel="noopener noreferrer" class="view-site">OPEN WEBSITE ↗</a><button id="disconnect" type="button" class="logout" hidden>DISCONNECT</button></div>
+   <div class="admin-brand"><span class="studio-square" aria-hidden="true">N.</span><div><b>NAFIS TAMIM</b><small>PORTFOLIO ADMINISTRATION</small></div></div>
+   <div class="admin-head-right"><a href="/" class="view-site">VIEW PORTFOLIO ↗</a><button id="disconnect" type="button" class="logout" hidden>DISCONNECT</button></div>
  </header>
- <section id="login" class="login-layout">
-   <div class="login-graphic">
-     <div class="index-meta">V9 — STUDENT PORTFOLIO / EDITOR</div>
-     <h1>Make the site<br><em>yours.</em></h1>
-     <p>Edit any section, add photos, reorder menus and share direct links to your research or certificates. Publish changes in one place.</p>
-     <div class="editor-motif" aria-hidden="true"><span>01 / IDEAS</span><span>02 / EVIDENCE</span><span>03 / WORK</span></div>
-   </div>
-   <div class="auth-panel">
-     <span class="small-cap">CONNECT TO GITHUB / 01</span>
-     <h2>Sign in to your editor.</h2>
-     <p>Use a <strong>fine-grained GitHub Personal Access Token</strong> for this repository with <strong>Contents: Read and write</strong>. The upload button becomes available after sign-in, and GitHub checks write access during actual upload.</p>
-     <label class="form-field"><span>GITHUB TOKEN</span><input id="token" type="password" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="github_pat_..." /></label>
-     <button id="connect" type="button" class="main-action">CONNECT & CHECK PERMISSIONS <span>↗</span></button>
-     <div id="auth-message" role="status"></div>
-     <div class="help-permission"><strong>UPLOAD ERROR? CHECK ACCESS</strong><p><b>Fine-grained token → Repository access:</b> Only selected repositories → <code>nafis-tamim.github.io</code>. <b>Permissions → Contents:</b> Read and write. If a token is restricted to read-only, the editor can open content but cannot upload or publish.</p><a href="https://github.com/settings/personal-access-tokens" target="_blank" rel="noopener noreferrer">OPEN GITHUB TOKEN SETTINGS ↗</a></div>
+ <section id="login" class="login-layout login-simple">
+   <div class="auth-panel auth-panel-clean">
+     <span class="small-cap">PRIVATE WORKSPACE</span>
+     <h1>Administrator sign in</h1>
+     <p>Authorized access only.</p>
+     <label class="form-field"><span>ACCESS TOKEN</span><input id="token" type="password" autocomplete="off" spellcheck="false" autocapitalize="off" placeholder="Enter access token" aria-label="Access token" /></label>
+     <button id="connect" type="button" class="main-action">SIGN IN <span aria-hidden="true">↗</span></button>
+     <div id="auth-message" role="status" aria-live="polite"></div>
    </div>
  </section>
  <div id="workspace" hidden>
@@ -41,5 +34,5 @@
    <main class="editor-wrap" id="editor-main"><div id="editor"></div></main>
   </div>
  </div>
-</div><script src="/studio.js?v=13" defer></script>
+</div><script src="/studio.js?v=14" defer></script>
 </body></html>

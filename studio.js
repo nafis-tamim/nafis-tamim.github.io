@@ -579,23 +579,30 @@ async function publish(){
  finally{busy=false;render()}
 }
 async function login(){
- const input=$("#token"),auth=$("#auth-message");auth.textContent="";
+ const input=$("#token"),message=$("#auth-message"),button=$("#connect");
+ message.textContent="";
  token=input.value.trim();
- if(!token){auth.textContent="Paste a GitHub token first.";return}
- const b=$("#connect");b.disabled=true;b.textContent="CHECKING ACCOUNT…";
+ if(!token){message.textContent="Enter an access token.";return}
+ button.disabled=true;button.textContent="VERIFYING…";
  try{
+  // Public repository content alone is not proof of authorization.
+  // A valid token must belong to the GitHub account that owns this portfolio.
+  const account=await request("GET","https://api.github.com/user");
+  if(String(account?.login||"").toLowerCase()!=="nafis-tamim")throw Error("Unauthorized account");
   const file=await request("GET","/contents/"+CONTENT);
   data=JSON.parse(decode(file.content));sha=file.sha;
-  /* Git Blobs preflight isn't the upload route and may incorrectly block
-     file uploads. Real file PUTs enforce GitHub Contents: write access. */
+  // GitHub enforces actual repository write permission for uploads and publishing.
   writeOK=true;
   input.value="";
-  $("#login").hidden=true;$("#workspace").hidden=false;$("#disconnect").hidden=false;
+  $("#login").hidden=true;
+  $("#workspace").hidden=false;
+  $("#disconnect").hidden=false;
   cleanNow();render();
-  notice("Connected. You can choose photos, PDFs and favicons. GitHub will confirm your token has Contents: Read and write on the actual Upload or Publish request. A 403 requires fixing token permissions.", "success");
- }catch(e){
-  auth.textContent=errorMessage(e);token="";data=null;
- }finally{b.disabled=false;b.textContent="CONNECT & CHECK PERMISSIONS ↗"}
+  notice("Signed in.","success");
+ }catch(err){
+  message.textContent="Access denied. Verify your access token and try again.";
+  token="";data=null;sha="";writeOK=false;
+ }finally{button.disabled=false;button.innerHTML='SIGN IN <span aria-hidden="true">↗</span>'}
 }
 function logout(){
  if(dirty&&!confirm("Discard unpublished changes and disconnect?"))return;

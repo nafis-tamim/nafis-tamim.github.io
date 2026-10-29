@@ -197,3 +197,39 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .media-gallery-editor{border:1px solid #BFD1F1;background:#F7F9FF;border-radius:7px}
 .pdf-thumb{width:92px;height:70px;display:grid;place-items:center;background:#1D4ED8;color:#F8FAFC;font:15px var(--mono);border-radius:6px}
 @media(max-width:900px){.media-order-row{grid-template-columns:80px 1fr}.media-order-row>img{width:80px;height:64px}.media-order-actions{grid-column:1/-1}}
+
+/* Minimal private-access screen; editor layout remains unchanged. */
+.login-layout.login-simple{
+ display:flex;align-items:center;justify-content:center;
+ min-height:calc(100vh - 76px);max-width:none;
+ padding:clamp(32px,7vw,92px) 20px;
+ background:radial-gradient(ellipse at 50% 15%,#f5f7fd 0,#edf0f5 66%,#e9edf4 100%);
+}
+.login-simple .auth-panel-clean{
+ width:min(100%,460px);max-width:460px;align-self:auto;
+ padding:clamp(32px,5vw,56px);
+ background:#fff;border:1px solid #e1e6ed;border-radius:14px;
+ box-shadow:0 24px 85px rgba(18,33,59,.055);
+}
+.login-simple .auth-panel-clean .small-cap{color:#697b98;letter-spacing:.13em;font-size:10px}
+.login-simple .auth-panel-clean h1{
+ font:600 clamp(28px,3vw,38px)/1.12 var(--sans);
+ letter-spacing:-.055em;margin:25px 0 10px;color:#172234;
+}
+.login-simple .auth-panel-clean>p{margin:0 0 38px;color:#748094;font-size:14px;line-height:1.55}
+.login-simple .auth-panel-clean .form-field{margin-bottom:17px}
+.login-simple .auth-panel-clean .form-field>span{font-size:10px;letter-spacing:.105em;color:#64748b}
+.login-simple .auth-panel-clean input{height:50px;background:#fafbfe;border-color:#dbe1e9;border-radius:6px}
+.login-simple .auth-panel-clean input::placeholder{color:#9ba6b5}
+.login-simple .auth-panel-clean .main-action{min-height:51px;width:100%;padding-inline:19px;font:600 12px var(--sans);letter-spacing:.075em;border-radius:6px}
+.login-simple #auth-message:empty{display:none}
+.login-simple #auth-message{margin:16px 0 0;font:13px/1.5 var(--sans);color:#ad3434}
+@media(max-width:600px){
+ .admin-top{height:70px;padding:0 18px}
+ .admin-brand{gap:10px}
+ .admin-brand small{font-size:8px}
+ .admin-head-right{gap:10px}
+ .view-site{font-size:9px}
+ .login-layout.login-simple{min-height:calc(100svh - 70px);padding:24px 14px}
+ .login-simple .auth-panel-clean{padding:35px 26px}
+}
