@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /admin.html
 Disallow: /admin-studio-nt26.html
 Sitemap: https://nafis-tamim.github.io/sitemap.xml

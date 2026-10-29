@@ -447,7 +447,7 @@ function labelsPanel(container){
  editorHeading(container,"All little words & labels","Change even small text such as link headings, chips, captions and featured intro.");
  const box=section(container,"Website microcopy","Text here is displayed throughout the portfolio.");
  editorFields(box,data.ui||{});
- if(data.tandemContent){const editor=section(container,"Original animated template text","Edit Interests, Learning, Focus, FAQs and labels without writing code.");editorFields(editor,data.tandemContent);}
+ if(data.portfolioContent){const editor=section(container,"Portfolio section text","Edit section labels, FAQs and supporting text without changing source code.");editorFields(editor,data.portfolioContent);}
  const path=section(container,"Academic section introduction","Other headings and labels also live in Home, Achievements, Projects, Research, Design, Writing and Education.");
  path.append(make("div","help-box","Use the editors above to update all content. Your changes go live only after you press Publish."));
 }
@@ -553,7 +553,7 @@ function download(){
 async function syncSearchMeta(){
  const file=await request("GET","/contents/index.html");
  let html=decode(file.content);
- const fields={"site-title":data.seo?.title||data.identity?.name,"site-description":data.seo?.description||"","site-keywords":data.seo?.keywords||"","og-title":data.seo?.title||"","og-description":data.seo?.description||"","og-image":data.seo?.ogImage||data.identity?.portrait||"","site-favicon":data.seo?.favicon||"/favicon.svg","canonical":data.seo?.canonical||"https://nafis-tamim.github.io/"};
+ const fields={"site-title":data.seo?.title||data.identity?.name,"site-description":data.seo?.description||"","site-keywords":data.seo?.keywords||"","og-title":data.seo?.title||"","og-description":data.seo?.description||"","og-image":data.seo?.ogImage||data.identity?.portrait||"","site-favicon":data.seo?.favicon||"/favicon.png","canonical":data.seo?.canonical||"https://nafis-tamim.github.io/"};
  const encoded=s=>s.replaceAll("&","&amp;").replaceAll('"',"&quot;").replaceAll("<","&lt;");
  const original=html;
  html=html.replace(/<title data-sync="site-title">[\s\S]*?<\/title>/i,'<title data-sync="site-title">'+encoded(fields["site-title"])+'</title>');

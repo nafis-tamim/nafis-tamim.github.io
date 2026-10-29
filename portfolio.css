@@ -1,4 +1,4 @@
-/* Small additions only. ALL original Tandem CSS and GSAP remain unchanged. */
+/* Portfolio layout refinements and responsive components. */
 :root{--nt-shadow:0 28px 90px rgba(0,0,0,.29)}
 html{scroll-padding-top:var(--hdr)}
 body.nt-loaded{visibility:visible}

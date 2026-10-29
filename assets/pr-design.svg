@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" role="img" aria-label="DESIGN STUDIES illustration">
-<defs><linearGradient id="gr" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#342738"/><stop offset="1" stop-color="#070A14"/></linearGradient><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" stroke="#fff" stroke-opacity=".055" fill="none"/></pattern></defs>
-<rect width="1200" height="700" fill="url(#gr)"/><rect width="1200" height="700" fill="url(#grid)"/>
-<g><path d="M360 540L645 135L953 540" fill="none" stroke="#ECC7A0" stroke-width="65" stroke-linecap="square"/><circle cx="750" cy="300" r="240" stroke="#eaf3ff" stroke-width="2" fill="none" opacity=".33"/></g><rect x="55" y="51" width="44" height="44" rx="7" stroke="#eaf3ff" stroke-opacity=".55" fill="none"/>
-<text x="77" y="81" font-family="Arial,sans-serif" font-size="18" text-anchor="middle" fill="#eaf3ff" font-weight="700">NT</text>
-<text x="55" y="594" font-family="Arial,sans-serif" font-weight="800" font-size="62" letter-spacing="-1.4" fill="#eaf3ff">DESIGN STUDIES</text>
-<text x="58" y="640" font-family="Arial,sans-serif" font-size="17" letter-spacing="3" fill="#fff" opacity=".67">PACKAGING / PRODUCTS / PRINT</text>
-<text x="1110" y="80" font-family="Arial,monospace" font-size="20" text-anchor="end" fill="#eaf3ff" opacity=".9">OBJ.02</text>
-</svg>

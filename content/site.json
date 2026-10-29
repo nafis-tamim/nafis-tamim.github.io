@@ -405,11 +405,11 @@
         "category": "Website",
         "year": "2026",
         "status": "Exploration",
-        "summary": "A publicly accessible repository exploring ideas in AI-assisted digital products.",
+        "summary": "An e-commerce website project focused on storefront presentation and online browsing.",
         "challenge": "How do you translate a broad AI idea into something usable and thoughtfully scoped?",
         "process": "Exploring product questions, experiments, and iterative interface decisions.",
         "outcome": "Public project repository; claims of deployment or user impact are not yet made.",
-        "tools": "AI concepts, product thinking",
+        "tools": "Website design and digital presentation",
         "image": "/uploads/1792436396431-dba69c22-WhatsApp-Image-2025-10-09-at-17-50-38_327265.jpg",
         "gallery": [],
         "url": "https://alifashion.github.io/",
@@ -467,7 +467,7 @@
         "process": "Evidence-led structure, responsive design, accessible interaction and a content administration workflow.",
         "outcome": "Public website and inspectable repository.",
         "tools": "HTML, CSS, JavaScript, GitHub Pages",
-        "image": "/uploads/1792436313033-a97806cd-397985c4-5573-43e7-b895-81b3602e15d0.png",
+        "image": "/assets/pr-web.svg",
         "gallery": [],
         "url": "https://nafis-tamim.github.io",
         "verification": "",
@@ -556,46 +556,7 @@
     "eyebrow": "05 — BEYOND THE CODE",
     "heading": "Visual experiments",
     "intro": "Brand systems, product concepts and design investigations.",
-    "items": [
-      {
-        "id": "creative-1",
-        "title": "Identity & brand systems",
-        "category": "Visual communication",
-        "description": "Developing visual languages that balance clear meaning with distinctive aesthetics.",
-        "image": "/uploads/1792435716980-1abf3586-226685af-e8a7-4f64-923a-5f89dda1d852.png",
-        "gallery": [],
-        "link": "https://github.com/nafis-tamim/GRAPHLAIR",
-        "featured": true,
-        "links": [
-          {
-            "label": "See work",
-            "url": "https://github.com/nafis-tamim/GRAPHLAIR"
-          }
-        ]
-      },
-      {
-        "id": "creative-2",
-        "title": "Packaging & product concepts",
-        "category": "Creative practice",
-        "description": "Exploring patterns, print-ready thinking and compelling visual compositions for product presentation.",
-        "image": "/uploads/1792435765933-c577005e-From-Digital-Design-to-Reality.png",
-        "gallery": [],
-        "link": "",
-        "featured": true,
-        "links": []
-      },
-      {
-        "id": "creative-3",
-        "title": "Posters & editorial graphics",
-        "category": "Graphic design",
-        "description": "Working with typography, visual hierarchy and storytelling through design.",
-        "image": "/uploads/1792435794796-cad08c85-Discipline-Creates-Freedom_-Abstract-Blue-Ca.png",
-        "gallery": [],
-        "link": "",
-        "featured": false,
-        "links": []
-      }
-    ],
+    "items": [],
     "sectionLinks": []
   },
   "writing": {
@@ -762,7 +723,157 @@
     "scrollLabButton": "SCROLL TO EXPERIMENT",
     "orbitalCaption": "ORBITAL INDEX"
   },
-  "tandemContent": {
+  "certifications": {
+    "eyebrow": "COURSES / 2025—2026",
+    "heading": "Courses & certificates",
+    "intro": "Selected short courses and learning assessments, with supporting documents. These are completion records—not academic degrees or competition prizes.",
+    "items": [
+      {
+        "id": "unesco-open-hardware-2025",
+        "title": "Cookbook for Open Hardware Sensors for Water Resources Management",
+        "issuer": "UNESCO — International Hydrological Programme",
+        "date": "03 December 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Science & environment",
+        "description": "Completed a course of study on open hardware sensors for water resources management, offered through UNESCO.",
+        "documentUrl": "/certificates/unesco-open-hardware-water.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "iaea-critical-appraisal",
+        "title": "Applied Sciences of Oncology — Critical Appraisal",
+        "issuer": "IAEA Learning Management System",
+        "date": "",
+        "year": "2025",
+        "kind": "Module completion",
+        "category": "Scientific literacy",
+        "description": "Completed the Critical Appraisal online module in the Applied Sciences of Oncology programme. An educational module, not a professional medical qualification.",
+        "documentUrl": "/certificates/iaea-critical-appraisal.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "unescap-frontier-icts",
+        "title": "Frontier ICTs for Sustainable Development — Overview",
+        "issuer": "UN ESCAP / APCICT",
+        "date": "10 January 2026",
+        "year": "2026",
+        "kind": "Course completion",
+        "category": "Technology",
+        "description": "Completed the Digital Leaders overview e-learning module on frontier information and communication technologies for sustainable development.",
+        "documentUrl": "/certificates/escap-frontier-icts.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "unitar-climate-champion",
+        "title": "Becoming a Climate Champion",
+        "issuer": "UNITAR / UN Climate Change — Youth4Capacity",
+        "date": "13 December 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Climate & sustainability",
+        "description": "Completed the e-course covering climate action, project management, resource mobilization, leadership and communication.",
+        "documentUrl": "/certificates/unitar-climate-champion.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "fao-forestry-modules",
+        "title": "Operationalising the Forestry Modules",
+        "issuer": "Food and Agriculture Organization of the United Nations (FAO)",
+        "date": "04 December 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Environment",
+        "description": "Passed the final test for the FAO e-learning course on operationalising forestry modules.",
+        "documentUrl": "/certificates/fao-forestry-modules.pdf",
+        "verification": "https://elearning.fao.org/admin/tool/certificate/index.php?code=7754889770NT",
+        "visible": true
+      },
+      {
+        "id": "imo-energy-efficient-ships",
+        "title": "An Introduction to Energy Efficient Ship Operation",
+        "issuer": "International Maritime Organization (IMO) / GreenVoyage2050",
+        "date": "19 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Engineering & sustainability",
+        "description": "Completed the introductory online course on energy-efficient ship operations.",
+        "documentUrl": "/certificates/imo-energy-efficient-ship-operation.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "cybersecurity-healthcare",
+        "title": "Cybersecurity in Healthcare",
+        "issuer": "Simplilearn SkillUp",
+        "date": "01 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Cybersecurity",
+        "description": "Completed the SkillUp online course on cybersecurity in healthcare.",
+        "documentUrl": "/certificates/cybersecurity-healthcare.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "blue-ocean-student-entrepreneurs",
+        "title": "Blue Ocean Student Entrepreneurs — Mini-Course",
+        "issuer": "Blue Ocean Student Entrepreneurs Competition",
+        "date": "06 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Entrepreneurship",
+        "description": "Completed a mini-course introducing Blue Ocean Strategy and the development of a competition pitch. Course completion, not a competition award.",
+        "documentUrl": "/certificates/blue-ocean-entrepreneurs.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "hp-life-professional-networking",
+        "title": "Professional Networking for Career Growth",
+        "issuer": "HP LIFE / HP Foundation",
+        "date": "13 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Professional skills",
+        "description": "Completed training in professional networking, personal branding and the use of digital tools to build professional connections.",
+        "documentUrl": "/certificates/hp-life-professional-networking.pdf",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "uniathena-engineering-management",
+        "title": "Basics of Engineering Management",
+        "issuer": "UniAthena / Cambridge International Qualifications",
+        "date": "15 November 2025",
+        "year": "2025",
+        "kind": "Course completion",
+        "category": "Engineering & management",
+        "description": "Completed the Basics of Engineering Management course offered by UniAthena in partnership with Cambridge International Qualifications. Original PDF link is pending.",
+        "documentUrl": "",
+        "verification": "",
+        "visible": true
+      },
+      {
+        "id": "uniathena-digital-marketing-assessment",
+        "title": "Basics of Digital Marketing — Quiz Result (90%)",
+        "issuer": "UniAthena",
+        "date": "",
+        "year": "2025",
+        "kind": "Assessment result",
+        "category": "Digital marketing",
+        "description": "Scored 90% on the introductory digital marketing quiz. This is an assessment report, not a course completion certificate.",
+        "documentUrl": "/certificates/digital-marketing-quiz-90.pdf",
+        "verification": "",
+        "visible": true
+      }
+    ]
+  },
+  "portfolioContent": {
     "labels": {
       "interestsTitle": "Fields of inquiry",
       "interestsIntro": "Where academic interests meet creative practice.",
@@ -920,162 +1031,12 @@
       "academics": true,
       "projects": true,
       "research": true,
-      "creative": true,
+      "creative": false,
       "interests": true,
-      "learning": true,
-      "focus": true,
+      "learning": false,
+      "focus": false,
       "faq": true,
       "contact": true
     }
-  },
-  "certifications": {
-    "eyebrow": "COURSES / 2025—2026",
-    "heading": "Courses & certificates",
-    "intro": "Selected short courses and learning assessments, with supporting documents. These are completion records—not academic degrees or competition prizes.",
-    "items": [
-      {
-        "id": "unesco-open-hardware-2025",
-        "title": "Cookbook for Open Hardware Sensors for Water Resources Management",
-        "issuer": "UNESCO — International Hydrological Programme",
-        "date": "03 December 2025",
-        "year": "2025",
-        "kind": "Course completion",
-        "category": "Science & environment",
-        "description": "Completed a course of study on open hardware sensors for water resources management, offered through UNESCO.",
-        "documentUrl": "/certificates/unesco-open-hardware-water.pdf",
-        "verification": "",
-        "visible": true
-      },
-      {
-        "id": "iaea-critical-appraisal",
-        "title": "Applied Sciences of Oncology — Critical Appraisal",
-        "issuer": "IAEA Learning Management System",
-        "date": "",
-        "year": "2025",
-        "kind": "Module completion",
-        "category": "Scientific literacy",
-        "description": "Completed the Critical Appraisal online module in the Applied Sciences of Oncology programme. An educational module, not a professional medical qualification.",
-        "documentUrl": "/certificates/iaea-critical-appraisal.pdf",
-        "verification": "",
-        "visible": true
-      },
-      {
-        "id": "unescap-frontier-icts",
-        "title": "Frontier ICTs for Sustainable Development — Overview",
-        "issuer": "UN ESCAP / APCICT",
-        "date": "10 January 2026",
-        "year": "2026",
-        "kind": "Course completion",
-        "category": "Technology",
-        "description": "Completed the Digital Leaders overview e-learning module on frontier information and communication technologies for sustainable development.",
-        "documentUrl": "/certificates/escap-frontier-icts.pdf",
-        "verification": "",
-        "visible": true
-      },
-      {
-        "id": "unitar-climate-champion",
-        "title": "Becoming a Climate Champion",
-        "issuer": "UNITAR / UN Climate Change — Youth4Capacity",
-        "date": "13 December 2025",
-        "year": "2025",
-        "kind": "Course completion",
-        "category": "Climate & sustainability",
-        "description": "Completed the e-course covering climate action, project management, resource mobilization, leadership and communication.",
-        "documentUrl": "/certificates/unitar-climate-champion.pdf",
-        "verification": "",
-        "visible": true
-      },
-      {
-        "id": "fao-forestry-modules",
-        "title": "Operationalising the Forestry Modules",
-        "issuer": "Food and Agriculture Organization of the United Nations (FAO)",
-        "date": "04 December 2025",
-        "year": "2025",
-        "kind": "Course completion",
-        "category": "Environment",
-        "description": "Passed the final test for the FAO e-learning course on operationalising forestry modules.",
-        "documentUrl": "/certificates/fao-forestry-modules.pdf",
-        "verification": "https://elearning.fao.org/admin/tool/certificate/index.php?code=7754889770NT",
-        "visible": true
-      },
-      {
-        "id": "imo-energy-efficient-ships",
-        "title": "An Introduction to Energy Efficient Ship Operation",
-        "issuer": "International Maritime Organization (IMO) / GreenVoyage2050",
-        "date": "19 November 2025",
-        "year": "2025",
-        "kind": "Course completion",
-        "category": "Engineering & sustainability",
-        "description": "Completed the introductory online course on energy-efficient ship operations.",
-        "documentUrl": "/certificates/imo-energy-efficient-ship-operation.pdf",
-        "verification": "",
-        "visible": true
-      },
-      {
-        "id": "cybersecurity-healthcare",
-        "title": "Cybersecurity in Healthcare",
-        "issuer": "Simplilearn SkillUp",
-        "date": "01 November 2025",
-        "year": "2025",
-        "kind": "Course completion",
-        "category": "Cybersecurity",
-        "description": "Completed the SkillUp online course on cybersecurity in healthcare.",
-        "documentUrl": "/certificates/cybersecurity-healthcare.pdf",
-        "verification": "",
-        "visible": true
-      },
-      {
-        "id": "blue-ocean-student-entrepreneurs",
-        "title": "Blue Ocean Student Entrepreneurs — Mini-Course",
-        "issuer": "Blue Ocean Student Entrepreneurs Competition",
-        "date": "06 November 2025",
-        "year": "2025",
-        "kind": "Course completion",
-        "category": "Entrepreneurship",
-        "description": "Completed a mini-course introducing Blue Ocean Strategy and the development of a competition pitch. Course completion, not a competition award.",
-        "documentUrl": "/certificates/blue-ocean-entrepreneurs.pdf",
-        "verification": "",
-        "visible": true
-      },
-      {
-        "id": "hp-life-professional-networking",
-        "title": "Professional Networking for Career Growth",
-        "issuer": "HP LIFE / HP Foundation",
-        "date": "13 November 2025",
-        "year": "2025",
-        "kind": "Course completion",
-        "category": "Professional skills",
-        "description": "Completed training in professional networking, personal branding and the use of digital tools to build professional connections.",
-        "documentUrl": "/certificates/hp-life-professional-networking.pdf",
-        "verification": "",
-        "visible": true
-      },
-      {
-        "id": "uniathena-engineering-management",
-        "title": "Basics of Engineering Management",
-        "issuer": "UniAthena / Cambridge International Qualifications",
-        "date": "15 November 2025",
-        "year": "2025",
-        "kind": "Course completion",
-        "category": "Engineering & management",
-        "description": "Completed the Basics of Engineering Management course offered by UniAthena in partnership with Cambridge International Qualifications. Original PDF link is pending.",
-        "documentUrl": "",
-        "verification": "",
-        "visible": true
-      },
-      {
-        "id": "uniathena-digital-marketing-assessment",
-        "title": "Basics of Digital Marketing — Quiz Result (90%)",
-        "issuer": "UniAthena",
-        "date": "",
-        "year": "2025",
-        "kind": "Assessment result",
-        "category": "Digital marketing",
-        "description": "Scored 90% on the introductory digital marketing quiz. This is an assessment report, not a course completion certificate.",
-        "documentUrl": "/certificates/digital-marketing-quiz-90.pdf",
-        "verification": "",
-        "visible": true
-      }
-    ]
   }
 }
