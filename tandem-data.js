@@ -13,7 +13,7 @@ const setImg=(selector,src,alt,base=document)=>{const e=$(selector,base);if(e&&s
 const setLink=(selector,url,label,base=document)=>{const a=$(selector,base);if(a){a.href=uri(url);if(label!==undefined){const span=$("span",a);if(span)span.textContent=label;else a.textContent=label}if(uri(url).startsWith("http")){a.target="_blank";a.rel="noopener noreferrer"}}};
 const get=(x,k,defaultValue)=>x&&x[k]!=null?x[k]:defaultValue;
 const anchored={
- hero:"hero",top:"hero",about:"about",achievements:"achievements",principles:"principles",
+ hero:"hero",top:"hero",about:"about",achievements:"achievements",awards:"achievements",principles:"principles",
  academics:"academics",journey:"academics",projects:"projects",research:"research",
  creative:"creative",design:"creative",interests:"interests",learning:"learning",
  focus:"focus",faq:"faq",journal:"journal",contact:"contact"
@@ -77,7 +77,7 @@ const categoryLogo=g=>{
 };
 function achievements(d){
  const a=d.achievements||{}; awardData=items(a.cards);
- put(".services .svc-head h2",a.heading||"Achievements");
+ put(".services .svc-head h2",a.heading||"Awards");
  put(".services .svc-head p",a.intro||"Certificates, award evidence and official results — kept in context.");
  const section=$("#achievements"),list=$(".svc-list",section);if(!list)return;
  const groups=items(a.groups);
@@ -103,7 +103,15 @@ function achievements(d){
   return '<li class="svc" data-award-item="'+i+'"><figure class="svc-media frame">'+image(w.image||"/assets/aw-icsc.svg",w.imageAlt||"Illustration representing "+w.title)+'</figure>'+
   category+'<h3>'+esc(w.title)+'</h3><p class="svc-text">'+esc(w.summary||"")+'</p>'+
   '<ul class="svc-points"><li>'+esc(w.year||"")+'</li><li>'+esc(group)+'</li></ul>'+
-  '<div class="nt-award-action"><button class="btn nt-view" data-award="'+i+'" type="button"><span>'+esc(d.ui?.achievementDetails||"View more")+'</span><span aria-hidden="true">↗</span></button></div></li>';
+  '<div class="nt-award-action"><button class="btn nt-view" data-award="'+i+'" type="button"><span>'+esc(d.ui?.achievementDetails||"View more")+'</span><span aria-hidden="true">↗</span></button>'+
+  (()=>{
+   // Use only record-specific evidence URLs, never substitute an unrelated official website.
+   const links=items(w.supportingLinks).filter(x=>uri(x.url)!=="#");
+   const direct=links[0]?.url||w.verification||w.documentUrl||
+     items(w.gallery).map(x=>typeof x==="string"?x:x?.url).find(x=>uri(x)!=="#")||"";
+   const label=links[0]?.label||(w.verification?"Official source":w.documentUrl?"Certificate PDF":"Certificate / evidence");
+   return uri(direct)==="#"?"":evidenceLink(label,direct).replace('class="nt-link"','class="nt-link nt-award-direct"');
+  })()+'</div></li>';
  }).join("");
  // Keep the text placeholder visible if an uploaded/external category logo cannot be loaded.
  $$(".nt-category-mark img",section).forEach(img=>{
@@ -229,10 +237,8 @@ function faqs(d){
 function journal(d){
  put(".jr-head h2",d.tandemContent?.labels?.journalTitle||"Research");
  setLink(".jr-head .link","https://www.researchgate.net/profile/Nafis-Tamim-2","ResearchGate profile");
- const entries=[
- ...items(d.research?.items).map(x=>({name:x.title,label:x.field||"Research",year:x.year,image:x.image,url:x.documentUrl||x.links?.[0]?.url||"#research"})),
- ...items(d.achievements?.cards).slice(0,2).map(x=>({name:x.title,label:x.category||"Recognition",year:x.year,image:x.image,url:x.verification||"#achievements"}))
- ].slice(0,4);
+ // Research contains research records only. Awards live in their own section.
+ const entries=items(d.research?.items).map(x=>({name:x.title,label:x.field||"Research",year:x.year,image:x.image,url:x.documentUrl||x.links?.[0]?.url||"#research"}));
  const list=$(".jr-list");
  if(list)list.innerHTML=entries.map(x=>'<li class="post"><a class="post-link" href="'+esc(uri(x.url))+'"'+(uri(x.url).startsWith("http")?' target="_blank" rel="noopener noreferrer"':'')+'><p class="post-meta soft">'+esc(x.year||"")+'<br>'+esc(x.label||"")+'</p><h3 class="post-title">'+esc(x.name)+'</h3><figure class="post-photo frame" data-wipe>'+image(x.image||"/assets/pr-web.svg",x.name)+'</figure></a></li>').join("");
 }
