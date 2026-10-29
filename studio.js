@@ -18,8 +18,8 @@ const freshId=prefix=>prefix+"-"+uuid().replace(/[^a-z0-9-]/gi,"").slice(0,14);
 const modules=[
  ["start","Dashboard","See your website at a glance"],
  ["home","Home & photo","Change your picture, biography and landing page"],
- ["awards","Achievements","Add awards, certificate PDFs, photos and links"],
- ["groups","Achievement categories","Government, international and custom logos"],
+ ["awards","Awards","Add awards, honours, evidence photos and official links"],
+ ["groups","Award categories","Government, international and custom logos"],
  ["projects","Projects","All categories, images, work and PDF links"],
  ["research","Research","Paper covers, manuscripts and sources"],
  ["creative","Design gallery","Brand work, packaging, posters and graphics"],
@@ -286,7 +286,7 @@ function moveItem(list,index,delta){
 function schema(type){
  const base={id:freshId(type),image:"/assets/pr-web.svg",imageAlt:"Editorial placeholder image. Replace with a photograph.",gallery:[],links:[]};
  const map={
-  awards:{id:freshId("achievement"),title:"New achievement",groupId:"international",institution:"",category:"Recognition",year:String(new Date().getFullYear()),summary:"",details:"",result:"",image:"/assets/aw-notes.svg",imageAlt:"Editorial cover illustration",gallery:[],supportingLinks:[],documentUrl:"",featured:false},
+  awards:{id:freshId("achievement"),title:"New award",groupId:"international",institution:"",category:"Award",year:String(new Date().getFullYear()),summary:"",details:"",result:"",verification:"",image:"/assets/aw-notes.svg",imageAlt:"Editorial cover illustration",gallery:[],supportingLinks:[],documentUrl:"",featured:false},
   projects:{...base,title:"New project",subtitle:"",category:"Other",year:String(new Date().getFullYear()),status:"In progress",summary:"",challenge:"",process:"",outcome:"",tools:"",pdf:"",url:"",verification:"",featured:false,tags:[]},
   research:{...base,image:"/assets/re-truthlens.svg",title:"New research",field:"Independent research",year:String(new Date().getFullYear()),status:"Draft",abstract:"",question:"",method:"",result:"",publication:"",paperId:"",documentUrl:"",pdf:"",verification:"",featured:false,tags:[]},
   creative:{...base,title:"New creative work",category:"Graphic design",description:"",link:"",featured:false},
@@ -300,7 +300,7 @@ function schema(type){
  return clone(map[type]||base);
 }
 const groupsByMode={
- awards:{path:"achievements.cards",title:"Achievements",singular:"Achievement",intro:"Each record can have a photo, certificates, direct evidence links and a chosen award category."},
+ awards:{path:"achievements.cards",title:"Awards & recognition",singular:"Award",intro:"Add as many awards or documented distinctions as you need. Edit the title, result, official website, certificate PDF, images, category and supporting links. Each award has its own View more panel and a direct evidence link when available."},
  groups:{path:"achievements.groups",title:"Award categories & logos",singular:"Award category",intro:"Upload your own government or international category logo, change the category name and move groups."},
  projects:{path:"projects.items",title:"Projects",singular:"Project",intro:"Create case studies in any discipline. Every project displays its image, gallery and direct PDF/source buttons."},
  research:{path:"research.items",title:"Research",singular:"Research entry",intro:"Add a cover, abstract, publication status, research PDF and supporting sources."},
@@ -355,7 +355,7 @@ function collection(parent,type){
   list.splice(position,1);chosen[key]=Math.max(0,position-1);dirtyNow();render();
  },"danger-action"));
  form.append(actions);
- if(type==="awards")form.append(make("div","record-card-intro","Choose a category, upload its cover image and add supporting links. Visitors click View more to see your images, certificate PDFs, evidence and supporting links."));
+ if(type==="awards")form.append(make("div","record-card-intro","Choose an award category, enter the official source in Verification, upload a cover or certificate PDF, and add Supporting Links. Visitors can open the official link directly or click View more for all evidence."));
  if(type==="menu")form.append(make("div","record-card-intro","For an existing section, use a link like #research or #projects. For custom external navigation use a full https:// URL and enable Open new tab."));
  editorFields(form,item);
  layout.append(aside,form);parent.append(layout);
@@ -368,7 +368,7 @@ function editorHeading(container,title,detail,number){
 function dashboard(container){
  editorHeading(container,"Your website, without the code.","Click a card below. Update text, images, certificate PDFs, menus or favicon, then press Publish at the top.");
  const list=[
- [a(data.achievements.cards).length,"Achievements","awards"],
+ [a(data.achievements.cards).length,"Awards","awards"],
  [a(data.projects.items).length,"Projects","projects"],
  [a(data.research.items).length,"Research","research"],
  [a(data.certifications?.items).length,"Course certificates","certifications"],
