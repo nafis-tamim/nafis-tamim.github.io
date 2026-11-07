@@ -1,13 +1,9 @@
 
-/* Independent, opt-in collaborative cursor rebuild visualization. */
+/* Automatic collaborative cursor rebuild presentation. */
 (function(){
 "use strict";
-if(document.getElementById("swarm-replay"))return;
+if(document.getElementById("swarm-cover"))return;
 const motionPreference=window.matchMedia("(prefers-reduced-motion: reduce)");
-const trigger=document.createElement("button");
-trigger.type="button";trigger.id="swarm-replay";trigger.className="swarm-replay";
-trigger.setAttribute("aria-label","Watch the portfolio rebuild animation");
-trigger.innerHTML='<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 5h6v6H5zM13 13h6v6h-6zM13 5h6M5 16h6M16 2v6M2 8h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M10 13l3-3" stroke="currentColor" stroke-width="1.5"/></svg><span>Watch Rebuild</span>';
 const layer=document.createElement("div");
 layer.id="swarm-cover";layer.className="swarm-cover";layer.hidden=true;
 layer.setAttribute("role","dialog");layer.setAttribute("aria-modal","true");
@@ -33,8 +29,7 @@ layer.innerHTML=
  '</div></div>'+
 '<div class="swarm-progress"><span id="swarm-status" role="status" aria-live="polite">PREPARING CANVAS</span><div class="swarm-progress-track"><i class="swarm-progress-fill"></i></div><strong id="swarm-percent">0%</strong></div>'+
 '<div class="swarm-cursor-layer" aria-hidden="true"></div>';
-document.body.append(trigger,layer);
-const playButton=trigger;
+document.body.append(layer);
 const skipButton=layer.querySelector(".swarm-skip");
 const progress=layer.querySelector(".swarm-progress-fill");
 const percent=layer.querySelector("#swarm-percent");
@@ -100,7 +95,7 @@ function close(){
  ++runId;active=false;
  layer.classList.remove("is-active","is-finishing");
  document.documentElement.style.overflow=previousOverflow;
- layer.hidden=true;playButton.hidden=false;
+ layer.hidden=true;
  reset();
  if(returnFocus&&typeof returnFocus.focus==="function")returnFocus.focus({preventScroll:true});
 }
@@ -130,13 +125,13 @@ async function rebuild(){
  if(active)return;
  active=true;
  const id=++runId;
- returnFocus=document.activeElement||playButton;
+ returnFocus=document.activeElement||document.body;
  previousOverflow=document.documentElement.style.overflow;
  document.documentElement.style.overflow="hidden";
  fillPreview();reset();layer.hidden=false;
- playButton.hidden=true;
  // A separate full-screen layer simulates reconstruction; the original DOM is untouched.
  await new Promise(resolve=>requestAnimationFrame(()=>{layer.classList.add("is-active");resolve()}));
+ skipButton.focus({preventScroll:true});
  if(id!==runId)return;
  if(motionPreference.matches){
   layer.querySelectorAll(".swarm-piece").forEach(el=>el.classList.add("is-built"));
@@ -167,7 +162,27 @@ async function rebuild(){
  await wait(980);
  if(id===runId)close();
 }
-playButton.addEventListener("click",rebuild);
+// Begin automatically after page content becomes available; never leave a visitor stuck loading.
+let scheduled=false;
+function scheduleAutoplay(){
+ if(scheduled||motionPreference.matches)return;
+ scheduled=true;
+ window.setTimeout(()=>{if(!active&&!document.hidden)rebuild()},420);
+}
+function afterContentLoad(){
+ if(document.body.classList.contains("nt-loaded")){scheduleAutoplay();return;}
+ const observer=new MutationObserver(()=>{
+  if(document.body.classList.contains("nt-loaded")){
+   observer.disconnect();
+   scheduleAutoplay();
+  }
+ });
+ observer.observe(document.body,{attributes:true,attributeFilter:["class"]});
+ window.setTimeout(()=>{observer.disconnect();scheduleAutoplay()},5500);
+}
+if(document.readyState==="loading"){
+ document.addEventListener("DOMContentLoaded",afterContentLoad,{once:true});
+}else afterContentLoad();
 skipButton.addEventListener("click",close);
 document.addEventListener("keydown",e=>{
  if(!active)return;
