@@ -1,195 +1,271 @@
-
-/* Automatic collaborative cursor rebuild presentation. */
+/* Live-page cursor swarm. Original portfolio, links, GSAP and scrolling stay intact. */
 (function(){
 "use strict";
-if(document.getElementById("swarm-cover"))return;
-const motionPreference=window.matchMedia("(prefers-reduced-motion: reduce)");
-const layer=document.createElement("div");
-layer.id="swarm-cover";layer.className="swarm-cover";layer.hidden=true;
-layer.setAttribute("role","dialog");layer.setAttribute("aria-modal","true");
-layer.setAttribute("aria-label","Portfolio rebuild animation");
-layer.innerHTML=
-'<div class="swarm-head"><div class="swarm-head-left"><span class="swarm-head-mark">N.</span><span class="swarm-head-title"><strong>PORTFOLIO / REBUILD</strong><small>CURSORS AT WORK</small></span></div><button class="swarm-skip" type="button">Skip animation ↗</button></div>'+
-'<div class="swarm-browser">'+
- '<div class="swarm-browser-top"><div class="swarm-dots"><i></i><i></i><i></i></div><div class="swarm-url">nafis-tamim.github.io</div><div class="swarm-live-indicator">PREVIEW</div></div>'+
- '<div class="swarm-preview">'+
-  '<div class="swarm-preview-top"><div class="swarm-preview-brand swarm-piece" data-stage="0">NAFIS <b>TAMIM.</b></div><div class="swarm-preview-menu swarm-piece" data-stage="0"><span>Projects</span><span>Research</span><span>Awards</span><span>Contact ↗</span></div></div>'+
-  '<div class="swarm-hero"><div class="swarm-copy">'+
-    '<div class="swarm-eyebrow swarm-piece" data-stage="1">STUDENT / RESEARCH / DESIGN</div>'+
-    '<h2 class="swarm-piece" data-stage="1" id="swarm-name">Nafis <span>Tamim.</span></h2>'+
-    '<p class="swarm-intro swarm-piece" data-stage="2" id="swarm-intro"></p>'+
-    '<div class="swarm-hero-actions swarm-piece" data-stage="2"><span class="swarm-faux-btn">EXPLORE WORK ↗</span><span class="swarm-faux-btn swarm-faux-btn-secondary">RESEARCH</span></div>'+
-   '</div><div class="swarm-portrait swarm-piece" data-stage="2"><img id="swarm-photo" alt="Portfolio portrait preview"></div></div>'+
-  '<div class="swarm-cards">'+
-   '<div class="swarm-card swarm-piece" data-stage="3"><small>01 / RESEARCH</small><strong>Independent inquiry</strong></div>'+
-   '<div class="swarm-card swarm-piece" data-stage="3"><small>02 / AWARDS</small><strong>Recognition</strong></div>'+
-   '<div class="swarm-card swarm-piece" data-stage="3"><small>03 / LEARNING</small><strong>Courses &amp; certificates</strong></div>'+
-  '</div>'+
-  '<div class="swarm-bottom-line swarm-piece" data-stage="4"><span>PERSONAL PORTFOLIO / 2026</span><span>DESIGNED TO EXPLORE ↗</span></div>'+
- '</div></div>'+
-'<div class="swarm-progress"><span id="swarm-status" role="status" aria-live="polite">PREPARING CANVAS</span><div class="swarm-progress-track"><i class="swarm-progress-fill"></i></div><strong id="swarm-percent">0%</strong></div>'+
-'<div class="swarm-cursor-layer" aria-hidden="true"></div>';
-document.body.append(layer);
-const skipButton=layer.querySelector(".swarm-skip");
-const progress=layer.querySelector(".swarm-progress-fill");
-const percent=layer.querySelector("#swarm-percent");
-const status=layer.querySelector("#swarm-status");
-const indicator=layer.querySelector(".swarm-live-indicator");
-const cursorLayer=layer.querySelector(".swarm-cursor-layer");
-const stages=["STRUCTURE / GRID","TYPOGRAPHY / HEADLINE","MEDIA / CONTENT","SECTIONS / CARDS","FINAL DETAILS / PUBLISH"];
-const agents=[
- {name:"Layout",color:"#4c6ef5",x:.12,y:.82},
- {name:"Type",color:"#e65b97",x:.9,y:.13},
- {name:"Media",color:"#329c81",x:.66,y:.87},
- {name:"Style",color:"#aa71e8",x:.22,y:.24},
- {name:"Motion",color:"#e58b40",x:.83,y:.65},
- {name:"Review",color:"#507d9b",x:.5,y:.04}
+if(window.__ntSwarmV4)return;
+window.__ntSwarmV4=true;
+const reduced=window.matchMedia("(prefers-reduced-motion: reduce)");
+if(reduced.matches||location.hash||new URLSearchParams(location.search).has("skipintro"))return;
+const $=(s,r=document)=>r.querySelector(s);
+const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const COLORS=["#5079ff","#ed6c99","#28b49f","#9c72eb","#ed994a","#4ba8d3","#eb6957","#9cbf49","#dfb64a","#7785f1","#28c8bd","#fd8b78","#388be1","#c96bbf","#49bf86","#b39353"];
+const NAMES=["Layout","Type","Media","Motion","Spacing","Review","Grid","Content","Color","Research","Assets","Systems","Awards","Images","Design","QA"];
+const LAYOUT=[
+ ["hero",[".hdr-brand",".hdr-nav",".hdr-cta","#hero .hero-word","#hero .hero-window","#hero .hero-intro","#hero .hero-aim","#hero .hero-stage"]],
+ ["about",["#about .about-title","#about .about-photo","#about .about-copy","#about .facts .fact"]],
+ ["principles",["#principles .pr-head","#principles .pr-list .principle"]],
+ ["academics",["#academics .pc-head","#academics .steps .step"]],
+ ["achievements",["#achievements .svc-head","#achievements .nt-award-category","#achievements .svc-list .svc"]],
+ ["certifications",["#certifications .nt-cert-intro","#certifications .nt-cert-list .nt-cert"]],
+ ["projects",["#projects .tm-head","#projects .tm-grid .person","#projects .tm-foot"]],
+ ["interests",["#interests .sc-head","#interests .sc-list .sector"]],
+ ["research",["#research .jr-head","#research .jr-list .post"]],
+ ["faq",["#faq .fq-head","#faq .fq-list .fq"]],
+ ["contact",["#contact .ct-title","#contact .ct-details","#contact .ct-form"]]
 ];
-const cursors=agents.map(function(agent){
- const node=document.createElement("div");node.className="swarm-cursor";
- node.style.setProperty("--sc",agent.color);
- node.innerHTML='<svg viewBox="0 0 24 29" aria-hidden="true"><path d="M2 2v21l6-6 4.3 9 4.3-2.1-4.1-8.5 8.5-.7L2 2z" fill="white" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><span class="swarm-cursor-label">'+agent.name+'</span>';
- cursorLayer.appendChild(node);
- return {node:node,initialX:agent.x,initialY:agent.y,x:0,y:0};
-});
-const wait=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-let runId=0,active=false,previousOverflow="",returnFocus=null;
-function setProgress(p,title){
- progress.style.width=Math.max(0,Math.min(p,100))+"%";
- percent.textContent=String(Math.round(p))+"%";
- status.textContent=title;
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const delay=ms=>new Promise(r=>setTimeout(r,ms));
+const rnd=(a,b)=>a+Math.random()*(b-a);
+function add(name,parent,tag){
+ const el=document.createElement(tag||"div");
+ el.className=name;(parent||document.body).appendChild(el);return el
 }
-function fillPreview(){
- const title=document.querySelector(".hero h1");
- const name=(title&&title.textContent.trim())||"Nafis Tamim";
- const words=name.split(/\s+/);
- const headline=layer.querySelector("#swarm-name");
- headline.textContent="";
- const first=document.createTextNode(words.slice(0,-1).join(" ")||words[0]);
- const last=document.createElement("span");
- last.textContent=(words.length>1?words[words.length-1]:"")+".";
- headline.append(first,document.createTextNode(" "),last);
- const intro=document.querySelector(".hero-intro .lead");
- const text=(intro&&intro.textContent.trim())||"Research, academic work and creative projects.";
- layer.querySelector("#swarm-intro").textContent=text.slice(0,225);
- const portrait=document.querySelector(".hero-window img");
- const preview=layer.querySelector("#swarm-photo");
- if(portrait&&portrait.getAttribute("src"))preview.src=portrait.getAttribute("src");
- else preview.src="/favicon.png";
-}
-function reset(){
- layer.classList.remove("is-finishing","is-active");
- layer.querySelectorAll(".swarm-piece").forEach(el=>el.classList.remove("is-built"));
- indicator.classList.remove("is-live");
- indicator.textContent="PREVIEW";
- setProgress(0,"PREPARING CANVAS");
- cursors.forEach(c=>{
-  c.x=c.initialX*window.innerWidth;c.y=c.initialY*window.innerHeight;
-  c.node.style.transition="none";
-  c.node.style.transform="translate3d("+c.x+"px,"+c.y+"px,0)";
-  c.node.style.opacity="0";
- });
-}
-function close(){
- if(!active)return;
- ++runId;active=false;
- layer.classList.remove("is-active","is-finishing");
- document.documentElement.style.overflow=previousOverflow;
- layer.hidden=true;
- reset();
- if(returnFocus&&typeof returnFocus.focus==="function")returnFocus.focus({preventScroll:true});
-}
-function moveCursor(cursor,target,offset){
- const r=target.getBoundingClientRect();
- const nextX=Math.max(8,Math.min(window.innerWidth-98,r.left+r.width*(.16+((offset%3)*.26))));
- const nextY=Math.max(8,Math.min(window.innerHeight-50,r.top+Math.min(32,r.height*.42)+((offset%2)*12)));
- const startX=cursor.x,startY=cursor.y;
- cursor.x=nextX;cursor.y=nextY;
- const node=cursor.node;
- node.style.opacity="1";
- if(typeof node.animate!=="function"){
-  node.style.transform="translate3d("+nextX+"px,"+nextY+"px,0)";
-  return wait(460);
+function gather(){
+ const all=[],groups=[],seen=new Set(),mobile=innerWidth<700;
+ for(const [id,selectors] of LAYOUT){
+  const root=document.getElementById(id);if(!root)continue;
+  if(mobile&&!["hero","about","academics","achievements","projects","research","contact"].includes(id))continue;
+  const chosen=[];
+  for(const selector of selectors){
+   for(const el of $$(selector)){
+    if(seen.has(el)||el.hidden)continue;
+    const s=getComputedStyle(el),r=el.getBoundingClientRect();
+    if(s.display==="none"||r.width<18||r.height<7)continue;
+    if(chosen.some(x=>x.contains(el)||el.contains(x)))continue;
+    chosen.push(el);seen.add(el);
+   }
+  }
+  const items=chosen.slice(0,mobile?7:14);
+  if(items.length){groups.push({id,root,items});all.push(...items)}
  }
- const animation=node.animate([
- {transform:"translate3d("+startX+"px,"+startY+"px,0)",offset:0},
- {transform:"translate3d("+((startX+nextX)/2-12)+"px,"+((startY+nextY)/2-18)+"px,0)",offset:.53},
- {transform:"translate3d("+nextX+"px,"+nextY+"px,0)",offset:1}
- ],{duration:530+(offset%3)*90,easing:"cubic-bezier(.28,.7,.2,1)",fill:"forwards"});
- return animation.finished.catch(function(){}).then(function(){
-  node.style.transform="translate3d("+nextX+"px,"+nextY+"px,0)";
-  animation.cancel();
- });
-}
-async function rebuild(){
- if(active)return;
- active=true;
- const id=++runId;
- returnFocus=document.activeElement||document.body;
- previousOverflow=document.documentElement.style.overflow;
- document.documentElement.style.overflow="hidden";
- fillPreview();reset();layer.hidden=false;
- // A separate full-screen layer simulates reconstruction; the original DOM is untouched.
- await new Promise(resolve=>requestAnimationFrame(()=>{layer.classList.add("is-active");resolve()}));
- skipButton.focus({preventScroll:true});
- if(id!==runId)return;
- if(motionPreference.matches){
-  layer.querySelectorAll(".swarm-piece").forEach(el=>el.classList.add("is-built"));
-  indicator.classList.add("is-live");indicator.textContent="LIVE";
-  setProgress(100,"PREVIEW COMPLETE");
-  await wait(850);if(id===runId)close();return;
+ const footer=$(".ftr-word");
+ if(!mobile&&footer&&footer.getBoundingClientRect().height>0){
+  groups.push({id:"footer",root:footer,items:[footer]});
+  all.push(footer);
  }
- await wait(350);if(id!==runId)return;
- for(let phase=0;phase<stages.length;phase++){
-  if(id!==runId)return;
-  const elements=[...layer.querySelectorAll('[data-stage="'+phase+'"]')];
-  setProgress(phase*20,stages[phase]);
-  await Promise.all(cursors.map(async function(cursor,index){
-   const el=elements[index%elements.length];
-   await moveCursor(cursor,el,index+phase);
-   if(id!==runId)return;
-   if(index<elements.length)el.classList.add("is-built");
-  }));
-  if(id!==runId)return;
-  elements.forEach(el=>el.classList.add("is-built"));
-  setProgress((phase+1)*20,stages[phase]);
-  await wait(170);
- }
- if(id!==runId)return;
- layer.classList.add("is-finishing");
- indicator.classList.add("is-live");indicator.textContent="LIVE";
- setProgress(100,"REBUILD COMPLETE / GO LIVE");
- await wait(980);
- if(id===runId)close();
+ return {all,groups};
 }
-// Begin automatically after page content becomes available; never leave a visitor stuck loading.
-let scheduled=false;
-function scheduleAutoplay(){
- if(scheduled||motionPreference.matches)return;
- scheduled=true;
- window.setTimeout(()=>{if(!active&&!document.hidden)rebuild()},420);
+let active=null,serial=0;
+function running(id){return active&&active.id===id&&!active.stopped}
+function scrollDestination(node){
+ const offset=node.id==="hero"?0:Math.min(85,innerHeight*.1);
+ return clamp(node.getBoundingClientRect().top+scrollY-offset,0,Math.max(0,document.documentElement.scrollHeight-innerHeight))
 }
-function afterContentLoad(){
- if(document.body.classList.contains("nt-loaded")){scheduleAutoplay();return;}
- const observer=new MutationObserver(()=>{
-  if(document.body.classList.contains("nt-loaded")){
-   observer.disconnect();
-   scheduleAutoplay();
+function glide(dest,duration,id){
+ return new Promise(resolve=>{
+  const begin=performance.now(),start=scrollY,dist=dest-start;
+  if(Math.abs(dist)<5){scrollTo(0,dest);resolve();return}
+  function step(now){
+   if(!running(id)){resolve();return}
+   const t=clamp((now-begin)/duration,0,1);
+   const ease=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+   scrollTo(0,start+dist*ease);
+   if(t<1)requestAnimationFrame(step);else resolve();
+  }
+  requestAnimationFrame(step);
+ })
+}
+function pointer(canvas,index){
+ const el=add("swarm-agent",canvas);
+ el.style.setProperty("--ac",COLORS[index%COLORS.length]);
+ el.innerHTML='<svg viewBox="0 0 20 25" aria-hidden="true"><path d="M2 1.5v19.3l5.4-5.3 3.6 7.2 4-1.8-3.8-7.2 7.2-.6L2 1.5z" fill="currentColor" stroke="#fff" stroke-width="1.25" stroke-linejoin="round"/></svg><span class="swarm-agent-name">'+NAMES[index%NAMES.length]+'</span>';
+ const p={el,x:rnd(35,Math.max(45,innerWidth-55)),y:rnd(40,Math.max(60,innerHeight-60)),color:COLORS[index%COLORS.length]};
+ el.style.transform="translate3d("+p.x+"px,"+p.y+"px,0)";
+ return p;
+}
+function move(p,x,y,id,ms){
+ const x2=clamp(x,2,innerWidth-65),y2=clamp(y,2,innerHeight-38);
+ const sx=p.x,sy=p.y;p.x=x2;p.y=y2;
+ p.el.style.opacity="1";p.el.classList.add("working");
+ return new Promise(resolve=>{
+  if(!running(id)){resolve();return}
+  if(!p.el.animate){p.el.style.transform="translate3d("+x2+"px,"+y2+"px,0)";resolve();return}
+  const anim=p.el.animate([
+   {transform:"translate3d("+sx+"px,"+sy+"px,0)"},
+   {transform:"translate3d("+((sx+x2)/2+rnd(-17,17))+"px,"+((sy+y2)/2+rnd(-18,18))+"px,0)",offset:.55},
+   {transform:"translate3d("+x2+"px,"+y2+"px,0)"}
+  ],{duration:ms,easing:"cubic-bezier(.2,.7,.28,1)",fill:"forwards"});
+  anim.finished.catch(()=>{}).then(()=>{p.el.style.transform="translate3d("+x2+"px,"+y2+"px,0)";anim.cancel();resolve()})
+ })
+}
+function selection(el,canvas,index){
+ const r=el.getBoundingClientRect();
+ if(r.bottom<76||r.top>innerHeight-35||r.width<16||r.height<7)return null;
+ const left=clamp(r.left,1,innerWidth-2),right=clamp(r.right,1,innerWidth-1);
+ const top=clamp(r.top,68,innerHeight-18),bottom=clamp(r.bottom,68,innerHeight-4);
+ if(right-left<15||bottom-top<7)return null;
+ const div=add("swarm-outline",canvas);
+ div.style.left=left+"px";div.style.top=top+"px";
+ div.style.width=(right-left)+"px";div.style.height=(bottom-top)+"px";
+ div.style.setProperty("--oc",COLORS[index%COLORS.length]);
+ let label=el.matches("h1,h2,h3")?"TEXT":el.matches("figure,img")?"IMAGE":el.matches("li,article")?"COMPONENT":el.matches("form")?"FORM":"FRAME";
+ div.dataset.label=label+" / "+Math.round(r.width)+" × "+Math.round(r.height);
+ for(let k=0;k<4;k++)add("swarm-handle",div,"span");
+ requestAnimationFrame(()=>div.classList.add("on"));
+ return div;
+}
+function ping(canvas,x,y,color){
+ const d=add("swarm-ping",canvas);
+ d.style.left=x+"px";d.style.top=y+"px";d.style.setProperty("--pc",color);
+ setTimeout(()=>d.remove(),560);
+}
+function setProgress(ctx,message){
+ const percent=Math.round(ctx.finished/ctx.all.length*100);
+ ctx.bar.style.width=percent+"%";
+ ctx.percent.textContent=percent+"%";
+ ctx.counter.textContent=ctx.finished+" / "+ctx.all.length+" layers";
+ ctx.phase.textContent=message;
+}
+async function batch(ctx,items,id){
+ if(!running(id))return;
+ const frames=[],jobs=[];
+ items.forEach((el,i)=>{
+  const r=el.getBoundingClientRect(),frame=selection(el,ctx.canvas,ctx.finished+i);
+  if(frame)frames.push(frame);
+  const x=r.left+clamp(r.width*.22,12,Math.max(12,r.width-12));
+  const y=r.top+clamp(r.height*.27,8,Math.max(8,r.height-10));
+  if(frame){
+   const p=ctx.pointers[(ctx.next+i)%ctx.pointers.length];
+   jobs.push(move(p,x,y,id,260+(i%3)*55).then(()=>{
+    if(running(id))ping(ctx.canvas,clamp(x,0,innerWidth-8),clamp(y,0,innerHeight-8),p.color);
+   }))
   }
  });
- observer.observe(document.body,{attributes:true,attributeFilter:["class"]});
- window.setTimeout(()=>{observer.disconnect();scheduleAutoplay()},5500);
+ ctx.next+=items.length;
+ await Promise.all(jobs);
+ if(!running(id))return;
+ items.forEach(el=>el.classList.add("swarm-build-complete"));
+ ctx.finished+=items.length;
+ setProgress(ctx,"BUILD / "+ctx.section.toUpperCase());
+ await delay(120);
+ frames.forEach(f=>{f.classList.remove("on");setTimeout(()=>f.remove(),200)});
 }
-if(document.readyState==="loading"){
- document.addEventListener("DOMContentLoaded",afterContentLoad,{once:true});
-}else afterContentLoad();
-skipButton.addEventListener("click",close);
-document.addEventListener("keydown",e=>{
- if(!active)return;
- if(e.key==="Escape"){e.preventDefault();close()}
- if(e.key==="Tab"){
-  // Only the Skip button is interactive while the reconstruction overlay is open.
-  e.preventDefault();skipButton.focus({preventScroll:true});
+function stop(ctx,restore){
+ if(!ctx||ctx.stopped)return;
+ ctx.stopped=true;serial++;
+ document.body.classList.remove("swarm-is-building");
+ ctx.all.forEach(el=>el.classList.remove("swarm-build-target","swarm-build-complete"));
+ document.documentElement.style.scrollBehavior=ctx.beforeBehavior;
+ document.documentElement.style.overscrollBehavior=ctx.beforeOverscroll;
+ document.removeEventListener("keydown",ctx.key,true);
+ document.removeEventListener("wheel",ctx.prevent,true);
+ document.removeEventListener("touchmove",ctx.prevent,true);
+ document.removeEventListener("visibilitychange",ctx.visibility);
+ if(restore!==false){
+  scrollTo(0,ctx.originalTop);
+  if(window.ScrollTrigger&&typeof window.ScrollTrigger.refresh==="function")
+   requestAnimationFrame(()=>window.ScrollTrigger.refresh());
  }
-});
+ [ctx.canvas,ctx.guard,ctx.hud,ctx.badge,ctx.wash].forEach(el=>el.remove());
+ if(active===ctx)active=null;
+}
+async function build(){
+ if(active||reduced.matches||location.hash)return;
+ const collection=gather();
+ if(!collection.all.length)return;
+ const id=++serial,mobile=innerWidth<700;
+ const wash=add("swarm-wash"),guard=add("swarm-guard"),canvas=add("swarm-canvas");
+ const badge=add("swarm-stage-badge"),hud=add("swarm-hud");
+ const agents=Array.from({length:mobile?9:16},(_,i)=>pointer(canvas,i));
+ hud.innerHTML='<div class="swarm-mark">N.</div>'+
+ '<div class="swarm-status"><strong>PORTFOLIO REBUILD</strong><small class="swarm-phase">PREPARING</small></div>'+
+ '<span class="swarm-counter">0 layers</span><div class="swarm-meter"><i></i></div>'+
+ '<span class="swarm-percent">0%</span><span class="swarm-dots">'+COLORS.slice(0,6).map(c=>'<i style="--dc:'+c+'"></i>').join("")+'</span>'+
+ '<button type="button" class="swarm-skip">Skip ↗</button>';
+ const ctx={id,all:collection.all,groups:collection.groups,pointers:agents,wash,guard,canvas,hud,badge,
+  bar:$(".swarm-meter i",hud),counter:$(".swarm-counter",hud),
+  phase:$(".swarm-phase",hud),percent:$(".swarm-percent",hud),
+  next:0,finished:0,section:"hero",stopped:false,originalTop:scrollY,
+  beforeBehavior:document.documentElement.style.scrollBehavior,
+  beforeOverscroll:document.documentElement.style.overscrollBehavior};
+ ctx.prevent=e=>{if(active===ctx&&e.cancelable)e.preventDefault()};
+ ctx.key=e=>{
+  if(active!==ctx)return;
+  if(e.key==="Escape"){e.preventDefault();stop(ctx);return}
+  if(e.key==="Tab"){e.preventDefault();$(".swarm-skip",hud).focus({preventScroll:true});return}
+  if(["PageDown","PageUp","ArrowDown","ArrowUp"," ","Home","End"].includes(e.key))e.preventDefault();
+ };
+ ctx.visibility=()=>{if(document.hidden&&active===ctx)stop(ctx)};
+ active=ctx;
+ $(".swarm-skip",hud).addEventListener("click",()=>stop(ctx));
+ document.addEventListener("keydown",ctx.key,true);
+ document.addEventListener("wheel",ctx.prevent,{capture:true,passive:false});
+ document.addEventListener("touchmove",ctx.prevent,{capture:true,passive:false});
+ document.addEventListener("visibilitychange",ctx.visibility);
+ document.documentElement.style.scrollBehavior="auto";
+ document.documentElement.style.overscrollBehavior="none";
+ ctx.all.forEach(el=>el.classList.add("swarm-build-target"));
+ document.body.classList.add("swarm-is-building");
+ // Colored collaborator crosshairs are decorative, not interactive.
+ const crosses=[];
+ for(let i=0;i<(mobile?9:21);i++){
+  const cross=add("swarm-cross",canvas);
+  cross.style.setProperty("--px",(8+(i*31+13)%83)+"vw");
+  cross.style.setProperty("--py",(7+(i*43+29)%79)+"vh");
+  cross.style.setProperty("--cc",COLORS[i%COLORS.length]);
+  crosses.push(cross);
+ }
+ try{
+  await new Promise(resolve=>requestAnimationFrame(resolve));
+  if(!running(id))return;
+  wash.classList.add("on");
+  await delay(330);if(!running(id))return;
+  wash.classList.remove("on");
+  hud.classList.add("on");
+  $(".swarm-skip",hud).focus({preventScroll:true});
+  await delay(180);if(!running(id))return;
+  crosses.forEach((el,i)=>setTimeout(()=>{if(running(id))el.classList.add("on")},i*25));
+  for(let i=0;i<ctx.groups.length;i++){
+   if(!running(id))return;
+   const g=ctx.groups[i];ctx.section=g.id;
+   badge.textContent=(i+1)+"/"+ctx.groups.length+" · "+g.id.toUpperCase();
+   setProgress(ctx,"BUILD / "+g.id.toUpperCase());
+   await glide(scrollDestination(g.root),i?mobile?460:570:100,id);
+   if(!running(id))return;
+   await delay(85);
+   const size=mobile?3:5;
+   for(let j=0;j<g.items.length;j+=size){
+    if(!running(id))return;
+    await batch(ctx,g.items.slice(j,j+size),id);
+   }
+   await delay(90);
+  }
+  if(!running(id))return;
+  ctx.all.forEach(el=>el.classList.add("swarm-build-complete"));
+  ctx.finished=ctx.all.length;
+  setProgress(ctx,"PUBLISH / COMPLETE");
+  badge.textContent="SITE COMPLETE / 100%";
+  await delay(650);if(!running(id))return;
+  wash.classList.add("on");
+  await delay(380);if(running(id))stop(ctx);
+ }catch(err){
+  console.warn("Rebuild animation stopped; portfolio restored",err);
+  stop(ctx);
+ }
+}
+let scheduled=false;
+function begin(){
+ if(scheduled||reduced.matches||location.hash||new URLSearchParams(location.search).has("skipintro"))return;
+ scheduled=true;
+ setTimeout(()=>{if(!document.hidden)build()},380);
+}
+function ready(){
+ if(document.body.classList.contains("nt-loaded")){begin();return}
+ const obs=new MutationObserver(()=>{
+  if(document.body.classList.contains("nt-loaded")){obs.disconnect();begin()}
+ });
+ obs.observe(document.body,{attributes:true,attributeFilter:["class"]});
+ setTimeout(()=>{obs.disconnect();begin()},6200);
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",ready,{once:true});
+else ready();
 })();
